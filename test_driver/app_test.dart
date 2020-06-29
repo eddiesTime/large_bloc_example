@@ -15,7 +15,7 @@ void main() {
 
     tearDownAll(() async {
       if (driver != null) {
-        await driver.close();
+        driver.close();
       }
     });
 
