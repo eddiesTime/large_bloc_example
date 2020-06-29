@@ -8,14 +8,14 @@ void main() {
     FlutterDriver driver;
     WeatherTestPage weatherTestPage;
 
-    setUp(() async {
+    setUpAll(() async {
       driver = await FlutterDriver.connect();
       weatherTestPage = WeatherTestPage(driver);
     });
 
     tearDownAll(() async {
       if (driver != null) {
-        driver.close();
+        await driver.close();
       }
     });
 
