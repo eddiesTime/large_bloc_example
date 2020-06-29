@@ -4,4 +4,3 @@ codecov:
   ignore:
     - '**/*.freezed.dart'
     - '**/*.g.dart'
-    - 'states_rebuilder_example/**/*'
