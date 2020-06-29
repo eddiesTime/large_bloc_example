@@ -64,7 +64,7 @@ jobs:
               '$1 == device { print $2 }'
           )
           xcrun simctl boot "${UDID:?No Simulator with this name found}"
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
         with:
           channel: 'dev'
@@ -76,9 +76,6 @@ jobs:
     #if conditional to prevent a job from running
     if: github.event_name != 'pull_request'
     runs-on: macos-latest
-    defaults:
-      run:
-        working-directory: ./flutter_bloc
     #creates a build matrix for your jobs
     strategy:
       #set of different configurations of the virtual environment.
@@ -95,7 +92,7 @@ jobs:
       - name: Run Flutter Driver tests
         #GitHub Action for installing, configuring and running Android Emulators (work only Mac OS)
         #https://github.com/ReactiveCircus/android-emulator-runner
-        uses: reactivecircus/android-emulator-runner@v1
+        uses: ReactiveCircus/android-emulator-runner@v2.11.0
         with:
           api-level: ${{ matrix.api-level }}
           target: ${{ matrix.target }}
