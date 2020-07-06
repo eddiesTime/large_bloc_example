@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dartz/dartz.dart';
+import 'package:lumberdash/lumberdash.dart';
 import 'package:weather_app_example_data_models_core/weather_app_example_data_models_core.dart';
 
 part 'weather_event.dart';
@@ -50,6 +51,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         ),
       );
     } catch (err) {
+      logError(Exception('Failure When Loading Location'));
       yield const LoadingFailure();
     }
   }
