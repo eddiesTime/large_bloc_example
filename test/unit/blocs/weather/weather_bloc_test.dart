@@ -29,7 +29,7 @@ void main() {
     });
 
     test('initial state is WeatherState.initial()', () {
-      expect(weatherBloc.initialState, const Initial());
+      expect(weatherBloc.state, const Initial());
     });
 
     blocTest(

@@ -47,7 +47,7 @@ void main() {
     test(
         'should check if initial state is ThemeState and contains theme entity initial',
         () {
-      expect(themeBloc.initialState, ThemeState(themeEntity: initial));
+      expect(themeBloc.state, ThemeState(themeEntity: initial));
     });
 
     blocTest(

@@ -11,7 +11,7 @@ void main() {
     });
 
     test('should check if initial state is WeatherState.initial()', () {
-      expect(settingsBloc.initialState, SettingsState.celcius());
+      expect(settingsBloc.state, SettingsState.celcius());
     });
 
     blocTest(
