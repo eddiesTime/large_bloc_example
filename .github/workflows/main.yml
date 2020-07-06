@@ -42,8 +42,8 @@ jobs:
       #set of different configurations of the virtual environment.
       matrix:
         device:
-          - 'iPhone 8 (13.6)'
-          - 'iPhone 11 Pro Max (13.6)'
+          - 'iPhone 8 (13.5)'
+          - 'iPhone 11 Pro Max (13.5)'
       fail-fast: false
     #if conditional to prevent a job from running
     if: github.event_name != 'pull_request'
@@ -99,17 +99,3 @@ jobs:
           arch: x86_64
           profile: Nexus 6
           script: flutter drive --target=test_driver/app.dart
-  # Second job.
-  # build:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: ./flutter_bloc
-  #   container:
-  #     image: google/dart:latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Install dependencies
-  #       run: flutter pub get
-  #     - name: Run tests
-  #       run: flutter test test/main_test.dart

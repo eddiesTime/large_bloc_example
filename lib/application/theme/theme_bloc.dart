@@ -15,10 +15,7 @@ part 'theme_bloc.freezed.dart';
 /// A business logic component to handle theme related logic in the application.
 @injectable
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
-  @override
-  ThemeState get initialState {
-    return ThemeState(themeEntity: ThemeEntity.initial());
-  }
+  ThemeBloc() : super(ThemeState(themeEntity: ThemeEntity.initial()));
 
   @override
   Stream<ThemeState> mapEventToState(

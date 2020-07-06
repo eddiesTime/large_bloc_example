@@ -18,10 +18,7 @@ part 'weather_bloc.freezed.dart';
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final IWeatherFacade _weatherFacade;
 
-  WeatherBloc(this._weatherFacade);
-
-  @override
-  WeatherState get initialState => const Initial();
+  WeatherBloc(this._weatherFacade) : super(const Initial());
 
   @override
   Stream<WeatherState> mapEventToState(
