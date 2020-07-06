@@ -35,6 +35,7 @@ doc/api/
 .pub-cache/
 .pub/
 coverage/
+ozzie/
 
 # Android related
 **/android/**/gradle-wrapper.jar
