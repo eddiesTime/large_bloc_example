@@ -1,4 +1,6 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc_example/domain/weather/i_weather_facade.dart';
+import 'package:flutter_bloc_example/domain/weather/weather_failure.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:weather_app_example_data_models_core/weather_app_example_data_models_core.dart';
@@ -19,18 +21,26 @@ class WeatherRepositoryFacade implements IWeatherFacade {
   }
 
   @override
-  Future<WeatherResponse> getWeatherForLocation(
+  Future<Either<WeatherFailure, WeatherResponse>> getWeatherForLocation(
       {@required String location}) async {
-    final WeatherResponse _wr =
-        await _weatherRepository.getWeatherFor(city: location);
-    return _wr;
+    try {
+      final WeatherResponse _wr =
+          await _weatherRepository.getWeatherFor(city: location);
+      return right(_wr);
+    } catch (e) {
+      return left(const NotALocation());
+    }
   }
 
   @override
-  Future<WeatherResponse> refreshWeatherData(
+  Future<Either<WeatherFailure, WeatherResponse>> refreshWeatherData(
       {@required String location}) async {
-    final WeatherResponse _wr =
-        await _weatherRepository.getWeatherFor(city: location);
-    return _wr;
+    try {
+      final WeatherResponse _wr =
+          await _weatherRepository.getWeatherFor(city: location);
+      return right(_wr);
+    } catch (e) {
+      return left(const UnableToRefresh());
+    }
   }
 }

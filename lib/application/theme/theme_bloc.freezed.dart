@@ -25,6 +25,25 @@ const $ThemeEvent = _$ThemeEventTearOff();
 mixin _$ThemeEvent {
   WeatherCondition get weatherCondition;
 
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result weatherChanged(WeatherCondition weatherCondition),
+  });
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result weatherChanged(WeatherCondition weatherCondition),
+    @required Result orElse(),
+  });
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result weatherChanged(WeatherChanged value),
+  });
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result weatherChanged(WeatherChanged value),
+    @required Result orElse(),
+  });
+
   $ThemeEventCopyWith<ThemeEvent> get copyWith;
 }
 
@@ -121,6 +140,50 @@ class _$WeatherChanged with DiagnosticableTreeMixin implements WeatherChanged {
   @override
   $WeatherChangedCopyWith<WeatherChanged> get copyWith =>
       _$WeatherChangedCopyWithImpl<WeatherChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result weatherChanged(WeatherCondition weatherCondition),
+  }) {
+    assert(weatherChanged != null);
+    return weatherChanged(weatherCondition);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result weatherChanged(WeatherCondition weatherCondition),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (weatherChanged != null) {
+      return weatherChanged(weatherCondition);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result weatherChanged(WeatherChanged value),
+  }) {
+    assert(weatherChanged != null);
+    return weatherChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result weatherChanged(WeatherChanged value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (weatherChanged != null) {
+      return weatherChanged(this);
+    }
+    return orElse();
+  }
 }
 
 abstract class WeatherChanged implements ThemeEvent {

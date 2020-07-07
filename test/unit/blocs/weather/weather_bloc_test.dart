@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc_example/application/weather/weather_bloc.dart';
+import 'package:flutter_bloc_example/domain/core/value_object.dart';
 import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
 import 'package:flutter_bloc_example/infrastructure/weather/weather_repository_facade.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -76,6 +77,7 @@ void main() {
         'should check if order of states is emmited correctly for fetch weather event',
         () async {
       final weatherEntity = WeatherEntity(
+          id: UniqueId.fromUniqueString('123'),
           weatherResponse: some(weatherResponse),
           city: 'London',
           lastUpdated: some(DateTime.now()));

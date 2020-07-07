@@ -25,6 +25,25 @@ const $SettingsEvent = _$SettingsEventTearOff();
 mixin _$SettingsEvent {
   bool get value;
 
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result toggleTemperatureUnit(bool value),
+  });
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result toggleTemperatureUnit(bool value),
+    @required Result orElse(),
+  });
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result toggleTemperatureUnit(ToggleTemperatureUnit value),
+  });
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result toggleTemperatureUnit(ToggleTemperatureUnit value),
+    @required Result orElse(),
+  });
+
   $SettingsEventCopyWith<SettingsEvent> get copyWith;
 }
 
@@ -119,6 +138,50 @@ class _$ToggleTemperatureUnit
   $ToggleTemperatureUnitCopyWith<ToggleTemperatureUnit> get copyWith =>
       _$ToggleTemperatureUnitCopyWithImpl<ToggleTemperatureUnit>(
           this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result toggleTemperatureUnit(bool value),
+  }) {
+    assert(toggleTemperatureUnit != null);
+    return toggleTemperatureUnit(value);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result toggleTemperatureUnit(bool value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (toggleTemperatureUnit != null) {
+      return toggleTemperatureUnit(value);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result toggleTemperatureUnit(ToggleTemperatureUnit value),
+  }) {
+    assert(toggleTemperatureUnit != null);
+    return toggleTemperatureUnit(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result toggleTemperatureUnit(ToggleTemperatureUnit value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (toggleTemperatureUnit != null) {
+      return toggleTemperatureUnit(this);
+    }
+    return orElse();
+  }
 }
 
 abstract class ToggleTemperatureUnit implements SettingsEvent {

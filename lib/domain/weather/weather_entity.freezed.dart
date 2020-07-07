@@ -13,10 +13,12 @@ class _$WeatherEntityTearOff {
   const _$WeatherEntityTearOff();
 
   _WeatherEntity call(
-      {@required Option<WeatherResponse> weatherResponse,
+      {@required UniqueId id,
+      @required Option<WeatherResponse> weatherResponse,
       @required String city,
       @required Option<DateTime> lastUpdated}) {
     return _WeatherEntity(
+      id: id,
       weatherResponse: weatherResponse,
       city: city,
       lastUpdated: lastUpdated,
@@ -28,6 +30,7 @@ class _$WeatherEntityTearOff {
 const $WeatherEntity = _$WeatherEntityTearOff();
 
 mixin _$WeatherEntity {
+  UniqueId get id;
   Option<WeatherResponse> get weatherResponse;
   String get city;
   Option<DateTime> get lastUpdated;
@@ -40,7 +43,8 @@ abstract class $WeatherEntityCopyWith<$Res> {
           WeatherEntity value, $Res Function(WeatherEntity) then) =
       _$WeatherEntityCopyWithImpl<$Res>;
   $Res call(
-      {Option<WeatherResponse> weatherResponse,
+      {UniqueId id,
+      Option<WeatherResponse> weatherResponse,
       String city,
       Option<DateTime> lastUpdated});
 }
@@ -55,11 +59,13 @@ class _$WeatherEntityCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object id = freezed,
     Object weatherResponse = freezed,
     Object city = freezed,
     Object lastUpdated = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed ? _value.id : id as UniqueId,
       weatherResponse: weatherResponse == freezed
           ? _value.weatherResponse
           : weatherResponse as Option<WeatherResponse>,
@@ -78,7 +84,8 @@ abstract class _$WeatherEntityCopyWith<$Res>
       __$WeatherEntityCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Option<WeatherResponse> weatherResponse,
+      {UniqueId id,
+      Option<WeatherResponse> weatherResponse,
       String city,
       Option<DateTime> lastUpdated});
 }
@@ -95,11 +102,13 @@ class __$WeatherEntityCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object id = freezed,
     Object weatherResponse = freezed,
     Object city = freezed,
     Object lastUpdated = freezed,
   }) {
     return _then(_WeatherEntity(
+      id: id == freezed ? _value.id : id as UniqueId,
       weatherResponse: weatherResponse == freezed
           ? _value.weatherResponse
           : weatherResponse as Option<WeatherResponse>,
@@ -113,13 +122,17 @@ class __$WeatherEntityCopyWithImpl<$Res>
 
 class _$_WeatherEntity with DiagnosticableTreeMixin implements _WeatherEntity {
   const _$_WeatherEntity(
-      {@required this.weatherResponse,
+      {@required this.id,
+      @required this.weatherResponse,
       @required this.city,
       @required this.lastUpdated})
-      : assert(weatherResponse != null),
+      : assert(id != null),
+        assert(weatherResponse != null),
         assert(city != null),
         assert(lastUpdated != null);
 
+  @override
+  final UniqueId id;
   @override
   final Option<WeatherResponse> weatherResponse;
   @override
@@ -129,7 +142,7 @@ class _$_WeatherEntity with DiagnosticableTreeMixin implements _WeatherEntity {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherEntity(weatherResponse: $weatherResponse, city: $city, lastUpdated: $lastUpdated)';
+    return 'WeatherEntity(id: $id, weatherResponse: $weatherResponse, city: $city, lastUpdated: $lastUpdated)';
   }
 
   @override
@@ -137,6 +150,7 @@ class _$_WeatherEntity with DiagnosticableTreeMixin implements _WeatherEntity {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'WeatherEntity'))
+      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('weatherResponse', weatherResponse))
       ..add(DiagnosticsProperty('city', city))
       ..add(DiagnosticsProperty('lastUpdated', lastUpdated));
@@ -146,6 +160,8 @@ class _$_WeatherEntity with DiagnosticableTreeMixin implements _WeatherEntity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _WeatherEntity &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.weatherResponse, weatherResponse) ||
                 const DeepCollectionEquality()
                     .equals(other.weatherResponse, weatherResponse)) &&
@@ -159,6 +175,7 @@ class _$_WeatherEntity with DiagnosticableTreeMixin implements _WeatherEntity {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(weatherResponse) ^
       const DeepCollectionEquality().hash(city) ^
       const DeepCollectionEquality().hash(lastUpdated);
@@ -170,10 +187,13 @@ class _$_WeatherEntity with DiagnosticableTreeMixin implements _WeatherEntity {
 
 abstract class _WeatherEntity implements WeatherEntity {
   const factory _WeatherEntity(
-      {@required Option<WeatherResponse> weatherResponse,
+      {@required UniqueId id,
+      @required Option<WeatherResponse> weatherResponse,
       @required String city,
       @required Option<DateTime> lastUpdated}) = _$_WeatherEntity;
 
+  @override
+  UniqueId get id;
   @override
   Option<WeatherResponse> get weatherResponse;
   @override

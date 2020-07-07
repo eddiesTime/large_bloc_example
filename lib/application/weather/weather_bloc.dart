@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc_example/domain/core/value_object.dart';
 import 'package:flutter_bloc_example/domain/weather/i_weather_facade.dart';
 import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
+import 'package:flutter_bloc_example/domain/weather/weather_failure.dart';
 import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dartz/dartz.dart';
-import 'package:lumberdash/lumberdash.dart';
 import 'package:weather_app_example_data_models_core/weather_app_example_data_models_core.dart';
 
 part 'weather_event.dart';
@@ -38,21 +39,22 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   /// Yields [WeatherState.loadingFailure()] when an error occured while fetchibg the weather data.
   Stream<WeatherState> _mapFetchWeatherToState(FetchWeather event) async* {
     yield const Loading();
-    try {
-      final WeatherResponse _weatherResponse =
-          await _weatherFacade.getWeatherForLocation(location: event.location);
+    final Either<WeatherFailure, WeatherResponse> failureOrSuccess =
+        await _weatherFacade.getWeatherForLocation(location: event.location);
+
+    if (failureOrSuccess.isLeft()) {
+      yield const LoadingFailure();
+    } else {
       yield Loaded(
         WeatherEntity(
-          weatherResponse: some(_weatherResponse),
+          id: UniqueId(),
+          weatherResponse: some(failureOrSuccess.getOrElse(() => null)),
           city: event.location,
           lastUpdated: some(
             DateTime.now(),
           ),
         ),
       );
-    } catch (err) {
-      logError(Exception('Failure When Loading Location'));
-      yield const LoadingFailure();
     }
   }
 
@@ -60,20 +62,22 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   ///
   /// Yields [WeatherState.loadingFailure()] when an error occured while refreshing the weather data.
   Stream<WeatherState> _mapRefreshWeatherToState(RefreshWeather event) async* {
-    try {
-      final WeatherResponse _weatherResponse =
-          await _weatherFacade.getWeatherForLocation(location: event.location);
+    final Either<WeatherFailure, WeatherResponse> failureOrSuccess =
+        await _weatherFacade.getWeatherForLocation(location: event.location);
+
+    if (failureOrSuccess.isLeft()) {
+      yield const LoadingFailure();
+    } else {
       yield Loaded(
         WeatherEntity(
-          weatherResponse: some(_weatherResponse),
+          id: UniqueId(),
+          weatherResponse: some(failureOrSuccess.getOrElse(() => null)),
           city: event.location,
           lastUpdated: some(
             DateTime.now(),
           ),
         ),
       );
-    } catch (err) {
-      yield const LoadingFailure();
     }
   }
 }

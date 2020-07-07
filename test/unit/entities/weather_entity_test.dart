@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_bloc_example/domain/core/value_object.dart';
 import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -9,6 +10,7 @@ class MockWeatherResponse extends Mock implements WeatherResponse {}
 void main() {
   group('Weather Entity', () {
     final WeatherResponse _weatherResponse = MockWeatherResponse();
+    final UniqueId _id = UniqueId.fromUniqueString('123');
     test(
         'should check if the factory method WeatherEntity.initial() is creating the correct object',
         () {
@@ -18,10 +20,12 @@ void main() {
     test('should check if the factory constructor is working correctly', () {
       final DateTime _tDateTime = DateTime.now();
       final WeatherEntity _tWeatherEntity = WeatherEntity(
+          id: _id,
           weatherResponse: some(_weatherResponse),
           city: 'London',
           lastUpdated: some(_tDateTime));
       final WeatherEntity _tWeatherEntity2 = WeatherEntity(
+          id: _id,
           weatherResponse: some(_weatherResponse),
           city: 'London',
           lastUpdated: some(_tDateTime));
