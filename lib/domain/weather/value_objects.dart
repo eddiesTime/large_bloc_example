@@ -7,8 +7,6 @@ class City extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  const City._(this.value);
-
   factory City(String input) {
     assert(input != null);
     return City._(
@@ -17,27 +15,27 @@ class City extends ValueObject<String> {
           .flatMap(validateCityString),
     );
   }
+  const City._(this.value);
 }
 
 class LastUpdated extends ValueObject<DateTime> {
   @override
   final Either<ValueFailure<DateTime>, DateTime> value;
-  const LastUpdated._(this.value);
 
   factory LastUpdated(DateTime input) {
     assert(input != null);
     return LastUpdated._(right(input));
   }
+  const LastUpdated._(this.value);
 }
 
 class WeatherResponse extends ValueObject<WeatherResponse> {
   @override
   final Either<ValueFailure<WeatherResponse>, WeatherResponse> value;
 
-  const WeatherResponse._(this.value);
-
   factory WeatherResponse(WeatherResponse input) {
     assert(input != null);
     return WeatherResponse._(right(input));
   }
+  const WeatherResponse._(this.value);
 }
