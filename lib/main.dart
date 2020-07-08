@@ -20,9 +20,10 @@ void main() {
         environment: 'development',
         releaseVersion: '1.0.0')
   ]);
+  final Map<String, String> test = {'Test': 'This is a test'};
   logWarning('Hello Warning');
   logFatal('Hello Fatal!');
-  logMessage('Hello Message!');
+  logMessage('Hello Message!', extras: test);
   logError(Exception('Hello Error'));
   runApp(
     BlocProvider<ThemeBloc>(
