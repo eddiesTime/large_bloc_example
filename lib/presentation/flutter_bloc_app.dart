@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_example/application/blocs.dart';
 import 'package:flutter_bloc_example/injection.dart';
+import 'package:flutter_bloc_example/presentation/routes/router.gr.dart';
 import 'package:flutter_bloc_example/presentation/weather/pages/weather_page.dart';
 
 class FlutterBlocApp extends StatelessWidget {
@@ -11,19 +13,21 @@ class FlutterBlocApp extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, themeState) {
         return MultiBlocProvider(
-          providers: [
-            BlocProvider<WeatherBloc>(
-              create: (_) => getIt<WeatherBloc>(),
-            ),
-            BlocProvider<SettingsBloc>(
-              create: (context) => getIt<SettingsBloc>(),
-            )
-          ],
-          child: MaterialApp(
+            providers: [
+              BlocProvider<WeatherBloc>(
+                create: (_) => getIt<WeatherBloc>(),
+              ),
+              BlocProvider<SettingsBloc>(
+                create: (context) => getIt<SettingsBloc>(),
+              )
+            ],
+            child: MaterialApp(
+              builder: ExtendedNavigator<Router>(
+                router: Router(),
+              ),
               title: 'Flutter Demo',
               theme: themeState.themeEntity.themeData,
-              home: WeatherPage()),
-        );
+            ));
       },
     );
   }

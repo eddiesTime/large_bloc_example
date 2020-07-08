@@ -1,6 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_example/presentation/location_search/pages/search_page.dart';
-import 'package:flutter_bloc_example/presentation/settings/pages/settings_page.dart';
+import 'package:flutter_bloc_example/presentation/routes/router.dart';
 import 'package:flutter_bloc_example/presentation/weather/widgets/weather.dart';
 
 /// This widget functions as a container for the weather screen.
@@ -24,12 +25,7 @@ class _WeatherPageState extends State<WeatherPage> {
             key: const Key('__Settings_IconButton__'),
             icon: const Icon(Icons.settings),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SettingsPage(),
-                ),
-              );
+              ExtendedNavigator.root.pushNamed(Routes.settingsPage);
             },
           ),
         ],
@@ -39,12 +35,7 @@ class _WeatherPageState extends State<WeatherPage> {
         key: const Key('__Search_FAB__'),
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SearchPage(),
-            ),
-          );
+          ExtendedNavigator.root.pushNamed(Routes.searchPage);
         },
         child: const Icon(
           Icons.search,

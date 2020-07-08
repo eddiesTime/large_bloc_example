@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_example/application/weather/weather_bloc.dart';
@@ -31,7 +32,7 @@ class CitySelection extends StatelessWidget {
             onPressed: () {
               context.bloc<WeatherBloc>().add(
                   WeatherEvent.fetchWeatherForLocation(_textController.text));
-              Navigator.pop(context);
+              ExtendedNavigator.root.pop();
             },
           )
         ],
