@@ -10,7 +10,8 @@ abstract class WeatherState with _$WeatherState {
   const factory WeatherState.loading() = Loading;
 
   /// Specifies a weather state that indicates a loading failure state.
-  const factory WeatherState.loadingFailure() = LoadingFailure;
+  const factory WeatherState.loadingFailure(WeatherFailure weatherFailure) =
+      LoadingFailure;
 
   /// Specifies a weather state that indicates a successful loading state.
   const factory WeatherState.loaded(WeatherEntity weatherEntity) = Loaded;

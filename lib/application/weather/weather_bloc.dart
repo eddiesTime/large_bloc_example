@@ -41,14 +41,17 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     yield const Loading();
     final Either<WeatherFailure, WeatherResponse> failureOrSuccess =
         await _weatherFacade.getWeatherForLocation(location: event.location);
+    WeatherFailure wf;
+    WeatherResponse wr;
+    failureOrSuccess.fold((l) => {wf = l}, (r) => {wr = r});
 
     if (failureOrSuccess.isLeft()) {
-      yield const LoadingFailure();
+      yield LoadingFailure(wf);
     } else {
       yield Loaded(
         WeatherEntity(
           id: UniqueId(),
-          weatherResponse: some(failureOrSuccess.getOrElse(() => null)),
+          weatherResponse: some(wr),
           city: event.location,
           lastUpdated: some(
             DateTime.now(),
@@ -63,15 +66,18 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   /// Yields [WeatherState.loadingFailure()] when an error occured while refreshing the weather data.
   Stream<WeatherState> _mapRefreshWeatherToState(RefreshWeather event) async* {
     final Either<WeatherFailure, WeatherResponse> failureOrSuccess =
-        await _weatherFacade.getWeatherForLocation(location: event.location);
+        await _weatherFacade.refreshWeatherData(location: event.location);
 
+    WeatherFailure wf;
+    WeatherResponse wr;
+    failureOrSuccess.fold((l) => {wf = l}, (r) => {wr = r});
     if (failureOrSuccess.isLeft()) {
-      yield const LoadingFailure();
+      yield LoadingFailure(wf);
     } else {
       yield Loaded(
         WeatherEntity(
           id: UniqueId(),
-          weatherResponse: some(failureOrSuccess.getOrElse(() => null)),
+          weatherResponse: some(wr),
           city: event.location,
           lastUpdated: some(
             DateTime.now(),

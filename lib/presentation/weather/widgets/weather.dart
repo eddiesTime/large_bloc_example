@@ -55,7 +55,7 @@ class _WeatherState extends State<Weather> {
       return state.map(
         initial: (_) => _buildIdle(),
         loading: (_) => _buildLoading(),
-        loadingFailure: (_) => _buildError(),
+        loadingFailure: (state) => _buildError(state),
         loaded: (state) => _buildWeather(context, state),
       );
       // if (state is LoadingFailure) {
@@ -121,12 +121,18 @@ class _WeatherState extends State<Weather> {
     });
   }
 
-  Widget _buildError() {
-    return const Center(
-      key: Key('__Error__'),
-      child: Text(
-        'Something went wrong!',
-        style: TextStyle(color: Colors.red),
+  Widget _buildError(LoadingFailure state) {
+    return Center(
+      key: const Key('__Error__'),
+      child: state.weatherFailure.map(
+        unableToRefresh: (_) => const Text(
+          'Unable to refresh!',
+          style: TextStyle(color: Colors.red),
+        ),
+        notALocation: (_) => const Text(
+          'Not a location!',
+          style: TextStyle(color: Colors.red),
+        ),
       ),
     );
   }

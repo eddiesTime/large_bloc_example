@@ -342,8 +342,10 @@ class _$WeatherStateTearOff {
     return const Loading();
   }
 
-  LoadingFailure loadingFailure() {
-    return const LoadingFailure();
+  LoadingFailure loadingFailure(WeatherFailure weatherFailure) {
+    return LoadingFailure(
+      weatherFailure,
+    );
   }
 
   Loaded loaded(WeatherEntity weatherEntity) {
@@ -361,14 +363,14 @@ mixin _$WeatherState {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadingFailure(),
+    @required Result loadingFailure(WeatherFailure weatherFailure),
     @required Result loaded(WeatherEntity weatherEntity),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadingFailure(),
+    Result loadingFailure(WeatherFailure weatherFailure),
     Result loaded(WeatherEntity weatherEntity),
     @required Result orElse(),
   });
@@ -444,7 +446,7 @@ class _$Initial with DiagnosticableTreeMixin implements Initial {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadingFailure(),
+    @required Result loadingFailure(WeatherFailure weatherFailure),
     @required Result loaded(WeatherEntity weatherEntity),
   }) {
     assert(initial != null);
@@ -459,7 +461,7 @@ class _$Initial with DiagnosticableTreeMixin implements Initial {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadingFailure(),
+    Result loadingFailure(WeatherFailure weatherFailure),
     Result loaded(WeatherEntity weatherEntity),
     @required Result orElse(),
   }) {
@@ -547,7 +549,7 @@ class _$Loading with DiagnosticableTreeMixin implements Loading {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadingFailure(),
+    @required Result loadingFailure(WeatherFailure weatherFailure),
     @required Result loaded(WeatherEntity weatherEntity),
   }) {
     assert(initial != null);
@@ -562,7 +564,7 @@ class _$Loading with DiagnosticableTreeMixin implements Loading {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadingFailure(),
+    Result loadingFailure(WeatherFailure weatherFailure),
     Result loaded(WeatherEntity weatherEntity),
     @required Result orElse(),
   }) {
@@ -613,6 +615,9 @@ abstract class $LoadingFailureCopyWith<$Res> {
   factory $LoadingFailureCopyWith(
           LoadingFailure value, $Res Function(LoadingFailure) then) =
       _$LoadingFailureCopyWithImpl<$Res>;
+  $Res call({WeatherFailure weatherFailure});
+
+  $WeatherFailureCopyWith<$Res> get weatherFailure;
 }
 
 class _$LoadingFailureCopyWithImpl<$Res>
@@ -624,43 +629,79 @@ class _$LoadingFailureCopyWithImpl<$Res>
 
   @override
   LoadingFailure get _value => super._value as LoadingFailure;
+
+  @override
+  $Res call({
+    Object weatherFailure = freezed,
+  }) {
+    return _then(LoadingFailure(
+      weatherFailure == freezed
+          ? _value.weatherFailure
+          : weatherFailure as WeatherFailure,
+    ));
+  }
+
+  @override
+  $WeatherFailureCopyWith<$Res> get weatherFailure {
+    if (_value.weatherFailure == null) {
+      return null;
+    }
+    return $WeatherFailureCopyWith<$Res>(_value.weatherFailure, (value) {
+      return _then(_value.copyWith(weatherFailure: value));
+    });
+  }
 }
 
 class _$LoadingFailure with DiagnosticableTreeMixin implements LoadingFailure {
-  const _$LoadingFailure();
+  const _$LoadingFailure(this.weatherFailure) : assert(weatherFailure != null);
+
+  @override
+  final WeatherFailure weatherFailure;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherState.loadingFailure()';
+    return 'WeatherState.loadingFailure(weatherFailure: $weatherFailure)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'WeatherState.loadingFailure'));
+    properties
+      ..add(DiagnosticsProperty('type', 'WeatherState.loadingFailure'))
+      ..add(DiagnosticsProperty('weatherFailure', weatherFailure));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is LoadingFailure);
+    return identical(this, other) ||
+        (other is LoadingFailure &&
+            (identical(other.weatherFailure, weatherFailure) ||
+                const DeepCollectionEquality()
+                    .equals(other.weatherFailure, weatherFailure)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(weatherFailure);
+
+  @override
+  $LoadingFailureCopyWith<LoadingFailure> get copyWith =>
+      _$LoadingFailureCopyWithImpl<LoadingFailure>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadingFailure(),
+    @required Result loadingFailure(WeatherFailure weatherFailure),
     @required Result loaded(WeatherEntity weatherEntity),
   }) {
     assert(initial != null);
     assert(loading != null);
     assert(loadingFailure != null);
     assert(loaded != null);
-    return loadingFailure();
+    return loadingFailure(weatherFailure);
   }
 
   @override
@@ -668,13 +709,13 @@ class _$LoadingFailure with DiagnosticableTreeMixin implements LoadingFailure {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadingFailure(),
+    Result loadingFailure(WeatherFailure weatherFailure),
     Result loaded(WeatherEntity weatherEntity),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (loadingFailure != null) {
-      return loadingFailure();
+      return loadingFailure(weatherFailure);
     }
     return orElse();
   }
@@ -712,7 +753,11 @@ class _$LoadingFailure with DiagnosticableTreeMixin implements LoadingFailure {
 }
 
 abstract class LoadingFailure implements WeatherState {
-  const factory LoadingFailure() = _$LoadingFailure;
+  const factory LoadingFailure(WeatherFailure weatherFailure) =
+      _$LoadingFailure;
+
+  WeatherFailure get weatherFailure;
+  $LoadingFailureCopyWith<LoadingFailure> get copyWith;
 }
 
 abstract class $LoadedCopyWith<$Res> {
@@ -794,7 +839,7 @@ class _$Loaded with DiagnosticableTreeMixin implements Loaded {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadingFailure(),
+    @required Result loadingFailure(WeatherFailure weatherFailure),
     @required Result loaded(WeatherEntity weatherEntity),
   }) {
     assert(initial != null);
@@ -809,7 +854,7 @@ class _$Loaded with DiagnosticableTreeMixin implements Loaded {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadingFailure(),
+    Result loadingFailure(WeatherFailure weatherFailure),
     Result loaded(WeatherEntity weatherEntity),
     @required Result orElse(),
   }) {
