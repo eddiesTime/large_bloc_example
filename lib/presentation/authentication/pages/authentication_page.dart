@@ -8,19 +8,10 @@ class AuthenticationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocProvider<SignInFormBloc>(
-      create: (context) => getIt<SignInFormBloc>(),
-      child: Center(
-          child: SingleChildScrollView(
-              child: Column(
-        children: [_buildLogo(), const SignInForm()],
-      ))),
-    ));
+      body: BlocProvider<SignInFormBloc>(
+        create: (context) => getIt<SignInFormBloc>(),
+        child: const Center(child: SignInForm()),
+      ),
+    );
   }
-}
-
-Image _buildLogo() {
-  return const Image(
-    image: AssetImage('flutter_logo.png'),
-  );
 }

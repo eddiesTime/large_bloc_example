@@ -4,11 +4,12 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:flutter_bloc_example/infrastructure/authentication/firebase_injectable_module.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc_example/infrastructure/authentication/firebase_user_mapper.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_bloc_example/infrastructure/authentication/firebase_auth_facade.dart';
 import 'package:flutter_bloc_example/domain/authentication/i_auth_facade.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_bloc_example/application/settings/settings_bloc.dart';
 import 'package:flutter_bloc_example/domain/settings/settings_entity.dart';
 import 'package:flutter_bloc_example/application/authentication/sign_in_form/sign_in_form_bloc.dart';
@@ -24,9 +25,14 @@ import 'package:flutter_bloc_example/application/weather/weather_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
+  final firebaseInjectableModule = _$FirebaseInjectableModule();
   final weatherRepositoryInjectableModule =
       _$WeatherRepositoryInjectableModule();
+  g.registerLazySingleton<FirebaseAuth>(
+      () => firebaseInjectableModule.firebaseAuth);
   g.registerLazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
+  g.registerLazySingleton<GoogleSignIn>(
+      () => firebaseInjectableModule.googleSignIn);
   g.registerLazySingleton<IAuthFacade>(() => FirebaseAuthFacade(
         g<FirebaseAuth>(),
         g<GoogleSignIn>(),
@@ -34,18 +40,21 @@ void $initGetIt(GetIt g, {String environment}) {
       ));
   g.registerFactory<SettingsBloc>(() => SettingsBloc());
   g.registerFactory<SettingsEntity>(() => SettingsEntity.celsius());
-  g.registerFactory<SignInFormBloc>(() => SignInFormBloc(g<IAuthFacade>()));
+  g.registerLazySingleton<SignInFormBloc>(
+      () => SignInFormBloc(g<IAuthFacade>()));
   g.registerFactory<ThemeBloc>(() => ThemeBloc());
   g.registerFactory<ThemeEntity>(() => ThemeEntity.initial());
   g.registerFactory<WeatherEntity>(() => WeatherEntity.initial());
   g.registerLazySingleton<WeatherRepository>(
       () => weatherRepositoryInjectableModule.weatherRepository);
-  g.registerFactory<AuthenticationBloc>(
+  g.registerLazySingleton<AuthenticationBloc>(
       () => AuthenticationBloc(g<IAuthFacade>()));
   g.registerLazySingleton<IWeatherFacade>(
       () => WeatherRepositoryFacade(g<WeatherRepository>()));
   g.registerFactory<WeatherBloc>(() => WeatherBloc(g<IWeatherFacade>()));
 }
+
+class _$FirebaseInjectableModule extends FirebaseInjectableModule {}
 
 class _$WeatherRepositoryInjectableModule
     extends WeatherRepositoryInjectableModule {}

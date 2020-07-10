@@ -16,7 +16,8 @@ void main() {
     MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticationBloc>(
-          create: (context) => getIt<AuthenticationBloc>(),
+          create: (context) =>
+              getIt<AuthenticationBloc>()..add(const AuthCheckRequested()),
         ),
         BlocProvider<ThemeBloc>(
           create: (context) => getIt<ThemeBloc>(),

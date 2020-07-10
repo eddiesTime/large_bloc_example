@@ -46,12 +46,21 @@ class SignInForm extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.all(8.0),
             children: <Widget>[
-              const Text(
-                '📝',
-              ).textAlignment(TextAlign.center).fontSize(130),
+              Container(
+                key: const Key('__Flutter_Logo_Container__'),
+                height: 200.0,
+                width: 200.0,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/flutter_logo.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
               const SizedBox(height: 8),
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email),
                   labelText: 'Email',
                 ),
@@ -75,7 +84,7 @@ class SignInForm extends StatelessWidget {
               const SizedBox(height: 8),
               TextFormField(
                 // controller: passwordController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.lock),
                   labelText: 'Password',
                 ),
