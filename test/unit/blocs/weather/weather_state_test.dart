@@ -1,5 +1,6 @@
 import 'package:flutter_bloc_example/application/weather/weather_bloc.dart';
 import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
+import 'package:flutter_bloc_example/domain/weather/weather_failure.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -18,7 +19,7 @@ void main() {
     });
     group('WeatherLoadingFailure', () {
       test('toString returns correct value', () {
-        expect(const WeatherState.loadingFailure().toString(),
+        expect(const WeatherState.loadingFailure(NotALocation()).toString(),
             'WeatherState.loadingFailure()');
       });
     });

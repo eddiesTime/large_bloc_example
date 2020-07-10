@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc_example/application/weather/weather_bloc.dart';
 import 'package:flutter_bloc_example/domain/core/value_object.dart';
 import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
+import 'package:flutter_bloc_example/domain/weather/weather_failure.dart';
 import 'package:flutter_bloc_example/infrastructure/weather/weather_repository_facade.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -37,25 +38,25 @@ void main() {
       'should emit LoadingFailure if repository throws in response to fetch weather event',
       build: () async {
         when(weatherRepositoryFacade.getWeatherForLocation(location: 'London'))
-            .thenThrow(Exception('Oops'));
+            .thenThrow(const NotALocation());
         return weatherBloc;
       },
       act: (WeatherBloc bloc) async => bloc.add(const FetchWeather('London')),
       expect: [
         const Loading(),
-        const LoadingFailure(),
+        const LoadingFailure(NotALocation()),
       ],
     );
     blocTest(
       'should emit LoadingFailure if repository throws in response to refresh weather event',
       build: () async {
         when(weatherRepositoryFacade.getWeatherForLocation(location: 'London'))
-            .thenThrow(Exception('Oops'));
+            .thenThrow(const UnableToRefresh());
         return weatherBloc;
       },
       act: (WeatherBloc bloc) async => bloc.add(const RefreshWeather('London')),
       expect: [
-        const LoadingFailure(),
+        const LoadingFailure(UnableToRefresh()),
       ],
     );
 
