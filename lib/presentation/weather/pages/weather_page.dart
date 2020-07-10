@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_example/presentation/location_search/pages/search_page.dart';
 import 'package:flutter_bloc_example/presentation/routes/router.dart';
 import 'package:flutter_bloc_example/presentation/weather/widgets/weather.dart';
 
