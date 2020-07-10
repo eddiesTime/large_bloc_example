@@ -23,8 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  lumberdash: ^2.1.1
-  firebase_lumberdash: ^2.1.0
   shared_preferences: ^0.5.7+3
   firebase_analytics: ^5.0.16
   meta:
@@ -32,6 +30,8 @@ dependencies:
   auto_route: ^0.6.1
   firebase_auth: ^0.16.1
   google_sign_in: ^4.5.1
+  flushbar: ^1.10.4
+  styled_widget: ^0.2.1+2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -62,10 +62,9 @@ dev_dependencies:
   # For information on the generic Dart part of this file, see the
   # following page: https://dart.dev/tools/pub/pubspec
   bloc_test: ^6.0.0
+  ozzie: ^2.2.3
   test: ^1.15.1
   mockito: ^4.1.1
-  ozzie: ^2.2.3
-  print_lumberdash: ^2.1.0
   auto_route_generator: ^0.6.0
 
 # The following section is specific to Flutter.
