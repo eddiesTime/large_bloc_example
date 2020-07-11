@@ -12,15 +12,25 @@ T _$identity<T>(T value) => value;
 class _$WeatherEventTearOff {
   const _$WeatherEventTearOff();
 
-  FetchWeather fetchWeatherForLocation(String location) {
-    return FetchWeather(
-      location,
+  CityChanged cityChanged(String cityStr) {
+    return CityChanged(
+      cityStr,
     );
   }
 
-  RefreshWeather refreshWeatherForLocation(String location) {
+  NewSearch newSearch() {
+    return const NewSearch();
+  }
+
+  FetchWeather fetchWeatherForLocation(String cityStr) {
+    return FetchWeather(
+      cityStr,
+    );
+  }
+
+  RefreshWeather refreshWeatherForLocation(String cityStr) {
     return RefreshWeather(
-      location,
+      cityStr,
     );
   }
 }
@@ -29,39 +39,42 @@ class _$WeatherEventTearOff {
 const $WeatherEvent = _$WeatherEventTearOff();
 
 mixin _$WeatherEvent {
-  String get location;
-
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result fetchWeatherForLocation(String location),
-    @required Result refreshWeatherForLocation(String location),
+    @required Result cityChanged(String cityStr),
+    @required Result newSearch(),
+    @required Result fetchWeatherForLocation(String cityStr),
+    @required Result refreshWeatherForLocation(String cityStr),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result fetchWeatherForLocation(String location),
-    Result refreshWeatherForLocation(String location),
+    Result cityChanged(String cityStr),
+    Result newSearch(),
+    Result fetchWeatherForLocation(String cityStr),
+    Result refreshWeatherForLocation(String cityStr),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
+    @required Result cityChanged(CityChanged value),
+    @required Result newSearch(NewSearch value),
     @required Result fetchWeatherForLocation(FetchWeather value),
     @required Result refreshWeatherForLocation(RefreshWeather value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
+    Result cityChanged(CityChanged value),
+    Result newSearch(NewSearch value),
     Result fetchWeatherForLocation(FetchWeather value),
     Result refreshWeatherForLocation(RefreshWeather value),
     @required Result orElse(),
   });
-
-  $WeatherEventCopyWith<WeatherEvent> get copyWith;
 }
 
 abstract class $WeatherEventCopyWith<$Res> {
   factory $WeatherEventCopyWith(
           WeatherEvent value, $Res Function(WeatherEvent) then) =
       _$WeatherEventCopyWithImpl<$Res>;
-  $Res call({String location});
 }
 
 class _$WeatherEventCopyWithImpl<$Res> implements $WeatherEventCopyWith<$Res> {
@@ -70,24 +83,247 @@ class _$WeatherEventCopyWithImpl<$Res> implements $WeatherEventCopyWith<$Res> {
   final WeatherEvent _value;
   // ignore: unused_field
   final $Res Function(WeatherEvent) _then;
+}
+
+abstract class $CityChangedCopyWith<$Res> {
+  factory $CityChangedCopyWith(
+          CityChanged value, $Res Function(CityChanged) then) =
+      _$CityChangedCopyWithImpl<$Res>;
+  $Res call({String cityStr});
+}
+
+class _$CityChangedCopyWithImpl<$Res> extends _$WeatherEventCopyWithImpl<$Res>
+    implements $CityChangedCopyWith<$Res> {
+  _$CityChangedCopyWithImpl(
+      CityChanged _value, $Res Function(CityChanged) _then)
+      : super(_value, (v) => _then(v as CityChanged));
+
+  @override
+  CityChanged get _value => super._value as CityChanged;
 
   @override
   $Res call({
-    Object location = freezed,
+    Object cityStr = freezed,
   }) {
-    return _then(_value.copyWith(
-      location: location == freezed ? _value.location : location as String,
+    return _then(CityChanged(
+      cityStr == freezed ? _value.cityStr : cityStr as String,
     ));
   }
 }
 
-abstract class $FetchWeatherCopyWith<$Res>
-    implements $WeatherEventCopyWith<$Res> {
+class _$CityChanged with DiagnosticableTreeMixin implements CityChanged {
+  const _$CityChanged(this.cityStr) : assert(cityStr != null);
+
+  @override
+  final String cityStr;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WeatherEvent.cityChanged(cityStr: $cityStr)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'WeatherEvent.cityChanged'))
+      ..add(DiagnosticsProperty('cityStr', cityStr));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is CityChanged &&
+            (identical(other.cityStr, cityStr) ||
+                const DeepCollectionEquality().equals(other.cityStr, cityStr)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(cityStr);
+
+  @override
+  $CityChangedCopyWith<CityChanged> get copyWith =>
+      _$CityChangedCopyWithImpl<CityChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result cityChanged(String cityStr),
+    @required Result newSearch(),
+    @required Result fetchWeatherForLocation(String cityStr),
+    @required Result refreshWeatherForLocation(String cityStr),
+  }) {
+    assert(cityChanged != null);
+    assert(newSearch != null);
+    assert(fetchWeatherForLocation != null);
+    assert(refreshWeatherForLocation != null);
+    return cityChanged(cityStr);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result cityChanged(String cityStr),
+    Result newSearch(),
+    Result fetchWeatherForLocation(String cityStr),
+    Result refreshWeatherForLocation(String cityStr),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (cityChanged != null) {
+      return cityChanged(cityStr);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result cityChanged(CityChanged value),
+    @required Result newSearch(NewSearch value),
+    @required Result fetchWeatherForLocation(FetchWeather value),
+    @required Result refreshWeatherForLocation(RefreshWeather value),
+  }) {
+    assert(cityChanged != null);
+    assert(newSearch != null);
+    assert(fetchWeatherForLocation != null);
+    assert(refreshWeatherForLocation != null);
+    return cityChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result cityChanged(CityChanged value),
+    Result newSearch(NewSearch value),
+    Result fetchWeatherForLocation(FetchWeather value),
+    Result refreshWeatherForLocation(RefreshWeather value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (cityChanged != null) {
+      return cityChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CityChanged implements WeatherEvent {
+  const factory CityChanged(String cityStr) = _$CityChanged;
+
+  String get cityStr;
+  $CityChangedCopyWith<CityChanged> get copyWith;
+}
+
+abstract class $NewSearchCopyWith<$Res> {
+  factory $NewSearchCopyWith(NewSearch value, $Res Function(NewSearch) then) =
+      _$NewSearchCopyWithImpl<$Res>;
+}
+
+class _$NewSearchCopyWithImpl<$Res> extends _$WeatherEventCopyWithImpl<$Res>
+    implements $NewSearchCopyWith<$Res> {
+  _$NewSearchCopyWithImpl(NewSearch _value, $Res Function(NewSearch) _then)
+      : super(_value, (v) => _then(v as NewSearch));
+
+  @override
+  NewSearch get _value => super._value as NewSearch;
+}
+
+class _$NewSearch with DiagnosticableTreeMixin implements NewSearch {
+  const _$NewSearch();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WeatherEvent.newSearch()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'WeatherEvent.newSearch'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is NewSearch);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result cityChanged(String cityStr),
+    @required Result newSearch(),
+    @required Result fetchWeatherForLocation(String cityStr),
+    @required Result refreshWeatherForLocation(String cityStr),
+  }) {
+    assert(cityChanged != null);
+    assert(newSearch != null);
+    assert(fetchWeatherForLocation != null);
+    assert(refreshWeatherForLocation != null);
+    return newSearch();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result cityChanged(String cityStr),
+    Result newSearch(),
+    Result fetchWeatherForLocation(String cityStr),
+    Result refreshWeatherForLocation(String cityStr),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (newSearch != null) {
+      return newSearch();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result cityChanged(CityChanged value),
+    @required Result newSearch(NewSearch value),
+    @required Result fetchWeatherForLocation(FetchWeather value),
+    @required Result refreshWeatherForLocation(RefreshWeather value),
+  }) {
+    assert(cityChanged != null);
+    assert(newSearch != null);
+    assert(fetchWeatherForLocation != null);
+    assert(refreshWeatherForLocation != null);
+    return newSearch(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result cityChanged(CityChanged value),
+    Result newSearch(NewSearch value),
+    Result fetchWeatherForLocation(FetchWeather value),
+    Result refreshWeatherForLocation(RefreshWeather value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (newSearch != null) {
+      return newSearch(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NewSearch implements WeatherEvent {
+  const factory NewSearch() = _$NewSearch;
+}
+
+abstract class $FetchWeatherCopyWith<$Res> {
   factory $FetchWeatherCopyWith(
           FetchWeather value, $Res Function(FetchWeather) then) =
       _$FetchWeatherCopyWithImpl<$Res>;
-  @override
-  $Res call({String location});
+  $Res call({String cityStr});
 }
 
 class _$FetchWeatherCopyWithImpl<$Res> extends _$WeatherEventCopyWithImpl<$Res>
@@ -101,23 +337,23 @@ class _$FetchWeatherCopyWithImpl<$Res> extends _$WeatherEventCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object location = freezed,
+    Object cityStr = freezed,
   }) {
     return _then(FetchWeather(
-      location == freezed ? _value.location : location as String,
+      cityStr == freezed ? _value.cityStr : cityStr as String,
     ));
   }
 }
 
 class _$FetchWeather with DiagnosticableTreeMixin implements FetchWeather {
-  const _$FetchWeather(this.location) : assert(location != null);
+  const _$FetchWeather(this.cityStr) : assert(cityStr != null);
 
   @override
-  final String location;
+  final String cityStr;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherEvent.fetchWeatherForLocation(location: $location)';
+    return 'WeatherEvent.fetchWeatherForLocation(cityStr: $cityStr)';
   }
 
   @override
@@ -125,21 +361,20 @@ class _$FetchWeather with DiagnosticableTreeMixin implements FetchWeather {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'WeatherEvent.fetchWeatherForLocation'))
-      ..add(DiagnosticsProperty('location', location));
+      ..add(DiagnosticsProperty('cityStr', cityStr));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is FetchWeather &&
-            (identical(other.location, location) ||
-                const DeepCollectionEquality()
-                    .equals(other.location, location)));
+            (identical(other.cityStr, cityStr) ||
+                const DeepCollectionEquality().equals(other.cityStr, cityStr)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(location);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(cityStr);
 
   @override
   $FetchWeatherCopyWith<FetchWeather> get copyWith =>
@@ -148,24 +383,30 @@ class _$FetchWeather with DiagnosticableTreeMixin implements FetchWeather {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result fetchWeatherForLocation(String location),
-    @required Result refreshWeatherForLocation(String location),
+    @required Result cityChanged(String cityStr),
+    @required Result newSearch(),
+    @required Result fetchWeatherForLocation(String cityStr),
+    @required Result refreshWeatherForLocation(String cityStr),
   }) {
+    assert(cityChanged != null);
+    assert(newSearch != null);
     assert(fetchWeatherForLocation != null);
     assert(refreshWeatherForLocation != null);
-    return fetchWeatherForLocation(location);
+    return fetchWeatherForLocation(cityStr);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result fetchWeatherForLocation(String location),
-    Result refreshWeatherForLocation(String location),
+    Result cityChanged(String cityStr),
+    Result newSearch(),
+    Result fetchWeatherForLocation(String cityStr),
+    Result refreshWeatherForLocation(String cityStr),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (fetchWeatherForLocation != null) {
-      return fetchWeatherForLocation(location);
+      return fetchWeatherForLocation(cityStr);
     }
     return orElse();
   }
@@ -173,9 +414,13 @@ class _$FetchWeather with DiagnosticableTreeMixin implements FetchWeather {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
+    @required Result cityChanged(CityChanged value),
+    @required Result newSearch(NewSearch value),
     @required Result fetchWeatherForLocation(FetchWeather value),
     @required Result refreshWeatherForLocation(RefreshWeather value),
   }) {
+    assert(cityChanged != null);
+    assert(newSearch != null);
     assert(fetchWeatherForLocation != null);
     assert(refreshWeatherForLocation != null);
     return fetchWeatherForLocation(this);
@@ -184,6 +429,8 @@ class _$FetchWeather with DiagnosticableTreeMixin implements FetchWeather {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
+    Result cityChanged(CityChanged value),
+    Result newSearch(NewSearch value),
     Result fetchWeatherForLocation(FetchWeather value),
     Result refreshWeatherForLocation(RefreshWeather value),
     @required Result orElse(),
@@ -197,21 +444,17 @@ class _$FetchWeather with DiagnosticableTreeMixin implements FetchWeather {
 }
 
 abstract class FetchWeather implements WeatherEvent {
-  const factory FetchWeather(String location) = _$FetchWeather;
+  const factory FetchWeather(String cityStr) = _$FetchWeather;
 
-  @override
-  String get location;
-  @override
+  String get cityStr;
   $FetchWeatherCopyWith<FetchWeather> get copyWith;
 }
 
-abstract class $RefreshWeatherCopyWith<$Res>
-    implements $WeatherEventCopyWith<$Res> {
+abstract class $RefreshWeatherCopyWith<$Res> {
   factory $RefreshWeatherCopyWith(
           RefreshWeather value, $Res Function(RefreshWeather) then) =
       _$RefreshWeatherCopyWithImpl<$Res>;
-  @override
-  $Res call({String location});
+  $Res call({String cityStr});
 }
 
 class _$RefreshWeatherCopyWithImpl<$Res>
@@ -226,23 +469,23 @@ class _$RefreshWeatherCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object location = freezed,
+    Object cityStr = freezed,
   }) {
     return _then(RefreshWeather(
-      location == freezed ? _value.location : location as String,
+      cityStr == freezed ? _value.cityStr : cityStr as String,
     ));
   }
 }
 
 class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
-  const _$RefreshWeather(this.location) : assert(location != null);
+  const _$RefreshWeather(this.cityStr) : assert(cityStr != null);
 
   @override
-  final String location;
+  final String cityStr;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherEvent.refreshWeatherForLocation(location: $location)';
+    return 'WeatherEvent.refreshWeatherForLocation(cityStr: $cityStr)';
   }
 
   @override
@@ -251,21 +494,20 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
     properties
       ..add(
           DiagnosticsProperty('type', 'WeatherEvent.refreshWeatherForLocation'))
-      ..add(DiagnosticsProperty('location', location));
+      ..add(DiagnosticsProperty('cityStr', cityStr));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is RefreshWeather &&
-            (identical(other.location, location) ||
-                const DeepCollectionEquality()
-                    .equals(other.location, location)));
+            (identical(other.cityStr, cityStr) ||
+                const DeepCollectionEquality().equals(other.cityStr, cityStr)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(location);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(cityStr);
 
   @override
   $RefreshWeatherCopyWith<RefreshWeather> get copyWith =>
@@ -274,24 +516,30 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result fetchWeatherForLocation(String location),
-    @required Result refreshWeatherForLocation(String location),
+    @required Result cityChanged(String cityStr),
+    @required Result newSearch(),
+    @required Result fetchWeatherForLocation(String cityStr),
+    @required Result refreshWeatherForLocation(String cityStr),
   }) {
+    assert(cityChanged != null);
+    assert(newSearch != null);
     assert(fetchWeatherForLocation != null);
     assert(refreshWeatherForLocation != null);
-    return refreshWeatherForLocation(location);
+    return refreshWeatherForLocation(cityStr);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result fetchWeatherForLocation(String location),
-    Result refreshWeatherForLocation(String location),
+    Result cityChanged(String cityStr),
+    Result newSearch(),
+    Result fetchWeatherForLocation(String cityStr),
+    Result refreshWeatherForLocation(String cityStr),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (refreshWeatherForLocation != null) {
-      return refreshWeatherForLocation(location);
+      return refreshWeatherForLocation(cityStr);
     }
     return orElse();
   }
@@ -299,9 +547,13 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
+    @required Result cityChanged(CityChanged value),
+    @required Result newSearch(NewSearch value),
     @required Result fetchWeatherForLocation(FetchWeather value),
     @required Result refreshWeatherForLocation(RefreshWeather value),
   }) {
+    assert(cityChanged != null);
+    assert(newSearch != null);
     assert(fetchWeatherForLocation != null);
     assert(refreshWeatherForLocation != null);
     return refreshWeatherForLocation(this);
@@ -310,6 +562,8 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
+    Result cityChanged(CityChanged value),
+    Result newSearch(NewSearch value),
     Result fetchWeatherForLocation(FetchWeather value),
     Result refreshWeatherForLocation(RefreshWeather value),
     @required Result orElse(),
@@ -323,34 +577,33 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
 }
 
 abstract class RefreshWeather implements WeatherEvent {
-  const factory RefreshWeather(String location) = _$RefreshWeather;
+  const factory RefreshWeather(String cityStr) = _$RefreshWeather;
 
-  @override
-  String get location;
-  @override
+  String get cityStr;
   $RefreshWeatherCopyWith<RefreshWeather> get copyWith;
 }
 
 class _$WeatherStateTearOff {
   const _$WeatherStateTearOff();
 
-  Initial initial() {
-    return const Initial();
-  }
-
-  Loading loading() {
-    return const Loading();
-  }
-
-  LoadingFailure loadingFailure(WeatherFailure weatherFailure) {
-    return LoadingFailure(
-      weatherFailure,
-    );
-  }
-
-  Loaded loaded(WeatherEntity weatherEntity) {
-    return Loaded(
-      weatherEntity,
+  _WeatherState call(
+      {@required
+          WeatherEntity weatherEntity,
+      @required
+          City city,
+      @required
+          bool showErrorMessages,
+      @required
+          bool isLoading,
+      @required
+          Option<Either<WeatherFailure, WeatherResponse>>
+              weatherFailureOrSuccessOption}) {
+    return _WeatherState(
+      weatherEntity: weatherEntity,
+      city: city,
+      showErrorMessages: showErrorMessages,
+      isLoading: isLoading,
+      weatherFailureOrSuccessOption: weatherFailureOrSuccessOption,
     );
   }
 }
@@ -359,42 +612,29 @@ class _$WeatherStateTearOff {
 const $WeatherState = _$WeatherStateTearOff();
 
 mixin _$WeatherState {
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadingFailure(WeatherFailure weatherFailure),
-    @required Result loaded(WeatherEntity weatherEntity),
-  });
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadingFailure(WeatherFailure weatherFailure),
-    Result loaded(WeatherEntity weatherEntity),
-    @required Result orElse(),
-  });
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(Initial value),
-    @required Result loading(Loading value),
-    @required Result loadingFailure(LoadingFailure value),
-    @required Result loaded(Loaded value),
-  });
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(Initial value),
-    Result loading(Loading value),
-    Result loadingFailure(LoadingFailure value),
-    Result loaded(Loaded value),
-    @required Result orElse(),
-  });
+  WeatherEntity get weatherEntity;
+  City get city;
+  bool get showErrorMessages;
+  bool get isLoading;
+  Option<Either<WeatherFailure, WeatherResponse>>
+      get weatherFailureOrSuccessOption;
+
+  $WeatherStateCopyWith<WeatherState> get copyWith;
 }
 
 abstract class $WeatherStateCopyWith<$Res> {
   factory $WeatherStateCopyWith(
           WeatherState value, $Res Function(WeatherState) then) =
       _$WeatherStateCopyWithImpl<$Res>;
+  $Res call(
+      {WeatherEntity weatherEntity,
+      City city,
+      bool showErrorMessages,
+      bool isLoading,
+      Option<Either<WeatherFailure, WeatherResponse>>
+          weatherFailureOrSuccessOption});
+
+  $WeatherEntityCopyWith<$Res> get weatherEntity;
 }
 
 class _$WeatherStateCopyWithImpl<$Res> implements $WeatherStateCopyWith<$Res> {
@@ -403,387 +643,28 @@ class _$WeatherStateCopyWithImpl<$Res> implements $WeatherStateCopyWith<$Res> {
   final WeatherState _value;
   // ignore: unused_field
   final $Res Function(WeatherState) _then;
-}
-
-abstract class $InitialCopyWith<$Res> {
-  factory $InitialCopyWith(Initial value, $Res Function(Initial) then) =
-      _$InitialCopyWithImpl<$Res>;
-}
-
-class _$InitialCopyWithImpl<$Res> extends _$WeatherStateCopyWithImpl<$Res>
-    implements $InitialCopyWith<$Res> {
-  _$InitialCopyWithImpl(Initial _value, $Res Function(Initial) _then)
-      : super(_value, (v) => _then(v as Initial));
-
-  @override
-  Initial get _value => super._value as Initial;
-}
-
-class _$Initial with DiagnosticableTreeMixin implements Initial {
-  const _$Initial();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'WeatherState.initial'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is Initial);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadingFailure(WeatherFailure weatherFailure),
-    @required Result loaded(WeatherEntity weatherEntity),
-  }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadingFailure != null);
-    assert(loaded != null);
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadingFailure(WeatherFailure weatherFailure),
-    Result loaded(WeatherEntity weatherEntity),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(Initial value),
-    @required Result loading(Loading value),
-    @required Result loadingFailure(LoadingFailure value),
-    @required Result loaded(Loaded value),
-  }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadingFailure != null);
-    assert(loaded != null);
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(Initial value),
-    Result loading(Loading value),
-    Result loadingFailure(LoadingFailure value),
-    Result loaded(Loaded value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Initial implements WeatherState {
-  const factory Initial() = _$Initial;
-}
-
-abstract class $LoadingCopyWith<$Res> {
-  factory $LoadingCopyWith(Loading value, $Res Function(Loading) then) =
-      _$LoadingCopyWithImpl<$Res>;
-}
-
-class _$LoadingCopyWithImpl<$Res> extends _$WeatherStateCopyWithImpl<$Res>
-    implements $LoadingCopyWith<$Res> {
-  _$LoadingCopyWithImpl(Loading _value, $Res Function(Loading) _then)
-      : super(_value, (v) => _then(v as Loading));
-
-  @override
-  Loading get _value => super._value as Loading;
-}
-
-class _$Loading with DiagnosticableTreeMixin implements Loading {
-  const _$Loading();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'WeatherState.loading'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is Loading);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadingFailure(WeatherFailure weatherFailure),
-    @required Result loaded(WeatherEntity weatherEntity),
-  }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadingFailure != null);
-    assert(loaded != null);
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadingFailure(WeatherFailure weatherFailure),
-    Result loaded(WeatherEntity weatherEntity),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(Initial value),
-    @required Result loading(Loading value),
-    @required Result loadingFailure(LoadingFailure value),
-    @required Result loaded(Loaded value),
-  }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadingFailure != null);
-    assert(loaded != null);
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(Initial value),
-    Result loading(Loading value),
-    Result loadingFailure(LoadingFailure value),
-    Result loaded(Loaded value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Loading implements WeatherState {
-  const factory Loading() = _$Loading;
-}
-
-abstract class $LoadingFailureCopyWith<$Res> {
-  factory $LoadingFailureCopyWith(
-          LoadingFailure value, $Res Function(LoadingFailure) then) =
-      _$LoadingFailureCopyWithImpl<$Res>;
-  $Res call({WeatherFailure weatherFailure});
-
-  $WeatherFailureCopyWith<$Res> get weatherFailure;
-}
-
-class _$LoadingFailureCopyWithImpl<$Res>
-    extends _$WeatherStateCopyWithImpl<$Res>
-    implements $LoadingFailureCopyWith<$Res> {
-  _$LoadingFailureCopyWithImpl(
-      LoadingFailure _value, $Res Function(LoadingFailure) _then)
-      : super(_value, (v) => _then(v as LoadingFailure));
-
-  @override
-  LoadingFailure get _value => super._value as LoadingFailure;
-
-  @override
-  $Res call({
-    Object weatherFailure = freezed,
-  }) {
-    return _then(LoadingFailure(
-      weatherFailure == freezed
-          ? _value.weatherFailure
-          : weatherFailure as WeatherFailure,
-    ));
-  }
-
-  @override
-  $WeatherFailureCopyWith<$Res> get weatherFailure {
-    if (_value.weatherFailure == null) {
-      return null;
-    }
-    return $WeatherFailureCopyWith<$Res>(_value.weatherFailure, (value) {
-      return _then(_value.copyWith(weatherFailure: value));
-    });
-  }
-}
-
-class _$LoadingFailure with DiagnosticableTreeMixin implements LoadingFailure {
-  const _$LoadingFailure(this.weatherFailure) : assert(weatherFailure != null);
-
-  @override
-  final WeatherFailure weatherFailure;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherState.loadingFailure(weatherFailure: $weatherFailure)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'WeatherState.loadingFailure'))
-      ..add(DiagnosticsProperty('weatherFailure', weatherFailure));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is LoadingFailure &&
-            (identical(other.weatherFailure, weatherFailure) ||
-                const DeepCollectionEquality()
-                    .equals(other.weatherFailure, weatherFailure)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(weatherFailure);
-
-  @override
-  $LoadingFailureCopyWith<LoadingFailure> get copyWith =>
-      _$LoadingFailureCopyWithImpl<LoadingFailure>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadingFailure(WeatherFailure weatherFailure),
-    @required Result loaded(WeatherEntity weatherEntity),
-  }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadingFailure != null);
-    assert(loaded != null);
-    return loadingFailure(weatherFailure);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadingFailure(WeatherFailure weatherFailure),
-    Result loaded(WeatherEntity weatherEntity),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (loadingFailure != null) {
-      return loadingFailure(weatherFailure);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(Initial value),
-    @required Result loading(Loading value),
-    @required Result loadingFailure(LoadingFailure value),
-    @required Result loaded(Loaded value),
-  }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadingFailure != null);
-    assert(loaded != null);
-    return loadingFailure(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(Initial value),
-    Result loading(Loading value),
-    Result loadingFailure(LoadingFailure value),
-    Result loaded(Loaded value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (loadingFailure != null) {
-      return loadingFailure(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class LoadingFailure implements WeatherState {
-  const factory LoadingFailure(WeatherFailure weatherFailure) =
-      _$LoadingFailure;
-
-  WeatherFailure get weatherFailure;
-  $LoadingFailureCopyWith<LoadingFailure> get copyWith;
-}
-
-abstract class $LoadedCopyWith<$Res> {
-  factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) then) =
-      _$LoadedCopyWithImpl<$Res>;
-  $Res call({WeatherEntity weatherEntity});
-
-  $WeatherEntityCopyWith<$Res> get weatherEntity;
-}
-
-class _$LoadedCopyWithImpl<$Res> extends _$WeatherStateCopyWithImpl<$Res>
-    implements $LoadedCopyWith<$Res> {
-  _$LoadedCopyWithImpl(Loaded _value, $Res Function(Loaded) _then)
-      : super(_value, (v) => _then(v as Loaded));
-
-  @override
-  Loaded get _value => super._value as Loaded;
 
   @override
   $Res call({
     Object weatherEntity = freezed,
+    Object city = freezed,
+    Object showErrorMessages = freezed,
+    Object isLoading = freezed,
+    Object weatherFailureOrSuccessOption = freezed,
   }) {
-    return _then(Loaded(
-      weatherEntity == freezed
+    return _then(_value.copyWith(
+      weatherEntity: weatherEntity == freezed
           ? _value.weatherEntity
           : weatherEntity as WeatherEntity,
+      city: city == freezed ? _value.city : city as City,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages as bool,
+      isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
+      weatherFailureOrSuccessOption: weatherFailureOrSuccessOption == freezed
+          ? _value.weatherFailureOrSuccessOption
+          : weatherFailureOrSuccessOption
+              as Option<Either<WeatherFailure, WeatherResponse>>,
     ));
   }
 
@@ -798,108 +679,162 @@ class _$LoadedCopyWithImpl<$Res> extends _$WeatherStateCopyWithImpl<$Res>
   }
 }
 
-class _$Loaded with DiagnosticableTreeMixin implements Loaded {
-  const _$Loaded(this.weatherEntity) : assert(weatherEntity != null);
+abstract class _$WeatherStateCopyWith<$Res>
+    implements $WeatherStateCopyWith<$Res> {
+  factory _$WeatherStateCopyWith(
+          _WeatherState value, $Res Function(_WeatherState) then) =
+      __$WeatherStateCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {WeatherEntity weatherEntity,
+      City city,
+      bool showErrorMessages,
+      bool isLoading,
+      Option<Either<WeatherFailure, WeatherResponse>>
+          weatherFailureOrSuccessOption});
+
+  @override
+  $WeatherEntityCopyWith<$Res> get weatherEntity;
+}
+
+class __$WeatherStateCopyWithImpl<$Res> extends _$WeatherStateCopyWithImpl<$Res>
+    implements _$WeatherStateCopyWith<$Res> {
+  __$WeatherStateCopyWithImpl(
+      _WeatherState _value, $Res Function(_WeatherState) _then)
+      : super(_value, (v) => _then(v as _WeatherState));
+
+  @override
+  _WeatherState get _value => super._value as _WeatherState;
+
+  @override
+  $Res call({
+    Object weatherEntity = freezed,
+    Object city = freezed,
+    Object showErrorMessages = freezed,
+    Object isLoading = freezed,
+    Object weatherFailureOrSuccessOption = freezed,
+  }) {
+    return _then(_WeatherState(
+      weatherEntity: weatherEntity == freezed
+          ? _value.weatherEntity
+          : weatherEntity as WeatherEntity,
+      city: city == freezed ? _value.city : city as City,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages as bool,
+      isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
+      weatherFailureOrSuccessOption: weatherFailureOrSuccessOption == freezed
+          ? _value.weatherFailureOrSuccessOption
+          : weatherFailureOrSuccessOption
+              as Option<Either<WeatherFailure, WeatherResponse>>,
+    ));
+  }
+}
+
+class _$_WeatherState with DiagnosticableTreeMixin implements _WeatherState {
+  const _$_WeatherState(
+      {@required this.weatherEntity,
+      @required this.city,
+      @required this.showErrorMessages,
+      @required this.isLoading,
+      @required this.weatherFailureOrSuccessOption})
+      : assert(weatherEntity != null),
+        assert(city != null),
+        assert(showErrorMessages != null),
+        assert(isLoading != null),
+        assert(weatherFailureOrSuccessOption != null);
 
   @override
   final WeatherEntity weatherEntity;
+  @override
+  final City city;
+  @override
+  final bool showErrorMessages;
+  @override
+  final bool isLoading;
+  @override
+  final Option<Either<WeatherFailure, WeatherResponse>>
+      weatherFailureOrSuccessOption;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherState.loaded(weatherEntity: $weatherEntity)';
+    return 'WeatherState(weatherEntity: $weatherEntity, city: $city, showErrorMessages: $showErrorMessages, isLoading: $isLoading, weatherFailureOrSuccessOption: $weatherFailureOrSuccessOption)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'WeatherState.loaded'))
-      ..add(DiagnosticsProperty('weatherEntity', weatherEntity));
+      ..add(DiagnosticsProperty('type', 'WeatherState'))
+      ..add(DiagnosticsProperty('weatherEntity', weatherEntity))
+      ..add(DiagnosticsProperty('city', city))
+      ..add(DiagnosticsProperty('showErrorMessages', showErrorMessages))
+      ..add(DiagnosticsProperty('isLoading', isLoading))
+      ..add(DiagnosticsProperty(
+          'weatherFailureOrSuccessOption', weatherFailureOrSuccessOption));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is Loaded &&
+        (other is _WeatherState &&
             (identical(other.weatherEntity, weatherEntity) ||
                 const DeepCollectionEquality()
-                    .equals(other.weatherEntity, weatherEntity)));
+                    .equals(other.weatherEntity, weatherEntity)) &&
+            (identical(other.city, city) ||
+                const DeepCollectionEquality().equals(other.city, city)) &&
+            (identical(other.showErrorMessages, showErrorMessages) ||
+                const DeepCollectionEquality()
+                    .equals(other.showErrorMessages, showErrorMessages)) &&
+            (identical(other.isLoading, isLoading) ||
+                const DeepCollectionEquality()
+                    .equals(other.isLoading, isLoading)) &&
+            (identical(other.weatherFailureOrSuccessOption,
+                    weatherFailureOrSuccessOption) ||
+                const DeepCollectionEquality().equals(
+                    other.weatherFailureOrSuccessOption,
+                    weatherFailureOrSuccessOption)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(weatherEntity);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(weatherEntity) ^
+      const DeepCollectionEquality().hash(city) ^
+      const DeepCollectionEquality().hash(showErrorMessages) ^
+      const DeepCollectionEquality().hash(isLoading) ^
+      const DeepCollectionEquality().hash(weatherFailureOrSuccessOption);
 
   @override
-  $LoadedCopyWith<Loaded> get copyWith =>
-      _$LoadedCopyWithImpl<Loaded>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadingFailure(WeatherFailure weatherFailure),
-    @required Result loaded(WeatherEntity weatherEntity),
-  }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadingFailure != null);
-    assert(loaded != null);
-    return loaded(weatherEntity);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadingFailure(WeatherFailure weatherFailure),
-    Result loaded(WeatherEntity weatherEntity),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (loaded != null) {
-      return loaded(weatherEntity);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(Initial value),
-    @required Result loading(Loading value),
-    @required Result loadingFailure(LoadingFailure value),
-    @required Result loaded(Loaded value),
-  }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadingFailure != null);
-    assert(loaded != null);
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(Initial value),
-    Result loading(Loading value),
-    Result loadingFailure(LoadingFailure value),
-    Result loaded(Loaded value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
+  _$WeatherStateCopyWith<_WeatherState> get copyWith =>
+      __$WeatherStateCopyWithImpl<_WeatherState>(this, _$identity);
 }
 
-abstract class Loaded implements WeatherState {
-  const factory Loaded(WeatherEntity weatherEntity) = _$Loaded;
+abstract class _WeatherState implements WeatherState {
+  const factory _WeatherState(
+      {@required
+          WeatherEntity weatherEntity,
+      @required
+          City city,
+      @required
+          bool showErrorMessages,
+      @required
+          bool isLoading,
+      @required
+          Option<Either<WeatherFailure, WeatherResponse>>
+              weatherFailureOrSuccessOption}) = _$_WeatherState;
 
+  @override
   WeatherEntity get weatherEntity;
-  $LoadedCopyWith<Loaded> get copyWith;
+  @override
+  City get city;
+  @override
+  bool get showErrorMessages;
+  @override
+  bool get isLoading;
+  @override
+  Option<Either<WeatherFailure, WeatherResponse>>
+      get weatherFailureOrSuccessOption;
+  @override
+  _$WeatherStateCopyWith<_WeatherState> get copyWith;
 }

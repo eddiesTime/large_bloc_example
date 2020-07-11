@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_example/application/weather/weather_bloc.dart';
 import 'package:flutter_bloc_example/presentation/routes/router.dart';
 import 'package:flutter_bloc_example/presentation/weather/widgets/weather.dart';
 
@@ -34,6 +36,8 @@ class _WeatherPageState extends State<WeatherPage> {
         key: const Key('__Search_FAB__'),
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
+          BlocProvider.of<WeatherBloc>(context)
+              .add(const WeatherEvent.newSearch());
           ExtendedNavigator.root.pushNamed(Routes.searchPage);
         },
         child: const Icon(

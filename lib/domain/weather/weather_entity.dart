@@ -16,7 +16,6 @@ abstract class WeatherEntity with _$WeatherEntity implements IEntity {
   const factory WeatherEntity({
     @required UniqueId id,
     @required Option<WeatherResponse> weatherResponse,
-    @required String city,
     @required Option<DateTime> lastUpdated,
   }) = _WeatherEntity;
 
@@ -25,7 +24,6 @@ abstract class WeatherEntity with _$WeatherEntity implements IEntity {
   factory WeatherEntity.initial() => WeatherEntity(
         id: UniqueId(),
         weatherResponse: none(),
-        city: '',
         lastUpdated: none(),
       );
 }

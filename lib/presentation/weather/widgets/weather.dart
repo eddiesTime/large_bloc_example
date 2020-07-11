@@ -36,42 +36,69 @@ class _WeatherState extends State<Weather> {
 
   Widget _buildUI(BuildContext context) {
     // Rebuilds the weather content whenever a new WeatherState is received.
-    return BlocConsumer<WeatherBloc, WeatherState>(listener: (context, state) {
-      if (state is Loaded) {
-        final model.Weather _weather = state.weatherEntity.weatherResponse
-            .getOrElse(() => null)
-            .weatherCollection
-            .first;
-        // Adds the ThemeEvent weatherChanged to the event stream when the WeatherState is loaded.
-        context.bloc<ThemeBloc>().add(
-              ThemeEvent.weatherChanged(
-                _weather.mapConditionToWeatherCondition(_weather.condition),
-              ),
-            );
-        _refreshCompleter?.complete();
-        _refreshCompleter = Completer();
-      }
-    }, builder: (context, state) {
-      return state.map(
-        initial: (_) => _buildIdle(),
-        loading: (_) => _buildLoading(),
-        loadingFailure: (state) => _buildError(state),
-        loaded: (state) => _buildWeather(context, state),
-      );
-      // if (state is LoadingFailure) {
-      //   return _buildError();
-      // }
-      // if (state is Loading) {
-      //   return _buildLoading();
-      // }
-      // if (state is Loaded) {
-      //   return _buildWeather(context, state);
-      // }
-      // return _buildIdle();
-    });
+    return BlocConsumer<WeatherBloc, WeatherState>(
+        listenWhen: (previous, current) =>
+            previous.weatherEntity != current.weatherEntity,
+        listener: (context, state) {
+          state.weatherFailureOrSuccessOption.fold(
+            () {},
+            (either) {
+              either.fold(
+                (_) {},
+                (_) {
+                  final model.Weather _weather = state
+                      .weatherEntity.weatherResponse
+                      .getOrElse(() => null)
+                      .weatherCollection
+                      .first;
+                  // Adds the ThemeEvent weatherChanged to the event stream when the WeatherState is loaded.
+                  context.bloc<ThemeBloc>().add(
+                        ThemeEvent.weatherChanged(
+                          _weather.mapConditionToWeatherCondition(
+                              _weather.condition),
+                        ),
+                      );
+                },
+              );
+              _refreshCompleter?.complete();
+              _refreshCompleter = Completer();
+            },
+          );
+        },
+        builder: (context, state) {
+          print('Builder: ${state.showErrorMessages}');
+          if (state.isLoading) {
+            return _buildLoading();
+          } else {
+            return state.weatherFailureOrSuccessOption.fold(() {
+              return _buildIdle();
+            }, (either) {
+              return either.fold(
+                (failure) => _buildError(state),
+                (_) => _buildWeather(context, state),
+              );
+            });
+          }
+          // return state.map(
+          //   initial: (_) => _buildIdle(),
+          //   loading: (_) => _buildLoading(),
+          //   loadingFailure: (state) => _buildError(state),
+          //   loaded: (state) => _buildWeather(context, state),
+
+          // if (state is LoadingFailure) {
+          //   return _buildError();
+          // }
+          // if (state is Loading) {
+          //   return _buildLoading();
+          // }
+          // if (state is Loaded) {
+          //   return _buildWeather(context, state);
+          // }
+          // return _buildIdle();
+        });
   }
 
-  Widget _buildWeather(BuildContext context, Loaded state) {
+  Widget _buildWeather(BuildContext context, WeatherState state) {
     return BlocBuilder<ThemeBloc, ThemeState>(builder: (context, themeState) {
       return GradientContainer(
         key: const Key('__Gradient_Container__'),
@@ -81,7 +108,10 @@ class _WeatherState extends State<Weather> {
           onRefresh: () {
             context.bloc<WeatherBloc>().add(
                   WeatherEvent.refreshWeatherForLocation(
-                      state.weatherEntity.city),
+                    state.weatherEntity.weatherResponse
+                        .getOrElse(() => null)
+                        .title,
+                  ),
                 );
             return _refreshCompleter.future;
           },
@@ -121,18 +151,25 @@ class _WeatherState extends State<Weather> {
     });
   }
 
-  Widget _buildError(LoadingFailure state) {
+  Widget _buildError(WeatherState state) {
     return Center(
       key: const Key('__Error__'),
-      child: state.weatherFailure.map(
-        unableToRefresh: (_) => const Text(
-          'Unable to refresh!',
-          style: TextStyle(color: Colors.red),
-        ),
-        notALocation: (_) => const Text(
-          'Not a location!',
-          style: TextStyle(color: Colors.red),
-        ),
+      child: state.weatherFailureOrSuccessOption.fold(
+        () => null,
+        (either) {
+          return either.fold((failure) {
+            return failure.map(
+              unableToRefresh: (_) => const Text(
+                'Unable to refresh!',
+                style: TextStyle(color: Colors.red),
+              ),
+              notALocation: (_) => const Text(
+                'Not a location!',
+                style: TextStyle(color: Colors.red),
+              ),
+            );
+          }, (_) => null);
+        },
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc_example/domain/weather/i_weather_facade.dart';
+import 'package:flutter_bloc_example/domain/weather/value_objects.dart';
 import 'package:flutter_bloc_example/domain/weather/weather_failure.dart';
+import 'package:flutter_bloc_example/infrastructure/weather/city_dto.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:weather_app_example_data_models_core/weather_app_example_data_models_core.dart';
@@ -22,10 +24,11 @@ class WeatherRepositoryFacade implements IWeatherFacade {
 
   @override
   Future<Either<WeatherFailure, WeatherResponse>> getWeatherForLocation(
-      {@required String location}) async {
+      {@required City city}) async {
     try {
+      final CityDto cityDto = CityDto.fromDomain(city);
       final WeatherResponse _wr =
-          await _weatherRepository.getWeatherFor(city: location);
+          await _weatherRepository.getWeatherFor(city: cityDto.city);
       return right(_wr);
     } catch (e) {
       return left(const NotALocation());
@@ -34,10 +37,11 @@ class WeatherRepositoryFacade implements IWeatherFacade {
 
   @override
   Future<Either<WeatherFailure, WeatherResponse>> refreshWeatherData(
-      {@required String location}) async {
+      {@required City city}) async {
     try {
+      final CityDto cityDto = CityDto.fromDomain(city);
       final WeatherResponse _wr =
-          await _weatherRepository.getWeatherFor(city: location);
+          await _weatherRepository.getWeatherFor(city: cityDto.city);
       return right(_wr);
     } catch (e) {
       return left(const UnableToRefresh());
