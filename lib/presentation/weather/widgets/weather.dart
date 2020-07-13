@@ -66,7 +66,6 @@ class _WeatherState extends State<Weather> {
           );
         },
         builder: (context, state) {
-          print('Builder: ${state.showErrorMessages}');
           if (state.isLoading) {
             return _buildLoading();
           } else {
@@ -165,6 +164,10 @@ class _WeatherState extends State<Weather> {
               ),
               notALocation: (_) => const Text(
                 'Not a location!',
+                style: TextStyle(color: Colors.red),
+              ),
+              noLocationFoundForLattLong: (_) => const Text(
+                'No location found for given location',
                 style: TextStyle(color: Colors.red),
               ),
             );

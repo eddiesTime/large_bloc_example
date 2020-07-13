@@ -16,6 +16,10 @@ class _$WeatherFailureTearOff {
     return const NotALocation();
   }
 
+  NoLocationFoundForLattLong noLocationFoundForLattLong() {
+    return const NoLocationFoundForLattLong();
+  }
+
   UnableToRefresh unableToRefresh() {
     return const UnableToRefresh();
   }
@@ -28,22 +32,27 @@ mixin _$WeatherFailure {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result notALocation(),
+    @required Result noLocationFoundForLattLong(),
     @required Result unableToRefresh(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result notALocation(),
+    Result noLocationFoundForLattLong(),
     Result unableToRefresh(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result notALocation(NotALocation value),
+    @required
+        Result noLocationFoundForLattLong(NoLocationFoundForLattLong value),
     @required Result unableToRefresh(UnableToRefresh value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result notALocation(NotALocation value),
+    Result noLocationFoundForLattLong(NoLocationFoundForLattLong value),
     Result unableToRefresh(UnableToRefresh value),
     @required Result orElse(),
   });
@@ -101,9 +110,11 @@ class _$NotALocation implements NotALocation {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result notALocation(),
+    @required Result noLocationFoundForLattLong(),
     @required Result unableToRefresh(),
   }) {
     assert(notALocation != null);
+    assert(noLocationFoundForLattLong != null);
     assert(unableToRefresh != null);
     return notALocation();
   }
@@ -112,6 +123,7 @@ class _$NotALocation implements NotALocation {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result notALocation(),
+    Result noLocationFoundForLattLong(),
     Result unableToRefresh(),
     @required Result orElse(),
   }) {
@@ -126,9 +138,12 @@ class _$NotALocation implements NotALocation {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result notALocation(NotALocation value),
+    @required
+        Result noLocationFoundForLattLong(NoLocationFoundForLattLong value),
     @required Result unableToRefresh(UnableToRefresh value),
   }) {
     assert(notALocation != null);
+    assert(noLocationFoundForLattLong != null);
     assert(unableToRefresh != null);
     return notALocation(this);
   }
@@ -137,6 +152,7 @@ class _$NotALocation implements NotALocation {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result notALocation(NotALocation value),
+    Result noLocationFoundForLattLong(NoLocationFoundForLattLong value),
     Result unableToRefresh(UnableToRefresh value),
     @required Result orElse(),
   }) {
@@ -150,6 +166,102 @@ class _$NotALocation implements NotALocation {
 
 abstract class NotALocation implements WeatherFailure {
   const factory NotALocation() = _$NotALocation;
+}
+
+abstract class $NoLocationFoundForLattLongCopyWith<$Res> {
+  factory $NoLocationFoundForLattLongCopyWith(NoLocationFoundForLattLong value,
+          $Res Function(NoLocationFoundForLattLong) then) =
+      _$NoLocationFoundForLattLongCopyWithImpl<$Res>;
+}
+
+class _$NoLocationFoundForLattLongCopyWithImpl<$Res>
+    extends _$WeatherFailureCopyWithImpl<$Res>
+    implements $NoLocationFoundForLattLongCopyWith<$Res> {
+  _$NoLocationFoundForLattLongCopyWithImpl(NoLocationFoundForLattLong _value,
+      $Res Function(NoLocationFoundForLattLong) _then)
+      : super(_value, (v) => _then(v as NoLocationFoundForLattLong));
+
+  @override
+  NoLocationFoundForLattLong get _value =>
+      super._value as NoLocationFoundForLattLong;
+}
+
+class _$NoLocationFoundForLattLong implements NoLocationFoundForLattLong {
+  const _$NoLocationFoundForLattLong();
+
+  @override
+  String toString() {
+    return 'WeatherFailure.noLocationFoundForLattLong()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is NoLocationFoundForLattLong);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result notALocation(),
+    @required Result noLocationFoundForLattLong(),
+    @required Result unableToRefresh(),
+  }) {
+    assert(notALocation != null);
+    assert(noLocationFoundForLattLong != null);
+    assert(unableToRefresh != null);
+    return noLocationFoundForLattLong();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result notALocation(),
+    Result noLocationFoundForLattLong(),
+    Result unableToRefresh(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (noLocationFoundForLattLong != null) {
+      return noLocationFoundForLattLong();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result notALocation(NotALocation value),
+    @required
+        Result noLocationFoundForLattLong(NoLocationFoundForLattLong value),
+    @required Result unableToRefresh(UnableToRefresh value),
+  }) {
+    assert(notALocation != null);
+    assert(noLocationFoundForLattLong != null);
+    assert(unableToRefresh != null);
+    return noLocationFoundForLattLong(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result notALocation(NotALocation value),
+    Result noLocationFoundForLattLong(NoLocationFoundForLattLong value),
+    Result unableToRefresh(UnableToRefresh value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (noLocationFoundForLattLong != null) {
+      return noLocationFoundForLattLong(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NoLocationFoundForLattLong implements WeatherFailure {
+  const factory NoLocationFoundForLattLong() = _$NoLocationFoundForLattLong;
 }
 
 abstract class $UnableToRefreshCopyWith<$Res> {
@@ -189,9 +301,11 @@ class _$UnableToRefresh implements UnableToRefresh {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result notALocation(),
+    @required Result noLocationFoundForLattLong(),
     @required Result unableToRefresh(),
   }) {
     assert(notALocation != null);
+    assert(noLocationFoundForLattLong != null);
     assert(unableToRefresh != null);
     return unableToRefresh();
   }
@@ -200,6 +314,7 @@ class _$UnableToRefresh implements UnableToRefresh {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result notALocation(),
+    Result noLocationFoundForLattLong(),
     Result unableToRefresh(),
     @required Result orElse(),
   }) {
@@ -214,9 +329,12 @@ class _$UnableToRefresh implements UnableToRefresh {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result notALocation(NotALocation value),
+    @required
+        Result noLocationFoundForLattLong(NoLocationFoundForLattLong value),
     @required Result unableToRefresh(UnableToRefresh value),
   }) {
     assert(notALocation != null);
+    assert(noLocationFoundForLattLong != null);
     assert(unableToRefresh != null);
     return unableToRefresh(this);
   }
@@ -225,6 +343,7 @@ class _$UnableToRefresh implements UnableToRefresh {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result notALocation(NotALocation value),
+    Result noLocationFoundForLattLong(NoLocationFoundForLattLong value),
     Result unableToRefresh(UnableToRefresh value),
     @required Result orElse(),
   }) {

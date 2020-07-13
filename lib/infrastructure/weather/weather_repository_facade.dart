@@ -23,15 +23,29 @@ class WeatherRepositoryFacade implements IWeatherFacade {
   }
 
   @override
-  Future<Either<WeatherFailure, WeatherResponse>> getWeatherForLocation(
+  Future<Either<WeatherFailure, WeatherResponse>> getWeatherWithQuery(
       {@required City city}) async {
     try {
       final CityDto cityDto = CityDto.fromDomain(city);
       final WeatherResponse _wr =
-          await _weatherRepository.getWeatherFor(city: cityDto.city);
+          await _weatherRepository.getWeatherWithQuery(city: cityDto.city);
       return right(_wr);
     } catch (e) {
       return left(const NotALocation());
+    }
+  }
+
+  @override
+  Future<Either<WeatherFailure, WeatherResponse>> getWeatherWithLattLong({
+    @required double latt,
+    @required double long,
+  }) async {
+    try {
+      final WeatherResponse _wr = await _weatherRepository
+          .getWeatherWithLattLong(latt: latt, long: long);
+      return right(_wr);
+    } catch (e) {
+      return left(const NoLocationFoundForLattLong());
     }
   }
 
@@ -41,7 +55,7 @@ class WeatherRepositoryFacade implements IWeatherFacade {
     try {
       final CityDto cityDto = CityDto.fromDomain(city);
       final WeatherResponse _wr =
-          await _weatherRepository.getWeatherFor(city: cityDto.city);
+          await _weatherRepository.getWeatherWithQuery(city: cityDto.city);
       return right(_wr);
     } catch (e) {
       return left(const UnableToRefresh());

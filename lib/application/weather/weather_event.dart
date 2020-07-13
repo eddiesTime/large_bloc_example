@@ -7,8 +7,12 @@ abstract class WeatherEvent with _$WeatherEvent {
   const factory WeatherEvent.newSearch() = NewSearch;
 
   /// Specifies a weather event to fetch weather data for a given [location].
-  const factory WeatherEvent.fetchWeatherForLocation(String cityStr) =
-      FetchWeather;
+  const factory WeatherEvent.fetchWeatherForLocationWithQuery(String cityStr) =
+      FetchWeatherWithQuery;
+
+  /// Specifies a weather event to fetch weather data for a given [latt] and [long].
+  const factory WeatherEvent.fetchWeatherForLocationWithLattLong(
+      {double latt, double long}) = FetchWeatherWithLattLong;
 
   /// Specifies a weather event to refresh weather data for a given [location].
   const factory WeatherEvent.refreshWeatherForLocation(String cityStr) =

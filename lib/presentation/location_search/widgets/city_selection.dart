@@ -48,9 +48,8 @@ class CitySelection extends StatelessWidget {
               key: const Key('__Location_Search_Icon_Button__'),
               icon: const Icon(Icons.search),
               onPressed: () {
-                context
-                    .bloc<WeatherBloc>()
-                    .add(WeatherEvent.fetchWeatherForLocation(_tec.text));
+                context.bloc<WeatherBloc>().add(
+                    WeatherEvent.fetchWeatherForLocationWithQuery(_tec.text));
                 if (_tec.text.isNotEmpty) {
                   ExtendedNavigator.root.pop();
                 }

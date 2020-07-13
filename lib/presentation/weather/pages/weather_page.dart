@@ -32,17 +32,36 @@ class _WeatherPageState extends State<WeatherPage> {
         ],
       ),
       body: Weather(),
-      floatingActionButton: FloatingActionButton(
-        key: const Key('__Search_FAB__'),
-        backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () {
-          BlocProvider.of<WeatherBloc>(context)
-              .add(const WeatherEvent.newSearch());
-          ExtendedNavigator.root.pushNamed(Routes.searchPage);
-        },
-        child: const Icon(
-          Icons.search,
-        ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            key: const Key('__Geolocation_FAB__'),
+            heroTag: 'LocationBtn',
+            mini: true,
+            backgroundColor: Colors.grey,
+            onPressed: () {
+              BlocProvider.of<WeatherBloc>(context).add(
+                  const WeatherEvent.fetchWeatherForLocationWithLattLong());
+            },
+            child: const Icon(
+              Icons.location_on,
+            ),
+          ),
+          FloatingActionButton(
+            key: const Key('__Search_FAB__'),
+            heroTag: 'SearchBtn',
+            backgroundColor: Theme.of(context).primaryColor,
+            onPressed: () {
+              BlocProvider.of<WeatherBloc>(context)
+                  .add(const WeatherEvent.newSearch());
+              ExtendedNavigator.root.pushNamed(Routes.searchPage);
+            },
+            child: const Icon(
+              Icons.search,
+            ),
+          ),
+        ],
       ),
     );
   }

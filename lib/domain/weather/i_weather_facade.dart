@@ -6,9 +6,13 @@ import 'package:weather_app_example_data_models_core/weather_app_example_data_mo
 
 /// Is an interface that specifies which methods are relevant to connect to the domain layer.
 abstract class IWeatherFacade {
-  /// Is an asynchronous method that returns `WeatherResponse` for a given [location].
-  Future<Either<WeatherFailure, WeatherResponse>> getWeatherForLocation(
+  /// Is an asynchronous method that returns `WeatherResponse` for a given [query].
+  Future<Either<WeatherFailure, WeatherResponse>> getWeatherWithQuery(
       {@required City city});
+
+  /// Is an asynchronous method that returns `WeatherResponse` for a given [lattitude] and [longitude].
+  Future<Either<WeatherFailure, WeatherResponse>> getWeatherWithLattLong(
+      {@required double latt, @required double long});
 
   /// Is an asynchonous method that return an updated `WeatherResponse` for a given [location]
   /// by making another request.
