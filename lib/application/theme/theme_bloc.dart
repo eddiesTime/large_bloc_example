@@ -13,7 +13,7 @@ part 'theme_state.dart';
 part 'theme_bloc.freezed.dart';
 
 /// A business logic component to handle theme related logic in the application.
-@injectable
+@lazySingleton
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   ThemeBloc() : super(ThemeState(themeEntity: ThemeEntity.initial()));
 

@@ -16,6 +16,8 @@ import 'package:flutter_bloc_example/infrastructure/geolocation/geolocator_repos
 import 'package:flutter_bloc_example/domain/geolocation/i_geolocation_facade.dart';
 import 'package:flutter_bloc_example/application/settings/settings_bloc.dart';
 import 'package:flutter_bloc_example/domain/settings/settings_entity.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_bloc_example/infrastructure/local_storage/local_storage_injectable_module.dart';
 import 'package:flutter_bloc_example/application/authentication/sign_in_form/sign_in_form_bloc.dart';
 import 'package:flutter_bloc_example/application/theme/theme_bloc.dart';
 import 'package:flutter_bloc_example/domain/theme/theme_entity.dart';
@@ -23,14 +25,17 @@ import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
 import 'package:flutter_bloc_example/infrastructure/weather/weather_repository_injectable_module.dart';
 import 'package:weather_repository_core/weather_repository_core.dart';
 import 'package:flutter_bloc_example/application/authentication/authentication_bloc.dart';
+import 'package:flutter_bloc_example/infrastructure/local_storage/local_storage_repository_facade.dart';
+import 'package:flutter_bloc_example/domain/local_storage/i_local_storage_facade.dart';
 import 'package:flutter_bloc_example/infrastructure/weather/weather_repository_facade.dart';
 import 'package:flutter_bloc_example/domain/weather/i_weather_facade.dart';
 import 'package:flutter_bloc_example/application/weather/weather_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-void $initGetIt(GetIt g, {String environment}) {
+Future<void> $initGetIt(GetIt g, {String environment}) async {
   final firebaseInjectableModule = _$FirebaseInjectableModule();
   final geolocatorInjectableModule = _$GeolocatorInjectableModule();
+  final localStorageInjectableModule = _$LocalStorageInjectableModule();
   final weatherRepositoryInjectableModule =
       _$WeatherRepositoryInjectableModule();
   g.registerLazySingleton<FirebaseAuth>(
@@ -47,26 +52,35 @@ void $initGetIt(GetIt g, {String environment}) {
       ));
   g.registerLazySingleton<IGeolocationFacade>(
       () => GeolocatorRepositoryFacade(g<Geolocator>()));
-  g.registerFactory<SettingsBloc>(() => SettingsBloc());
+  g.registerLazySingleton<SettingsBloc>(() => SettingsBloc());
   g.registerFactory<SettingsEntity>(() => SettingsEntity.celsius());
+  final sharedPreferences = await localStorageInjectableModule.sharedPrefs;
+  g.registerFactory<SharedPreferences>(() => sharedPreferences);
   g.registerLazySingleton<SignInFormBloc>(
       () => SignInFormBloc(g<IAuthFacade>()));
-  g.registerFactory<ThemeBloc>(() => ThemeBloc());
+  g.registerLazySingleton<ThemeBloc>(() => ThemeBloc());
   g.registerFactory<ThemeEntity>(() => ThemeEntity.initial());
   g.registerFactory<WeatherEntity>(() => WeatherEntity.initial());
   g.registerLazySingleton<WeatherRepository>(
       () => weatherRepositoryInjectableModule.weatherRepository);
   g.registerLazySingleton<AuthenticationBloc>(
       () => AuthenticationBloc(g<IAuthFacade>()));
+  g.registerLazySingleton<ILocalStorageFacade>(
+      () => LocalStorageRepositoryFacade(g<SharedPreferences>()));
   g.registerLazySingleton<IWeatherFacade>(
       () => WeatherRepositoryFacade(g<WeatherRepository>()));
-  g.registerFactory<WeatherBloc>(
-      () => WeatherBloc(g<IWeatherFacade>(), g<IGeolocationFacade>()));
+  g.registerLazySingleton<WeatherBloc>(() => WeatherBloc(
+        g<IWeatherFacade>(),
+        g<IGeolocationFacade>(),
+        g<ILocalStorageFacade>(),
+      ));
 }
 
 class _$FirebaseInjectableModule extends FirebaseInjectableModule {}
 
 class _$GeolocatorInjectableModule extends GeolocatorInjectableModule {}
+
+class _$LocalStorageInjectableModule extends LocalStorageInjectableModule {}
 
 class _$WeatherRepositoryInjectableModule
     extends WeatherRepositoryInjectableModule {}

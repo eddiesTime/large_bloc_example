@@ -9,6 +9,6 @@ final GetIt getIt = GetIt.instance;
 ///
 /// The parameter [env] can be used to differentiate between production, test or development.
 @injectableInit
-void configureInjection(String env) {
-  $initGetIt(getIt, environment: env);
+Future<void> configureInjection(String env) {
+  return $initGetIt(getIt, environment: env);
 }

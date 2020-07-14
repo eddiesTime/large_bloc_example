@@ -5,6 +5,7 @@ part of 'weather_bloc.dart';
 abstract class WeatherEvent with _$WeatherEvent {
   const factory WeatherEvent.cityChanged(String cityStr) = CityChanged;
   const factory WeatherEvent.newSearch() = NewSearch;
+  const factory WeatherEvent.loadFromStorage() = LoadFromStorage;
 
   /// Specifies a weather event to fetch weather data for a given [location].
   const factory WeatherEvent.fetchWeatherForLocationWithQuery(String cityStr) =

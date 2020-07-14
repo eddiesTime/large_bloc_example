@@ -15,7 +15,10 @@ class FlutterBlocApp extends StatelessWidget {
         return MultiBlocProvider(
             providers: [
               BlocProvider<WeatherBloc>(
-                create: (_) => getIt<WeatherBloc>(),
+                create: (_) => getIt<WeatherBloc>()
+                  ..add(
+                    const LoadFromStorage(),
+                  ),
               ),
               BlocProvider<SettingsBloc>(
                 create: (context) => getIt<SettingsBloc>(),

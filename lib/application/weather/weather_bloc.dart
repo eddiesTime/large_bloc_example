@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc_example/domain/geolocation/i_geolocation_facade.dart';
+import 'package:flutter_bloc_example/domain/local_storage/i_local_storage_facade.dart';
+import 'package:flutter_bloc_example/domain/local_storage/local_storage_failure.dart';
 import 'package:flutter_bloc_example/domain/weather/i_weather_facade.dart';
 import 'package:flutter_bloc_example/domain/weather/value_objects.dart';
 import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
@@ -18,14 +20,16 @@ part 'weather_state.dart';
 part 'weather_bloc.freezed.dart';
 
 /// A business logic component to handle weather related logic in the application.
-@injectable
+@lazySingleton
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final IWeatherFacade _weatherFacade;
   final IGeolocationFacade _geolocationFacade;
+  final ILocalStorageFacade _localStorageFacade;
 
   WeatherBloc(
     this._weatherFacade,
     this._geolocationFacade,
+    this._localStorageFacade,
   ) : super(WeatherState.initial());
 
   @override
@@ -41,6 +45,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       },
       newSearch: (e) async* {
         yield state.copyWith(showErrorMessages: false);
+      },
+      loadFromStorage: (e) async* {
+        yield* _loadWeatherEntityFromStorage(e);
       },
       fetchWeatherForLocationWithLattLong: (e) async* {
         yield* _performActionToFetchWeatherDataForLattLong(e);
@@ -104,6 +111,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       } else {
         final WeatherEntity _we = state.weatherEntity.copyWith(
             weatherResponse: some(_wr), lastUpdated: some(DateTime.now()));
+        await _localStorageFacade.saveToLocalStorage(weatherEntity: _we);
         yield state.copyWith(
           city: _city,
           weatherEntity: _we,
@@ -167,6 +175,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     } else {
       final WeatherEntity _we = state.weatherEntity.copyWith(
           weatherResponse: some(_wr), lastUpdated: some(DateTime.now()));
+      await _localStorageFacade.saveToLocalStorage(weatherEntity: _we);
       final City _city = City(_we.weatherResponse.getOrElse(() => null).title);
       yield state.copyWith(
         city: _city,
@@ -174,6 +183,33 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         isLoading: false,
         showErrorMessages: true,
         weatherFailureOrSuccessOption: some(right(_wr)),
+      );
+    }
+  }
+
+  Stream<WeatherState> _loadWeatherEntityFromStorage(
+      LoadFromStorage event) async* {
+    Either<LocalStorageFailure, WeatherEntity> failureOrSuccess;
+    failureOrSuccess = _localStorageFacade.loadWeatherDataFromLocalStorage();
+
+    LocalStorageFailure _lsf;
+    WeatherEntity _we;
+    failureOrSuccess.fold(
+        (failure) => {_lsf = failure}, (success) => {_we = success});
+
+    if (failureOrSuccess.isLeft()) {
+      yield state;
+    } else {
+      final City _city = City(_we.weatherResponse.getOrElse(() => null).title);
+      yield state.copyWith(
+        city: _city,
+        weatherEntity: _we,
+        showErrorMessages: true,
+        weatherFailureOrSuccessOption: some(
+          right(
+            _we.weatherResponse.getOrElse(() => null),
+          ),
+        ),
       );
     }
   }

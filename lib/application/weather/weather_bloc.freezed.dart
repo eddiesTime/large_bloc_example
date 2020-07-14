@@ -22,6 +22,10 @@ class _$WeatherEventTearOff {
     return const NewSearch();
   }
 
+  LoadFromStorage loadFromStorage() {
+    return const LoadFromStorage();
+  }
+
   FetchWeatherWithQuery fetchWeatherForLocationWithQuery(String cityStr) {
     return FetchWeatherWithQuery(
       cityStr,
@@ -51,6 +55,7 @@ mixin _$WeatherEvent {
   Result when<Result extends Object>({
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
+    @required Result loadFromStorage(),
     @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
         Result fetchWeatherForLocationWithLattLong(double latt, double long),
@@ -60,6 +65,7 @@ mixin _$WeatherEvent {
   Result maybeWhen<Result extends Object>({
     Result cityChanged(String cityStr),
     Result newSearch(),
+    Result loadFromStorage(),
     Result fetchWeatherForLocationWithQuery(String cityStr),
     Result fetchWeatherForLocationWithLattLong(double latt, double long),
     Result refreshWeatherForLocation(String cityStr),
@@ -69,6 +75,7 @@ mixin _$WeatherEvent {
   Result map<Result extends Object>({
     @required Result cityChanged(CityChanged value),
     @required Result newSearch(NewSearch value),
+    @required Result loadFromStorage(LoadFromStorage value),
     @required
         Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     @required
@@ -80,6 +87,7 @@ mixin _$WeatherEvent {
   Result maybeMap<Result extends Object>({
     Result cityChanged(CityChanged value),
     Result newSearch(NewSearch value),
+    Result loadFromStorage(LoadFromStorage value),
     Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     Result fetchWeatherForLocationWithLattLong(FetchWeatherWithLattLong value),
     Result refreshWeatherForLocation(RefreshWeather value),
@@ -167,6 +175,7 @@ class _$CityChanged with DiagnosticableTreeMixin implements CityChanged {
   Result when<Result extends Object>({
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
+    @required Result loadFromStorage(),
     @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
         Result fetchWeatherForLocationWithLattLong(double latt, double long),
@@ -174,6 +183,7 @@ class _$CityChanged with DiagnosticableTreeMixin implements CityChanged {
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
+    assert(loadFromStorage != null);
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
@@ -185,6 +195,7 @@ class _$CityChanged with DiagnosticableTreeMixin implements CityChanged {
   Result maybeWhen<Result extends Object>({
     Result cityChanged(String cityStr),
     Result newSearch(),
+    Result loadFromStorage(),
     Result fetchWeatherForLocationWithQuery(String cityStr),
     Result fetchWeatherForLocationWithLattLong(double latt, double long),
     Result refreshWeatherForLocation(String cityStr),
@@ -202,6 +213,7 @@ class _$CityChanged with DiagnosticableTreeMixin implements CityChanged {
   Result map<Result extends Object>({
     @required Result cityChanged(CityChanged value),
     @required Result newSearch(NewSearch value),
+    @required Result loadFromStorage(LoadFromStorage value),
     @required
         Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     @required
@@ -211,6 +223,7 @@ class _$CityChanged with DiagnosticableTreeMixin implements CityChanged {
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
+    assert(loadFromStorage != null);
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
@@ -222,6 +235,7 @@ class _$CityChanged with DiagnosticableTreeMixin implements CityChanged {
   Result maybeMap<Result extends Object>({
     Result cityChanged(CityChanged value),
     Result newSearch(NewSearch value),
+    Result loadFromStorage(LoadFromStorage value),
     Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     Result fetchWeatherForLocationWithLattLong(FetchWeatherWithLattLong value),
     Result refreshWeatherForLocation(RefreshWeather value),
@@ -283,6 +297,7 @@ class _$NewSearch with DiagnosticableTreeMixin implements NewSearch {
   Result when<Result extends Object>({
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
+    @required Result loadFromStorage(),
     @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
         Result fetchWeatherForLocationWithLattLong(double latt, double long),
@@ -290,6 +305,7 @@ class _$NewSearch with DiagnosticableTreeMixin implements NewSearch {
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
+    assert(loadFromStorage != null);
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
@@ -301,6 +317,7 @@ class _$NewSearch with DiagnosticableTreeMixin implements NewSearch {
   Result maybeWhen<Result extends Object>({
     Result cityChanged(String cityStr),
     Result newSearch(),
+    Result loadFromStorage(),
     Result fetchWeatherForLocationWithQuery(String cityStr),
     Result fetchWeatherForLocationWithLattLong(double latt, double long),
     Result refreshWeatherForLocation(String cityStr),
@@ -318,6 +335,7 @@ class _$NewSearch with DiagnosticableTreeMixin implements NewSearch {
   Result map<Result extends Object>({
     @required Result cityChanged(CityChanged value),
     @required Result newSearch(NewSearch value),
+    @required Result loadFromStorage(LoadFromStorage value),
     @required
         Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     @required
@@ -327,6 +345,7 @@ class _$NewSearch with DiagnosticableTreeMixin implements NewSearch {
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
+    assert(loadFromStorage != null);
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
@@ -338,6 +357,7 @@ class _$NewSearch with DiagnosticableTreeMixin implements NewSearch {
   Result maybeMap<Result extends Object>({
     Result cityChanged(CityChanged value),
     Result newSearch(NewSearch value),
+    Result loadFromStorage(LoadFromStorage value),
     Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     Result fetchWeatherForLocationWithLattLong(FetchWeatherWithLattLong value),
     Result refreshWeatherForLocation(RefreshWeather value),
@@ -353,6 +373,131 @@ class _$NewSearch with DiagnosticableTreeMixin implements NewSearch {
 
 abstract class NewSearch implements WeatherEvent {
   const factory NewSearch() = _$NewSearch;
+}
+
+abstract class $LoadFromStorageCopyWith<$Res> {
+  factory $LoadFromStorageCopyWith(
+          LoadFromStorage value, $Res Function(LoadFromStorage) then) =
+      _$LoadFromStorageCopyWithImpl<$Res>;
+}
+
+class _$LoadFromStorageCopyWithImpl<$Res>
+    extends _$WeatherEventCopyWithImpl<$Res>
+    implements $LoadFromStorageCopyWith<$Res> {
+  _$LoadFromStorageCopyWithImpl(
+      LoadFromStorage _value, $Res Function(LoadFromStorage) _then)
+      : super(_value, (v) => _then(v as LoadFromStorage));
+
+  @override
+  LoadFromStorage get _value => super._value as LoadFromStorage;
+}
+
+class _$LoadFromStorage
+    with DiagnosticableTreeMixin
+    implements LoadFromStorage {
+  const _$LoadFromStorage();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WeatherEvent.loadFromStorage()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'WeatherEvent.loadFromStorage'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is LoadFromStorage);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result cityChanged(String cityStr),
+    @required Result newSearch(),
+    @required Result loadFromStorage(),
+    @required Result fetchWeatherForLocationWithQuery(String cityStr),
+    @required
+        Result fetchWeatherForLocationWithLattLong(double latt, double long),
+    @required Result refreshWeatherForLocation(String cityStr),
+  }) {
+    assert(cityChanged != null);
+    assert(newSearch != null);
+    assert(loadFromStorage != null);
+    assert(fetchWeatherForLocationWithQuery != null);
+    assert(fetchWeatherForLocationWithLattLong != null);
+    assert(refreshWeatherForLocation != null);
+    return loadFromStorage();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result cityChanged(String cityStr),
+    Result newSearch(),
+    Result loadFromStorage(),
+    Result fetchWeatherForLocationWithQuery(String cityStr),
+    Result fetchWeatherForLocationWithLattLong(double latt, double long),
+    Result refreshWeatherForLocation(String cityStr),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (loadFromStorage != null) {
+      return loadFromStorage();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result cityChanged(CityChanged value),
+    @required Result newSearch(NewSearch value),
+    @required Result loadFromStorage(LoadFromStorage value),
+    @required
+        Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
+    @required
+        Result fetchWeatherForLocationWithLattLong(
+            FetchWeatherWithLattLong value),
+    @required Result refreshWeatherForLocation(RefreshWeather value),
+  }) {
+    assert(cityChanged != null);
+    assert(newSearch != null);
+    assert(loadFromStorage != null);
+    assert(fetchWeatherForLocationWithQuery != null);
+    assert(fetchWeatherForLocationWithLattLong != null);
+    assert(refreshWeatherForLocation != null);
+    return loadFromStorage(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result cityChanged(CityChanged value),
+    Result newSearch(NewSearch value),
+    Result loadFromStorage(LoadFromStorage value),
+    Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
+    Result fetchWeatherForLocationWithLattLong(FetchWeatherWithLattLong value),
+    Result refreshWeatherForLocation(RefreshWeather value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (loadFromStorage != null) {
+      return loadFromStorage(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LoadFromStorage implements WeatherEvent {
+  const factory LoadFromStorage() = _$LoadFromStorage;
 }
 
 abstract class $FetchWeatherWithQueryCopyWith<$Res> {
@@ -426,6 +571,7 @@ class _$FetchWeatherWithQuery
   Result when<Result extends Object>({
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
+    @required Result loadFromStorage(),
     @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
         Result fetchWeatherForLocationWithLattLong(double latt, double long),
@@ -433,6 +579,7 @@ class _$FetchWeatherWithQuery
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
+    assert(loadFromStorage != null);
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
@@ -444,6 +591,7 @@ class _$FetchWeatherWithQuery
   Result maybeWhen<Result extends Object>({
     Result cityChanged(String cityStr),
     Result newSearch(),
+    Result loadFromStorage(),
     Result fetchWeatherForLocationWithQuery(String cityStr),
     Result fetchWeatherForLocationWithLattLong(double latt, double long),
     Result refreshWeatherForLocation(String cityStr),
@@ -461,6 +609,7 @@ class _$FetchWeatherWithQuery
   Result map<Result extends Object>({
     @required Result cityChanged(CityChanged value),
     @required Result newSearch(NewSearch value),
+    @required Result loadFromStorage(LoadFromStorage value),
     @required
         Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     @required
@@ -470,6 +619,7 @@ class _$FetchWeatherWithQuery
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
+    assert(loadFromStorage != null);
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
@@ -481,6 +631,7 @@ class _$FetchWeatherWithQuery
   Result maybeMap<Result extends Object>({
     Result cityChanged(CityChanged value),
     Result newSearch(NewSearch value),
+    Result loadFromStorage(LoadFromStorage value),
     Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     Result fetchWeatherForLocationWithLattLong(FetchWeatherWithLattLong value),
     Result refreshWeatherForLocation(RefreshWeather value),
@@ -582,6 +733,7 @@ class _$FetchWeatherWithLattLong
   Result when<Result extends Object>({
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
+    @required Result loadFromStorage(),
     @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
         Result fetchWeatherForLocationWithLattLong(double latt, double long),
@@ -589,6 +741,7 @@ class _$FetchWeatherWithLattLong
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
+    assert(loadFromStorage != null);
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
@@ -600,6 +753,7 @@ class _$FetchWeatherWithLattLong
   Result maybeWhen<Result extends Object>({
     Result cityChanged(String cityStr),
     Result newSearch(),
+    Result loadFromStorage(),
     Result fetchWeatherForLocationWithQuery(String cityStr),
     Result fetchWeatherForLocationWithLattLong(double latt, double long),
     Result refreshWeatherForLocation(String cityStr),
@@ -617,6 +771,7 @@ class _$FetchWeatherWithLattLong
   Result map<Result extends Object>({
     @required Result cityChanged(CityChanged value),
     @required Result newSearch(NewSearch value),
+    @required Result loadFromStorage(LoadFromStorage value),
     @required
         Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     @required
@@ -626,6 +781,7 @@ class _$FetchWeatherWithLattLong
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
+    assert(loadFromStorage != null);
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
@@ -637,6 +793,7 @@ class _$FetchWeatherWithLattLong
   Result maybeMap<Result extends Object>({
     Result cityChanged(CityChanged value),
     Result newSearch(NewSearch value),
+    Result loadFromStorage(LoadFromStorage value),
     Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     Result fetchWeatherForLocationWithLattLong(FetchWeatherWithLattLong value),
     Result refreshWeatherForLocation(RefreshWeather value),
@@ -727,6 +884,7 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
   Result when<Result extends Object>({
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
+    @required Result loadFromStorage(),
     @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
         Result fetchWeatherForLocationWithLattLong(double latt, double long),
@@ -734,6 +892,7 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
+    assert(loadFromStorage != null);
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
@@ -745,6 +904,7 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
   Result maybeWhen<Result extends Object>({
     Result cityChanged(String cityStr),
     Result newSearch(),
+    Result loadFromStorage(),
     Result fetchWeatherForLocationWithQuery(String cityStr),
     Result fetchWeatherForLocationWithLattLong(double latt, double long),
     Result refreshWeatherForLocation(String cityStr),
@@ -762,6 +922,7 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
   Result map<Result extends Object>({
     @required Result cityChanged(CityChanged value),
     @required Result newSearch(NewSearch value),
+    @required Result loadFromStorage(LoadFromStorage value),
     @required
         Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     @required
@@ -771,6 +932,7 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
+    assert(loadFromStorage != null);
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
@@ -782,6 +944,7 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
   Result maybeMap<Result extends Object>({
     Result cityChanged(CityChanged value),
     Result newSearch(NewSearch value),
+    Result loadFromStorage(LoadFromStorage value),
     Result fetchWeatherForLocationWithQuery(FetchWeatherWithQuery value),
     Result fetchWeatherForLocationWithLattLong(FetchWeatherWithLattLong value),
     Result refreshWeatherForLocation(RefreshWeather value),

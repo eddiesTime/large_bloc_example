@@ -23,7 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: ^0.5.7+3
+  shared_preferences: ^0.5.8
   firebase_analytics: ^5.0.16
   meta:
   uuid: ^2.2.0
@@ -33,6 +33,7 @@ dependencies:
   flushbar: ^1.10.4
   styled_widget: ^0.2.1+2
   geolocator: ^5.3.2+2
+  json_serializable: ^3.3.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -67,6 +68,7 @@ dev_dependencies:
   test: ^1.15.1
   mockito: ^4.1.1
   auto_route_generator: ^0.6.0
+  json_annotation: ^3.0.1
 
 # The following section is specific to Flutter.
 flutter:

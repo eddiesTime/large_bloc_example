@@ -7,10 +7,10 @@ import 'package:flutter_bloc_example/application/theme/theme_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Initialises the code generation for [get_it].
-  configureInjection(Environment.prod);
+  await configureInjection(Environment.prod);
 
   runApp(
     MultiBlocProvider(
