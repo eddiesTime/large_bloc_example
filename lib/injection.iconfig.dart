@@ -4,6 +4,8 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:flutter_bloc_example/infrastructure/logging/firebase_crashlytics_injectable_module.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc_example/infrastructure/authentication/firebase_injectable_module.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc_example/infrastructure/authentication/firebase_user_mapper.dart';
@@ -12,7 +14,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_bloc_example/infrastructure/authentication/firebase_auth_facade.dart';
 import 'package:flutter_bloc_example/domain/authentication/i_auth_facade.dart';
-import 'package:flutter_bloc_example/infrastructure/geolocation/geolocator_repository_facade.dart';
+import 'package:flutter_bloc_example/infrastructure/logging/firebase_crashlytics_facade.dart';
+import 'package:flutter_bloc_example/infrastructure/logging/i_firebase_crashlitycs_facade.dart';
+import 'package:flutter_bloc_example/infrastructure/geolocation/geolocator_facade.dart';
 import 'package:flutter_bloc_example/domain/geolocation/i_geolocation_facade.dart';
 import 'package:flutter_bloc_example/application/settings/settings_bloc.dart';
 import 'package:flutter_bloc_example/domain/settings/settings_entity.dart';
@@ -33,11 +37,14 @@ import 'package:flutter_bloc_example/application/weather/weather_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> $initGetIt(GetIt g, {String environment}) async {
+  final firebaseCrashlyticsModule = _$FirebaseCrashlyticsModule();
   final firebaseInjectableModule = _$FirebaseInjectableModule();
   final geolocatorInjectableModule = _$GeolocatorInjectableModule();
   final localStorageInjectableModule = _$LocalStorageInjectableModule();
   final weatherRepositoryInjectableModule =
       _$WeatherRepositoryInjectableModule();
+  g.registerLazySingleton<Crashlytics>(
+      () => firebaseCrashlyticsModule.crashlytics);
   g.registerLazySingleton<FirebaseAuth>(
       () => firebaseInjectableModule.firebaseAuth);
   g.registerLazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
@@ -50,8 +57,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<GoogleSignIn>(),
         g<FirebaseUserMapper>(),
       ));
+  g.registerLazySingleton<IFirebaseCrashlyticsFacade>(
+      () => FirebaseCrashlyticsFacade(g<Crashlytics>()));
   g.registerLazySingleton<IGeolocationFacade>(
-      () => GeolocatorRepositoryFacade(g<Geolocator>()));
+      () => GeolocatorFacade(g<Geolocator>()));
   g.registerLazySingleton<SettingsBloc>(() => SettingsBloc());
   g.registerFactory<SettingsEntity>(() => SettingsEntity.celsius());
   final sharedPreferences = await localStorageInjectableModule.sharedPrefs;
@@ -75,6 +84,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<ILocalStorageFacade>(),
       ));
 }
+
+class _$FirebaseCrashlyticsModule extends FirebaseCrashlyticsModule {}
 
 class _$FirebaseInjectableModule extends FirebaseInjectableModule {}
 
