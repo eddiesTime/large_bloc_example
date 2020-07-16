@@ -3,10 +3,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: IGeolocationFacade)
-class GeolocatorRepositoryFacade implements IGeolocationFacade {
+class GeolocatorFacade implements IGeolocationFacade {
   final Geolocator _geolocator;
 
-  GeolocatorRepositoryFacade(this._geolocator);
+  GeolocatorFacade(this._geolocator);
 
   @override
   Future<Position> getCurrentUserPosition() {
