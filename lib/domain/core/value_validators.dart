@@ -30,8 +30,8 @@ Either<ValueFailure<String>, String> validateEmailAddress(String input) {
 
 Either<ValueFailure<String>, String> validateCityString(String input) {
   // Maybe not the most robust way of city name validation but it's good enough
-  const cityRegex = r"""^[a-zA-Z]+""";
-  if (RegExp(cityRegex).hasMatch(input)) {
+  final RegExp cityRegex = RegExp(r'^[a-zA-Z ]+$');
+  if (cityRegex.hasMatch(input)) {
     return right(input);
   } else {
     return left(ValueFailure.invalidLocation(failedValue: input));
