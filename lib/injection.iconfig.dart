@@ -4,8 +4,6 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
-import 'package:flutter_bloc_example/infrastructure/logging/firebase_crashlytics_injectable_module.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc_example/infrastructure/authentication/firebase_injectable_module.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc_example/infrastructure/authentication/firebase_user_mapper.dart';
@@ -14,10 +12,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_bloc_example/infrastructure/authentication/firebase_auth_facade.dart';
 import 'package:flutter_bloc_example/domain/authentication/i_auth_facade.dart';
-import 'package:flutter_bloc_example/infrastructure/logging/firebase_crashlytics_facade.dart';
-import 'package:flutter_bloc_example/infrastructure/logging/i_firebase_crashlitycs_facade.dart';
 import 'package:flutter_bloc_example/infrastructure/geolocation/geolocator_facade.dart';
 import 'package:flutter_bloc_example/domain/geolocation/i_geolocation_facade.dart';
+import 'package:flutter_bloc_example/infrastructure/logging/fimber_facade.dart';
+import 'package:flutter_bloc_example/infrastructure/logging/i_logging_facade.dart';
+import 'package:fimber/fimber.dart';
 import 'package:flutter_bloc_example/application/settings/settings_bloc.dart';
 import 'package:flutter_bloc_example/domain/settings/settings_entity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,7 +28,7 @@ import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
 import 'package:flutter_bloc_example/infrastructure/weather/weather_repository_injectable_module.dart';
 import 'package:weather_repository_core/weather_repository_core.dart';
 import 'package:flutter_bloc_example/application/authentication/authentication_bloc.dart';
-import 'package:flutter_bloc_example/infrastructure/local_storage/local_storage_repository_facade.dart';
+import 'package:flutter_bloc_example/infrastructure/local_storage/local_storage_facade.dart';
 import 'package:flutter_bloc_example/domain/local_storage/i_local_storage_facade.dart';
 import 'package:flutter_bloc_example/infrastructure/weather/weather_repository_facade.dart';
 import 'package:flutter_bloc_example/domain/weather/i_weather_facade.dart';
@@ -37,14 +36,11 @@ import 'package:flutter_bloc_example/application/weather/weather_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> $initGetIt(GetIt g, {String environment}) async {
-  final firebaseCrashlyticsModule = _$FirebaseCrashlyticsModule();
   final firebaseInjectableModule = _$FirebaseInjectableModule();
   final geolocatorInjectableModule = _$GeolocatorInjectableModule();
   final localStorageInjectableModule = _$LocalStorageInjectableModule();
   final weatherRepositoryInjectableModule =
       _$WeatherRepositoryInjectableModule();
-  g.registerLazySingleton<Crashlytics>(
-      () => firebaseCrashlyticsModule.crashlytics);
   g.registerLazySingleton<FirebaseAuth>(
       () => firebaseInjectableModule.firebaseAuth);
   g.registerLazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
@@ -57,8 +53,6 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<GoogleSignIn>(),
         g<FirebaseUserMapper>(),
       ));
-  g.registerLazySingleton<IFirebaseCrashlyticsFacade>(
-      () => FirebaseCrashlyticsFacade(g<Crashlytics>()));
   g.registerLazySingleton<IGeolocationFacade>(
       () => GeolocatorFacade(g<Geolocator>()));
   g.registerLazySingleton<SettingsBloc>(() => SettingsBloc());
@@ -75,7 +69,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerLazySingleton<AuthenticationBloc>(
       () => AuthenticationBloc(g<IAuthFacade>()));
   g.registerLazySingleton<ILocalStorageFacade>(
-      () => LocalStorageRepositoryFacade(g<SharedPreferences>()));
+      () => LocalStorageFacade(g<SharedPreferences>()));
   g.registerLazySingleton<IWeatherFacade>(
       () => WeatherRepositoryFacade(g<WeatherRepository>()));
   g.registerLazySingleton<WeatherBloc>(() => WeatherBloc(
@@ -83,9 +77,12 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<IGeolocationFacade>(),
         g<ILocalStorageFacade>(),
       ));
-}
 
-class _$FirebaseCrashlyticsModule extends FirebaseCrashlyticsModule {}
+  //Register dev Dependencies --------
+  if (environment == 'dev') {
+    g.registerLazySingleton<ILoggingFacade<FimberLog>>(() => FimberFacade());
+  }
+}
 
 class _$FirebaseInjectableModule extends FirebaseInjectableModule {}
 
