@@ -59,7 +59,7 @@ void main() {
         (WidgetTester tester) async {
       when(_themeBloc.state)
           .thenAnswer((_) => ThemeState(themeEntity: ThemeEntity.initial()));
-      when(_weatherBloc.state).thenAnswer((_) => const Initial());
+      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
       await tester.pumpWidget(
         MultiBlocProvider(
           providers: [

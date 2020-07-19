@@ -26,7 +26,7 @@ void main() {
       _settingsBloc = MockSettingsBloc();
     });
     testWidgets('renders correctly', (WidgetTester tester) async {
-      when(_weatherBloc.state).thenAnswer((_) => const Initial());
+      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
       await tester.pumpWidget(
         BlocProvider<WeatherBloc>.value(
           value: _weatherBloc,
@@ -63,7 +63,7 @@ void main() {
     });
     testWidgets('navigates to Settings Page when App Bar Icon Button is tapped',
         (WidgetTester tester) async {
-      when(_weatherBloc.state).thenAnswer((_) => const Initial());
+      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
       when(_settingsBloc.state).thenAnswer((_) => SettingsState.celcius());
       await tester.pumpWidget(
         MultiBlocProvider(
@@ -85,7 +85,7 @@ void main() {
     testWidgets(
         'navigates to Location Search Page when Floating Action Button is tapped',
         (WidgetTester tester) async {
-      when(_weatherBloc.state).thenAnswer((_) => const Initial());
+      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
       await tester.pumpWidget(
         BlocProvider<WeatherBloc>.value(
           value: _weatherBloc,

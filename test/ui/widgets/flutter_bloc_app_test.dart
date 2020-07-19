@@ -31,7 +31,7 @@ void main() {
 
   group('Flutter Bloc App Widget', () {
     testWidgets('renders correctly', (WidgetTester tester) async {
-      when(_weatherBloc.state).thenAnswer((_) => const Initial());
+      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
       when(_settingsBloc.state).thenAnswer((_) => SettingsState.celcius());
       when(_themeBloc.state)
           .thenAnswer((_) => ThemeState(themeEntity: _themeEntity));
