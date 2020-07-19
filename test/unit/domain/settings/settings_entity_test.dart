@@ -4,6 +4,11 @@ import 'package:weather_app_example_data_models_core/weather_app_example_data_mo
 
 void main() {
   group('Settings Entity', () {
+    test('should check if the factory method is working correctly', () {
+      const SettingsEntity _settingsEntity =
+          SettingsEntity(temperatureUnit: TemperatureUnit.celsius);
+      expect(_settingsEntity.temperatureUnit, TemperatureUnit.celsius);
+    });
     test(
         'should check if the factory method SettingsEntity.celsius() is creating the correct object',
         () {

@@ -15,20 +15,22 @@ void main() {
         'should check if the factory method WeatherEntity.initial() is creating the correct object',
         () {
       final WeatherEntity _initial = WeatherEntity.initial();
-      expect(WeatherEntity.initial(), _initial);
+      expect(_initial.id, isA<UniqueId>());
+      expect(_initial.lastUpdated, none());
+      expect(_initial.weatherResponse, none());
     });
     test('should check if the factory constructor is working correctly', () {
       final DateTime _tDateTime = DateTime.now();
       final WeatherEntity _tWeatherEntity = WeatherEntity(
-          id: _id,
-          weatherResponse: some(_weatherResponse),
-          city: 'London',
-          lastUpdated: some(_tDateTime));
+        id: _id,
+        weatherResponse: some(_weatherResponse),
+        lastUpdated: some(_tDateTime),
+      );
       final WeatherEntity _tWeatherEntity2 = WeatherEntity(
-          id: _id,
-          weatherResponse: some(_weatherResponse),
-          city: 'London',
-          lastUpdated: some(_tDateTime));
+        id: _id,
+        weatherResponse: some(_weatherResponse),
+        lastUpdated: some(_tDateTime),
+      );
       expect(_tWeatherEntity, _tWeatherEntity2);
     });
   });
