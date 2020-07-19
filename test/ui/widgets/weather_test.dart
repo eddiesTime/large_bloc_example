@@ -48,7 +48,7 @@ void main() {
 
     testWidgets('should render properly for WeatherState.initial',
         (WidgetTester tester) async {
-      when(_weatherBloc.state).thenAnswer((_) => const Initial());
+      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
       await tester.pumpWidget(
         BlocProvider<WeatherBloc>.value(
           value: _weatherBloc,
@@ -65,7 +65,7 @@ void main() {
 
     testWidgets('should render properly for WeatherState.loading',
         (WidgetTester tester) async {
-      when(_weatherBloc.state).thenAnswer((_) => const Loading());
+      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
       await tester.pumpWidget(
         BlocProvider<WeatherBloc>.value(
           value: _weatherBloc,
@@ -82,8 +82,7 @@ void main() {
 
     testWidgets('should render properly for WeatherState.loadingFailure',
         (WidgetTester tester) async {
-      when(_weatherBloc.state)
-          .thenAnswer((_) => const LoadingFailure(NotALocation()));
+      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
       await tester.pumpWidget(
         BlocProvider<WeatherBloc>.value(
           value: _weatherBloc,
@@ -100,8 +99,7 @@ void main() {
 
     testWidgets('should render properly for WeatherState.loaded',
         (WidgetTester tester) async {
-      when(_weatherBloc.state)
-          .thenAnswer((_) => Loaded(WeatherEntity.initial()));
+      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
       when(_settingsBloc.state).thenAnswer((_) => SettingsState.celcius());
       when(_themeBloc.state)
           .thenAnswer((_) => ThemeState(themeEntity: ThemeEntity.initial()));
