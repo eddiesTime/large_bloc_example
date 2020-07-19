@@ -2,11 +2,14 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc_example/domain/weather/i_weather_facade.dart';
 import 'package:flutter_bloc_example/domain/weather/value_objects.dart';
 import 'package:flutter_bloc_example/domain/weather/weather_failure.dart';
+import 'package:flutter_bloc_example/infrastructure/logging/i_logging_facade.dart';
 import 'package:flutter_bloc_example/infrastructure/weather/city_dto.dart';
+import 'package:flutter_bloc_example/injection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:weather_app_example_data_models_core/weather_app_example_data_models_core.dart';
 import 'package:weather_repository_core/weather_repository_core.dart';
+import 'package:fimber/fimber.dart';
 
 /// Implements the interface `WeatherFacade` provided by the domain layer.
 ///
@@ -14,12 +17,22 @@ import 'package:weather_repository_core/weather_repository_core.dart';
 @LazySingleton(as: IWeatherFacade)
 class WeatherRepositoryFacade implements IWeatherFacade {
   final WeatherRepository _weatherRepository;
-
+  final FimberLog _logger =
+      getIt<ILoggingFacade<FimberLog>>().createNamedLogger(name: 'WeatherRepo');
   WeatherRepositoryFacade(this._weatherRepository);
 
   @override
   WeatherCondition getWeatherConditionForWeather({Weather weather}) {
-    return weather.mapConditionToWeatherCondition(weather.condition);
+    try {
+      return weather.mapConditionToWeatherCondition(weather.condition);
+    } catch (e, s) {
+      getIt<ILoggingFacade<FimberLog>>().logError(
+          logger: _logger,
+          message: 'Get weather condition for weather $weather.',
+          exception: e,
+          stackTrace: s);
+      return null;
+    }
   }
 
   @override
@@ -30,7 +43,12 @@ class WeatherRepositoryFacade implements IWeatherFacade {
       final WeatherResponse _wr =
           await _weatherRepository.getWeatherWithQuery(city: cityDto.city);
       return right(_wr);
-    } catch (e) {
+    } catch (e, s) {
+      getIt<ILoggingFacade<FimberLog>>().logError(
+          logger: _logger,
+          message: 'Get weather for query.',
+          exception: e,
+          stackTrace: s);
       return left(const NotALocation());
     }
   }
@@ -44,7 +62,12 @@ class WeatherRepositoryFacade implements IWeatherFacade {
       final WeatherResponse _wr = await _weatherRepository
           .getWeatherWithLattLong(latt: latt, long: long);
       return right(_wr);
-    } catch (e) {
+    } catch (e, s) {
+      getIt<ILoggingFacade<FimberLog>>().logError(
+          logger: _logger,
+          message: 'Get weather with latlong',
+          exception: e,
+          stackTrace: s);
       return left(const NoLocationFoundForLattLong());
     }
   }
@@ -57,7 +80,12 @@ class WeatherRepositoryFacade implements IWeatherFacade {
       final WeatherResponse _wr =
           await _weatherRepository.getWeatherWithQuery(city: cityDto.city);
       return right(_wr);
-    } catch (e) {
+    } catch (e, s) {
+      getIt<ILoggingFacade<FimberLog>>().logError(
+          logger: _logger,
+          message: 'Refresh weather data.',
+          exception: e,
+          stackTrace: s);
       return left(const UnableToRefresh());
     }
   }

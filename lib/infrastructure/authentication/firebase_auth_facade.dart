@@ -6,15 +6,20 @@ import 'package:flutter_bloc_example/domain/authentication/i_auth_facade.dart';
 import 'package:flutter_bloc_example/domain/authentication/user_entity.dart';
 import 'package:flutter_bloc_example/domain/authentication/value_objects.dart';
 import 'package:flutter_bloc_example/infrastructure/authentication/firebase_user_mapper.dart';
+import 'package:flutter_bloc_example/infrastructure/logging/i_logging_facade.dart';
+import 'package:flutter_bloc_example/injection.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
+import 'package:fimber/fimber.dart';
 
 @LazySingleton(as: IAuthFacade)
 class FirebaseAuthFacade implements IAuthFacade {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
   final FirebaseUserMapper _firebaseUserMapper;
+  final FimberLog _logger =
+      getIt<ILoggingFacade<FimberLog>>().createNamedLogger(name: 'AuthFacade');
 
   FirebaseAuthFacade(
     this._firebaseAuth,
@@ -41,7 +46,12 @@ class FirebaseAuthFacade implements IAuthFacade {
             password: passwordStr,
           )
           .then((_) => right(unit));
-    } on PlatformException catch (e) {
+    } on PlatformException catch (e, s) {
+      getIt<ILoggingFacade<FimberLog>>().logError(
+          logger: _logger,
+          message: 'Register with email and password.',
+          exception: e,
+          stackTrace: s);
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
         return left(const AuthFailure.emailAlreadyInUse());
       } else {
@@ -64,7 +74,12 @@ class FirebaseAuthFacade implements IAuthFacade {
             password: passwordStr,
           )
           .then((_) => right(unit));
-    } on PlatformException catch (e) {
+    } on PlatformException catch (e, s) {
+      getIt<ILoggingFacade<FimberLog>>().logError(
+          logger: _logger,
+          message: 'Sign in with email and password',
+          exception: e,
+          stackTrace: s);
       if (e.code == 'ERROR_WRONG_PASSWORD' ||
           e.code == 'ERROR_USER_NOT_FOUND') {
         return left(const AuthFailure.invalidEmailAndPasswordCombination());
@@ -90,16 +105,26 @@ class FirebaseAuthFacade implements IAuthFacade {
       return _firebaseAuth
           .signInWithCredential(authCredential)
           .then((r) => right(unit));
-    } on PlatformException catch (_) {
+    } on PlatformException catch (e, s) {
+      getIt<ILoggingFacade<FimberLog>>().logError(
+          logger: _logger,
+          message: 'Sign in with Google',
+          exception: e,
+          stackTrace: s);
       return left(const AuthFailure.serverError());
     }
   }
 
   @override
   Future<void> signOut() async {
-    return Future.wait([
-      _googleSignIn.signOut(),
-      _firebaseAuth.signOut(),
-    ]);
+    try {
+      return Future.wait([
+        _googleSignIn.signOut(),
+        _firebaseAuth.signOut(),
+      ]);
+    } catch (e, s) {
+      getIt<ILoggingFacade<FimberLog>>().logError(
+          logger: _logger, message: 'Logout', exception: e, stackTrace: s);
+    }
   }
 }
