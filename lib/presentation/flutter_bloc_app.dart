@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_example/application/blocs.dart';
 import 'package:flutter_bloc_example/injection.dart';
 import 'package:flutter_bloc_example/presentation/routes/router.gr.dart';
-import 'package:flutter_bloc_example/presentation/weather/pages/weather_page.dart';
 
 class FlutterBlocApp extends StatelessWidget {
   @override
