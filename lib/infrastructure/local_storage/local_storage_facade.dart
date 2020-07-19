@@ -4,15 +4,20 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc_example/domain/local_storage/i_local_storage_facade.dart';
 import 'package:flutter_bloc_example/domain/local_storage/local_storage_failure.dart';
 import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
+import 'package:flutter_bloc_example/infrastructure/logging/i_logging_facade.dart';
 import 'package:flutter_bloc_example/infrastructure/weather/weather_entity_dto.dart';
+import 'package:flutter_bloc_example/injection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fimber/fimber.dart';
 
 @LazySingleton(as: ILocalStorageFacade)
-class LocalStorageRepositoryFacade implements ILocalStorageFacade {
+class LocalStorageFacade implements ILocalStorageFacade {
   final SharedPreferences _sharedPrefs;
+  final FimberLog _logger = getIt<ILoggingFacade<FimberLog>>()
+      .createNamedLogger(name: 'Local Storage');
 
-  LocalStorageRepositoryFacade(this._sharedPrefs);
+  LocalStorageFacade(this._sharedPrefs);
 
   @override
   Either<LocalStorageFailure, WeatherEntity> loadWeatherDataFromLocalStorage() {
@@ -25,7 +30,12 @@ class LocalStorageRepositoryFacade implements ILocalStorageFacade {
           WeatherEntityDto.fromJson(localStoredDataJsonMap);
 
       return right(_weatherEntityDto.toDomain());
-    } catch (_) {
+    } catch (e, s) {
+      getIt<ILoggingFacade<FimberLog>>().logError(
+          logger: _logger,
+          message: 'Load data from local storage.',
+          exception: e,
+          stackTrace: s);
       return left(const NoDataStored());
     }
 
@@ -34,9 +44,18 @@ class LocalStorageRepositoryFacade implements ILocalStorageFacade {
 
   @override
   Future<bool> saveToLocalStorage({WeatherEntity weatherEntity}) {
-    final WeatherEntityDto _weatherEntityDto =
-        WeatherEntityDto.fromDomain(weatherEntity);
-    return _sharedPrefs.setString(
-        'latestWeatherEntity', jsonEncode(_weatherEntityDto));
+    try {
+      final WeatherEntityDto _weatherEntityDto =
+          WeatherEntityDto.fromDomain(weatherEntity);
+      return _sharedPrefs.setString(
+          'latestWeatherEntity', jsonEncode(_weatherEntityDto));
+    } catch (e, s) {
+      getIt<ILoggingFacade<FimberLog>>().logError(
+          logger: _logger,
+          message: 'Save to local storage.',
+          exception: e,
+          stackTrace: s);
+      return Future.value(false);
+    }
   }
 }
