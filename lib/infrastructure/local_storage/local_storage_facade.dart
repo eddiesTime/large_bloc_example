@@ -6,7 +6,6 @@ import 'package:flutter_bloc_example/domain/local_storage/local_storage_failure.
 import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
 import 'package:flutter_bloc_example/infrastructure/logging/i_logging_facade.dart';
 import 'package:flutter_bloc_example/infrastructure/weather/weather_entity_dto.dart';
-import 'package:flutter_bloc_example/injection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fimber/fimber.dart';
@@ -14,10 +13,12 @@ import 'package:fimber/fimber.dart';
 @LazySingleton(as: ILocalStorageFacade)
 class LocalStorageFacade implements ILocalStorageFacade {
   final SharedPreferences _sharedPrefs;
-  final FimberLog _logger = getIt<ILoggingFacade<FimberLog>>()
-      .createNamedLogger(name: 'Local Storage');
+  final ILoggingFacade<FimberLog> _loggingFacade;
+  FimberLog _logger;
 
-  LocalStorageFacade(this._sharedPrefs);
+  LocalStorageFacade(this._sharedPrefs, this._loggingFacade) {
+    _logger = _loggingFacade.createNamedLogger(name: 'Local Storage');
+  }
 
   @override
   Either<LocalStorageFailure, WeatherEntity> loadWeatherDataFromLocalStorage() {
@@ -31,7 +32,7 @@ class LocalStorageFacade implements ILocalStorageFacade {
 
       return right(_weatherEntityDto.toDomain());
     } catch (e, s) {
-      getIt<ILoggingFacade<FimberLog>>().logError(
+      _loggingFacade.logError(
           logger: _logger,
           message: 'Load data from local storage.',
           exception: e,
@@ -50,7 +51,7 @@ class LocalStorageFacade implements ILocalStorageFacade {
       return _sharedPrefs.setString(
           'latestWeatherEntity', jsonEncode(_weatherEntityDto));
     } catch (e, s) {
-      getIt<ILoggingFacade<FimberLog>>().logError(
+      _loggingFacade.logError(
           logger: _logger,
           message: 'Save to local storage.',
           exception: e,

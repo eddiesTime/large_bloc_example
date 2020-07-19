@@ -7,7 +7,6 @@ import 'package:flutter_bloc_example/domain/authentication/user_entity.dart';
 import 'package:flutter_bloc_example/domain/authentication/value_objects.dart';
 import 'package:flutter_bloc_example/infrastructure/authentication/firebase_user_mapper.dart';
 import 'package:flutter_bloc_example/infrastructure/logging/i_logging_facade.dart';
-import 'package:flutter_bloc_example/injection.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
@@ -18,14 +17,13 @@ class FirebaseAuthFacade implements IAuthFacade {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
   final FirebaseUserMapper _firebaseUserMapper;
-  final FimberLog _logger =
-      getIt<ILoggingFacade<FimberLog>>().createNamedLogger(name: 'AuthFacade');
+  final ILoggingFacade<FimberLog> _loggingFacade;
+  FimberLog _logger;
 
-  FirebaseAuthFacade(
-    this._firebaseAuth,
-    this._googleSignIn,
-    this._firebaseUserMapper,
-  );
+  FirebaseAuthFacade(this._firebaseAuth, this._googleSignIn,
+      this._firebaseUserMapper, this._loggingFacade) {
+    _logger = _loggingFacade.createNamedLogger(name: 'Auth Facade');
+  }
 
   @override
   Future<Option<UserEntity>> getSignedInUser() async => _firebaseAuth
@@ -47,7 +45,7 @@ class FirebaseAuthFacade implements IAuthFacade {
           )
           .then((_) => right(unit));
     } on PlatformException catch (e, s) {
-      getIt<ILoggingFacade<FimberLog>>().logError(
+      _loggingFacade.logError(
           logger: _logger,
           message: 'Register with email and password.',
           exception: e,
@@ -75,7 +73,7 @@ class FirebaseAuthFacade implements IAuthFacade {
           )
           .then((_) => right(unit));
     } on PlatformException catch (e, s) {
-      getIt<ILoggingFacade<FimberLog>>().logError(
+      _loggingFacade.logError(
           logger: _logger,
           message: 'Sign in with email and password',
           exception: e,
@@ -106,7 +104,7 @@ class FirebaseAuthFacade implements IAuthFacade {
           .signInWithCredential(authCredential)
           .then((r) => right(unit));
     } on PlatformException catch (e, s) {
-      getIt<ILoggingFacade<FimberLog>>().logError(
+      _loggingFacade.logError(
           logger: _logger,
           message: 'Sign in with Google',
           exception: e,
@@ -123,7 +121,7 @@ class FirebaseAuthFacade implements IAuthFacade {
         _firebaseAuth.signOut(),
       ]);
     } catch (e, s) {
-      getIt<ILoggingFacade<FimberLog>>().logError(
+      _loggingFacade.logError(
           logger: _logger, message: 'Logout', exception: e, stackTrace: s);
     }
   }

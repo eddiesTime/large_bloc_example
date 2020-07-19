@@ -17,16 +17,19 @@ import 'package:fimber/fimber.dart';
 @LazySingleton(as: IWeatherFacade)
 class WeatherRepositoryFacade implements IWeatherFacade {
   final WeatherRepository _weatherRepository;
-  final FimberLog _logger =
-      getIt<ILoggingFacade<FimberLog>>().createNamedLogger(name: 'WeatherRepo');
-  WeatherRepositoryFacade(this._weatherRepository);
+  final ILoggingFacade<FimberLog> _loggingFacade;
+  FimberLog _logger;
+
+  WeatherRepositoryFacade(this._weatherRepository, this._loggingFacade) {
+    _logger = _loggingFacade.createNamedLogger(name: 'Weather Repo');
+  }
 
   @override
   WeatherCondition getWeatherConditionForWeather({Weather weather}) {
     try {
       return weather.mapConditionToWeatherCondition(weather.condition);
     } catch (e, s) {
-      getIt<ILoggingFacade<FimberLog>>().logError(
+      _loggingFacade.logError(
           logger: _logger,
           message: 'Get weather condition for weather $weather.',
           exception: e,
@@ -44,7 +47,7 @@ class WeatherRepositoryFacade implements IWeatherFacade {
           await _weatherRepository.getWeatherWithQuery(city: cityDto.city);
       return right(_wr);
     } catch (e, s) {
-      getIt<ILoggingFacade<FimberLog>>().logError(
+      _loggingFacade.logError(
           logger: _logger,
           message: 'Get weather for query.',
           exception: e,
@@ -63,7 +66,7 @@ class WeatherRepositoryFacade implements IWeatherFacade {
           .getWeatherWithLattLong(latt: latt, long: long);
       return right(_wr);
     } catch (e, s) {
-      getIt<ILoggingFacade<FimberLog>>().logError(
+      _loggingFacade.logError(
           logger: _logger,
           message: 'Get weather with latlong',
           exception: e,
@@ -81,7 +84,7 @@ class WeatherRepositoryFacade implements IWeatherFacade {
           await _weatherRepository.getWeatherWithQuery(city: cityDto.city);
       return right(_wr);
     } catch (e, s) {
-      getIt<ILoggingFacade<FimberLog>>().logError(
+      _loggingFacade.logError(
           logger: _logger,
           message: 'Refresh weather data.',
           exception: e,
