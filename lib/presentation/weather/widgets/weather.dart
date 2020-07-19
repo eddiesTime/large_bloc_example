@@ -78,22 +78,6 @@ class _WeatherState extends State<Weather> {
               );
             });
           }
-          // return state.map(
-          //   initial: (_) => _buildIdle(),
-          //   loading: (_) => _buildLoading(),
-          //   loadingFailure: (state) => _buildError(state),
-          //   loaded: (state) => _buildWeather(context, state),
-
-          // if (state is LoadingFailure) {
-          //   return _buildError();
-          // }
-          // if (state is Loading) {
-          //   return _buildLoading();
-          // }
-          // if (state is Loaded) {
-          //   return _buildWeather(context, state);
-          // }
-          // return _buildIdle();
         });
   }
 
@@ -107,9 +91,10 @@ class _WeatherState extends State<Weather> {
           onRefresh: () {
             context.bloc<WeatherBloc>().add(
                   WeatherEvent.refreshWeatherForLocation(
-                    state.weatherEntity.weatherResponse
+                    cityStr: state.weatherEntity.weatherResponse
                         .getOrElse(() => null)
                         .title,
+                    requestTime: DateTime.now(),
                   ),
                 );
             return _refreshCompleter.future;

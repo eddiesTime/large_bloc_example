@@ -42,7 +42,10 @@ class _WeatherPageState extends State<WeatherPage> {
             backgroundColor: Colors.grey,
             onPressed: () {
               BlocProvider.of<WeatherBloc>(context).add(
-                  const WeatherEvent.fetchWeatherForLocationWithLattLong());
+                WeatherEvent.fetchWeatherForLocationWithLattLong(
+                  requestTime: DateTime.now(),
+                ),
+              );
             },
             child: const Icon(
               Icons.location_on,

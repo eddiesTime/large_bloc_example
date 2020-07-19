@@ -54,11 +54,19 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       },
       fetchWeatherForLocationWithQuery: (e) async* {
         yield* _performActionOnWeatherFacadeWithQuery(
-            _weatherFacade.getWeatherWithQuery, e.cityStr, false);
+          _weatherFacade.getWeatherWithQuery,
+          e.cityStr,
+          e.requestTime,
+          false,
+        );
       },
       refreshWeatherForLocation: (e) async* {
         yield* _performActionOnWeatherFacadeWithQuery(
-            _weatherFacade.refreshWeatherData, e.cityStr, true);
+          _weatherFacade.refreshWeatherData,
+          e.cityStr,
+          e.requestTime,
+          true,
+        );
       },
     );
   }
@@ -72,6 +80,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     })
         forwardedCall,
     String cityStr,
+    DateTime requestTime,
     bool isRefreshCallBack,
   ) async* {
     final City _city = City(cityStr);
@@ -110,7 +119,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         );
       } else {
         final WeatherEntity _we = state.weatherEntity.copyWith(
-            weatherResponse: some(_wr), lastUpdated: some(DateTime.now()));
+          weatherResponse: some(_wr),
+          lastUpdated: some(requestTime),
+        );
         await _localStorageFacade.saveToLocalStorage(weatherEntity: _we);
         yield state.copyWith(
           city: _city,
@@ -121,33 +132,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         );
       }
     }
-
-    // yield const Loading();
-    // final Either<WeatherFailure, WeatherResponse> failureOrSuccess =
-    //     await _weatherFacade.getWeatherForLocation(location: event.location);
-    // WeatherFailure wf;
-    // WeatherResponse wr;
-    // failureOrSuccess.fold((l) => {wf = l}, (r) => {wr = r});
-
-    // if (failureOrSuccess.isLeft()) {
-    //   yield LoadingFailure(wf);
-    // } else {
-    //   yield Loaded(
-    //     WeatherEntity(
-    //       id: UniqueId(),
-    //       weatherResponse: some(wr),
-    //       city: event.location,
-    //       lastUpdated: some(
-    //         DateTime.now(),
-    //       ),
-    //     ),
-    //   );
-    // }
   }
 
-  /// Yields [WeatherState.loaded(weatherEntity)] with a newly created [WeatherEntity] when the weather data has been refreshed successfully.
-  ///
-  /// Yields [WeatherState.loadingFailure()] when an error occured while refreshing the weather data.
   Stream<WeatherState> _performActionToFetchWeatherDataForLattLong(
       FetchWeatherWithLattLong event) async* {
     yield state.copyWith(
@@ -174,7 +160,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       );
     } else {
       final WeatherEntity _we = state.weatherEntity.copyWith(
-          weatherResponse: some(_wr), lastUpdated: some(DateTime.now()));
+        weatherResponse: some(_wr),
+        lastUpdated: some(event.requestTime),
+      );
       await _localStorageFacade.saveToLocalStorage(weatherEntity: _we);
       final City _city = City(_we.weatherResponse.getOrElse(() => null).title);
       yield state.copyWith(
@@ -189,13 +177,11 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
   Stream<WeatherState> _loadWeatherEntityFromStorage(
       LoadFromStorage event) async* {
-    Either<LocalStorageFailure, WeatherEntity> failureOrSuccess;
-    failureOrSuccess = _localStorageFacade.loadWeatherDataFromLocalStorage();
+    final Either<LocalStorageFailure, WeatherEntity> failureOrSuccess =
+        _localStorageFacade.loadWeatherDataFromLocalStorage();
 
-    LocalStorageFailure _lsf;
     WeatherEntity _we;
-    failureOrSuccess.fold(
-        (failure) => {_lsf = failure}, (success) => {_we = success});
+    failureOrSuccess.fold((failure) => null, (success) => {_we = success});
 
     if (failureOrSuccess.isLeft()) {
       yield state;

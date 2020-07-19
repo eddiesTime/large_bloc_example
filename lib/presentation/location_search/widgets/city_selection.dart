@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_example/application/weather/weather_bloc.dart';
-import 'package:flutter_bloc_example/domain/weather/value_objects.dart';
 
 /// This widget build the input field which allows the user to search
 /// for a location to receive its weather data.
@@ -48,8 +47,12 @@ class CitySelection extends StatelessWidget {
               key: const Key('__Location_Search_Icon_Button__'),
               icon: const Icon(Icons.search),
               onPressed: () {
-                context.bloc<WeatherBloc>().add(
-                    WeatherEvent.fetchWeatherForLocationWithQuery(_tec.text));
+                context
+                    .bloc<WeatherBloc>()
+                    .add(WeatherEvent.fetchWeatherForLocationWithQuery(
+                      cityStr: _tec.text,
+                      requestTime: DateTime.now(),
+                    ));
                 if (_tec.text.isNotEmpty) {
                   ExtendedNavigator.root.pop();
                 }

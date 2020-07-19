@@ -26,23 +26,28 @@ class _$WeatherEventTearOff {
     return const LoadFromStorage();
   }
 
-  FetchWeatherWithQuery fetchWeatherForLocationWithQuery(String cityStr) {
+  FetchWeatherWithQuery fetchWeatherForLocationWithQuery(
+      {@required String cityStr, @required DateTime requestTime}) {
     return FetchWeatherWithQuery(
-      cityStr,
+      cityStr: cityStr,
+      requestTime: requestTime,
     );
   }
 
   FetchWeatherWithLattLong fetchWeatherForLocationWithLattLong(
-      {double latt, double long}) {
+      {double latt, double long, @required DateTime requestTime}) {
     return FetchWeatherWithLattLong(
       latt: latt,
       long: long,
+      requestTime: requestTime,
     );
   }
 
-  RefreshWeather refreshWeatherForLocation(String cityStr) {
+  RefreshWeather refreshWeatherForLocation(
+      {@required String cityStr, @required DateTime requestTime}) {
     return RefreshWeather(
-      cityStr,
+      cityStr: cityStr,
+      requestTime: requestTime,
     );
   }
 }
@@ -56,19 +61,25 @@ mixin _$WeatherEvent {
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
     @required Result loadFromStorage(),
-    @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
-        Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    @required Result refreshWeatherForLocation(String cityStr),
+        Result fetchWeatherForLocationWithQuery(
+            String cityStr, DateTime requestTime),
+    @required
+        Result fetchWeatherForLocationWithLattLong(
+            double latt, double long, DateTime requestTime),
+    @required
+        Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result cityChanged(String cityStr),
     Result newSearch(),
     Result loadFromStorage(),
-    Result fetchWeatherForLocationWithQuery(String cityStr),
-    Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    Result refreshWeatherForLocation(String cityStr),
+    Result fetchWeatherForLocationWithQuery(
+        String cityStr, DateTime requestTime),
+    Result fetchWeatherForLocationWithLattLong(
+        double latt, double long, DateTime requestTime),
+    Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -176,10 +187,14 @@ class _$CityChanged with DiagnosticableTreeMixin implements CityChanged {
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
     @required Result loadFromStorage(),
-    @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
-        Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    @required Result refreshWeatherForLocation(String cityStr),
+        Result fetchWeatherForLocationWithQuery(
+            String cityStr, DateTime requestTime),
+    @required
+        Result fetchWeatherForLocationWithLattLong(
+            double latt, double long, DateTime requestTime),
+    @required
+        Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
@@ -196,9 +211,11 @@ class _$CityChanged with DiagnosticableTreeMixin implements CityChanged {
     Result cityChanged(String cityStr),
     Result newSearch(),
     Result loadFromStorage(),
-    Result fetchWeatherForLocationWithQuery(String cityStr),
-    Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    Result refreshWeatherForLocation(String cityStr),
+    Result fetchWeatherForLocationWithQuery(
+        String cityStr, DateTime requestTime),
+    Result fetchWeatherForLocationWithLattLong(
+        double latt, double long, DateTime requestTime),
+    Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -298,10 +315,14 @@ class _$NewSearch with DiagnosticableTreeMixin implements NewSearch {
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
     @required Result loadFromStorage(),
-    @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
-        Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    @required Result refreshWeatherForLocation(String cityStr),
+        Result fetchWeatherForLocationWithQuery(
+            String cityStr, DateTime requestTime),
+    @required
+        Result fetchWeatherForLocationWithLattLong(
+            double latt, double long, DateTime requestTime),
+    @required
+        Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
@@ -318,9 +339,11 @@ class _$NewSearch with DiagnosticableTreeMixin implements NewSearch {
     Result cityChanged(String cityStr),
     Result newSearch(),
     Result loadFromStorage(),
-    Result fetchWeatherForLocationWithQuery(String cityStr),
-    Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    Result refreshWeatherForLocation(String cityStr),
+    Result fetchWeatherForLocationWithQuery(
+        String cityStr, DateTime requestTime),
+    Result fetchWeatherForLocationWithLattLong(
+        double latt, double long, DateTime requestTime),
+    Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -423,10 +446,14 @@ class _$LoadFromStorage
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
     @required Result loadFromStorage(),
-    @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
-        Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    @required Result refreshWeatherForLocation(String cityStr),
+        Result fetchWeatherForLocationWithQuery(
+            String cityStr, DateTime requestTime),
+    @required
+        Result fetchWeatherForLocationWithLattLong(
+            double latt, double long, DateTime requestTime),
+    @required
+        Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
@@ -443,9 +470,11 @@ class _$LoadFromStorage
     Result cityChanged(String cityStr),
     Result newSearch(),
     Result loadFromStorage(),
-    Result fetchWeatherForLocationWithQuery(String cityStr),
-    Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    Result refreshWeatherForLocation(String cityStr),
+    Result fetchWeatherForLocationWithQuery(
+        String cityStr, DateTime requestTime),
+    Result fetchWeatherForLocationWithLattLong(
+        double latt, double long, DateTime requestTime),
+    Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -504,7 +533,7 @@ abstract class $FetchWeatherWithQueryCopyWith<$Res> {
   factory $FetchWeatherWithQueryCopyWith(FetchWeatherWithQuery value,
           $Res Function(FetchWeatherWithQuery) then) =
       _$FetchWeatherWithQueryCopyWithImpl<$Res>;
-  $Res call({String cityStr});
+  $Res call({String cityStr, DateTime requestTime});
 }
 
 class _$FetchWeatherWithQueryCopyWithImpl<$Res>
@@ -520,9 +549,12 @@ class _$FetchWeatherWithQueryCopyWithImpl<$Res>
   @override
   $Res call({
     Object cityStr = freezed,
+    Object requestTime = freezed,
   }) {
     return _then(FetchWeatherWithQuery(
-      cityStr == freezed ? _value.cityStr : cityStr as String,
+      cityStr: cityStr == freezed ? _value.cityStr : cityStr as String,
+      requestTime:
+          requestTime == freezed ? _value.requestTime : requestTime as DateTime,
     ));
   }
 }
@@ -530,14 +562,19 @@ class _$FetchWeatherWithQueryCopyWithImpl<$Res>
 class _$FetchWeatherWithQuery
     with DiagnosticableTreeMixin
     implements FetchWeatherWithQuery {
-  const _$FetchWeatherWithQuery(this.cityStr) : assert(cityStr != null);
+  const _$FetchWeatherWithQuery(
+      {@required this.cityStr, @required this.requestTime})
+      : assert(cityStr != null),
+        assert(requestTime != null);
 
   @override
   final String cityStr;
+  @override
+  final DateTime requestTime;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherEvent.fetchWeatherForLocationWithQuery(cityStr: $cityStr)';
+    return 'WeatherEvent.fetchWeatherForLocationWithQuery(cityStr: $cityStr, requestTime: $requestTime)';
   }
 
   @override
@@ -546,7 +583,8 @@ class _$FetchWeatherWithQuery
     properties
       ..add(DiagnosticsProperty(
           'type', 'WeatherEvent.fetchWeatherForLocationWithQuery'))
-      ..add(DiagnosticsProperty('cityStr', cityStr));
+      ..add(DiagnosticsProperty('cityStr', cityStr))
+      ..add(DiagnosticsProperty('requestTime', requestTime));
   }
 
   @override
@@ -554,12 +592,18 @@ class _$FetchWeatherWithQuery
     return identical(this, other) ||
         (other is FetchWeatherWithQuery &&
             (identical(other.cityStr, cityStr) ||
-                const DeepCollectionEquality().equals(other.cityStr, cityStr)));
+                const DeepCollectionEquality()
+                    .equals(other.cityStr, cityStr)) &&
+            (identical(other.requestTime, requestTime) ||
+                const DeepCollectionEquality()
+                    .equals(other.requestTime, requestTime)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(cityStr);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(cityStr) ^
+      const DeepCollectionEquality().hash(requestTime);
 
   @override
   $FetchWeatherWithQueryCopyWith<FetchWeatherWithQuery> get copyWith =>
@@ -572,10 +616,14 @@ class _$FetchWeatherWithQuery
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
     @required Result loadFromStorage(),
-    @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
-        Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    @required Result refreshWeatherForLocation(String cityStr),
+        Result fetchWeatherForLocationWithQuery(
+            String cityStr, DateTime requestTime),
+    @required
+        Result fetchWeatherForLocationWithLattLong(
+            double latt, double long, DateTime requestTime),
+    @required
+        Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
@@ -583,7 +631,7 @@ class _$FetchWeatherWithQuery
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
-    return fetchWeatherForLocationWithQuery(cityStr);
+    return fetchWeatherForLocationWithQuery(cityStr, requestTime);
   }
 
   @override
@@ -592,14 +640,16 @@ class _$FetchWeatherWithQuery
     Result cityChanged(String cityStr),
     Result newSearch(),
     Result loadFromStorage(),
-    Result fetchWeatherForLocationWithQuery(String cityStr),
-    Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    Result refreshWeatherForLocation(String cityStr),
+    Result fetchWeatherForLocationWithQuery(
+        String cityStr, DateTime requestTime),
+    Result fetchWeatherForLocationWithLattLong(
+        double latt, double long, DateTime requestTime),
+    Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (fetchWeatherForLocationWithQuery != null) {
-      return fetchWeatherForLocationWithQuery(cityStr);
+      return fetchWeatherForLocationWithQuery(cityStr, requestTime);
     }
     return orElse();
   }
@@ -646,9 +696,12 @@ class _$FetchWeatherWithQuery
 }
 
 abstract class FetchWeatherWithQuery implements WeatherEvent {
-  const factory FetchWeatherWithQuery(String cityStr) = _$FetchWeatherWithQuery;
+  const factory FetchWeatherWithQuery(
+      {@required String cityStr,
+      @required DateTime requestTime}) = _$FetchWeatherWithQuery;
 
   String get cityStr;
+  DateTime get requestTime;
   $FetchWeatherWithQueryCopyWith<FetchWeatherWithQuery> get copyWith;
 }
 
@@ -656,7 +709,7 @@ abstract class $FetchWeatherWithLattLongCopyWith<$Res> {
   factory $FetchWeatherWithLattLongCopyWith(FetchWeatherWithLattLong value,
           $Res Function(FetchWeatherWithLattLong) then) =
       _$FetchWeatherWithLattLongCopyWithImpl<$Res>;
-  $Res call({double latt, double long});
+  $Res call({double latt, double long, DateTime requestTime});
 }
 
 class _$FetchWeatherWithLattLongCopyWithImpl<$Res>
@@ -674,10 +727,13 @@ class _$FetchWeatherWithLattLongCopyWithImpl<$Res>
   $Res call({
     Object latt = freezed,
     Object long = freezed,
+    Object requestTime = freezed,
   }) {
     return _then(FetchWeatherWithLattLong(
       latt: latt == freezed ? _value.latt : latt as double,
       long: long == freezed ? _value.long : long as double,
+      requestTime:
+          requestTime == freezed ? _value.requestTime : requestTime as DateTime,
     ));
   }
 }
@@ -685,16 +741,20 @@ class _$FetchWeatherWithLattLongCopyWithImpl<$Res>
 class _$FetchWeatherWithLattLong
     with DiagnosticableTreeMixin
     implements FetchWeatherWithLattLong {
-  const _$FetchWeatherWithLattLong({this.latt, this.long});
+  const _$FetchWeatherWithLattLong(
+      {this.latt, this.long, @required this.requestTime})
+      : assert(requestTime != null);
 
   @override
   final double latt;
   @override
   final double long;
+  @override
+  final DateTime requestTime;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherEvent.fetchWeatherForLocationWithLattLong(latt: $latt, long: $long)';
+    return 'WeatherEvent.fetchWeatherForLocationWithLattLong(latt: $latt, long: $long, requestTime: $requestTime)';
   }
 
   @override
@@ -704,7 +764,8 @@ class _$FetchWeatherWithLattLong
       ..add(DiagnosticsProperty(
           'type', 'WeatherEvent.fetchWeatherForLocationWithLattLong'))
       ..add(DiagnosticsProperty('latt', latt))
-      ..add(DiagnosticsProperty('long', long));
+      ..add(DiagnosticsProperty('long', long))
+      ..add(DiagnosticsProperty('requestTime', requestTime));
   }
 
   @override
@@ -714,14 +775,18 @@ class _$FetchWeatherWithLattLong
             (identical(other.latt, latt) ||
                 const DeepCollectionEquality().equals(other.latt, latt)) &&
             (identical(other.long, long) ||
-                const DeepCollectionEquality().equals(other.long, long)));
+                const DeepCollectionEquality().equals(other.long, long)) &&
+            (identical(other.requestTime, requestTime) ||
+                const DeepCollectionEquality()
+                    .equals(other.requestTime, requestTime)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(latt) ^
-      const DeepCollectionEquality().hash(long);
+      const DeepCollectionEquality().hash(long) ^
+      const DeepCollectionEquality().hash(requestTime);
 
   @override
   $FetchWeatherWithLattLongCopyWith<FetchWeatherWithLattLong> get copyWith =>
@@ -734,10 +799,14 @@ class _$FetchWeatherWithLattLong
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
     @required Result loadFromStorage(),
-    @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
-        Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    @required Result refreshWeatherForLocation(String cityStr),
+        Result fetchWeatherForLocationWithQuery(
+            String cityStr, DateTime requestTime),
+    @required
+        Result fetchWeatherForLocationWithLattLong(
+            double latt, double long, DateTime requestTime),
+    @required
+        Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
@@ -745,7 +814,7 @@ class _$FetchWeatherWithLattLong
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
-    return fetchWeatherForLocationWithLattLong(latt, long);
+    return fetchWeatherForLocationWithLattLong(latt, long, requestTime);
   }
 
   @override
@@ -754,14 +823,16 @@ class _$FetchWeatherWithLattLong
     Result cityChanged(String cityStr),
     Result newSearch(),
     Result loadFromStorage(),
-    Result fetchWeatherForLocationWithQuery(String cityStr),
-    Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    Result refreshWeatherForLocation(String cityStr),
+    Result fetchWeatherForLocationWithQuery(
+        String cityStr, DateTime requestTime),
+    Result fetchWeatherForLocationWithLattLong(
+        double latt, double long, DateTime requestTime),
+    Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (fetchWeatherForLocationWithLattLong != null) {
-      return fetchWeatherForLocationWithLattLong(latt, long);
+      return fetchWeatherForLocationWithLattLong(latt, long, requestTime);
     }
     return orElse();
   }
@@ -808,11 +879,14 @@ class _$FetchWeatherWithLattLong
 }
 
 abstract class FetchWeatherWithLattLong implements WeatherEvent {
-  const factory FetchWeatherWithLattLong({double latt, double long}) =
-      _$FetchWeatherWithLattLong;
+  const factory FetchWeatherWithLattLong(
+      {double latt,
+      double long,
+      @required DateTime requestTime}) = _$FetchWeatherWithLattLong;
 
   double get latt;
   double get long;
+  DateTime get requestTime;
   $FetchWeatherWithLattLongCopyWith<FetchWeatherWithLattLong> get copyWith;
 }
 
@@ -820,7 +894,7 @@ abstract class $RefreshWeatherCopyWith<$Res> {
   factory $RefreshWeatherCopyWith(
           RefreshWeather value, $Res Function(RefreshWeather) then) =
       _$RefreshWeatherCopyWithImpl<$Res>;
-  $Res call({String cityStr});
+  $Res call({String cityStr, DateTime requestTime});
 }
 
 class _$RefreshWeatherCopyWithImpl<$Res>
@@ -836,22 +910,29 @@ class _$RefreshWeatherCopyWithImpl<$Res>
   @override
   $Res call({
     Object cityStr = freezed,
+    Object requestTime = freezed,
   }) {
     return _then(RefreshWeather(
-      cityStr == freezed ? _value.cityStr : cityStr as String,
+      cityStr: cityStr == freezed ? _value.cityStr : cityStr as String,
+      requestTime:
+          requestTime == freezed ? _value.requestTime : requestTime as DateTime,
     ));
   }
 }
 
 class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
-  const _$RefreshWeather(this.cityStr) : assert(cityStr != null);
+  const _$RefreshWeather({@required this.cityStr, @required this.requestTime})
+      : assert(cityStr != null),
+        assert(requestTime != null);
 
   @override
   final String cityStr;
+  @override
+  final DateTime requestTime;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WeatherEvent.refreshWeatherForLocation(cityStr: $cityStr)';
+    return 'WeatherEvent.refreshWeatherForLocation(cityStr: $cityStr, requestTime: $requestTime)';
   }
 
   @override
@@ -860,7 +941,8 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
     properties
       ..add(
           DiagnosticsProperty('type', 'WeatherEvent.refreshWeatherForLocation'))
-      ..add(DiagnosticsProperty('cityStr', cityStr));
+      ..add(DiagnosticsProperty('cityStr', cityStr))
+      ..add(DiagnosticsProperty('requestTime', requestTime));
   }
 
   @override
@@ -868,12 +950,18 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
     return identical(this, other) ||
         (other is RefreshWeather &&
             (identical(other.cityStr, cityStr) ||
-                const DeepCollectionEquality().equals(other.cityStr, cityStr)));
+                const DeepCollectionEquality()
+                    .equals(other.cityStr, cityStr)) &&
+            (identical(other.requestTime, requestTime) ||
+                const DeepCollectionEquality()
+                    .equals(other.requestTime, requestTime)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(cityStr);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(cityStr) ^
+      const DeepCollectionEquality().hash(requestTime);
 
   @override
   $RefreshWeatherCopyWith<RefreshWeather> get copyWith =>
@@ -885,10 +973,14 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
     @required Result cityChanged(String cityStr),
     @required Result newSearch(),
     @required Result loadFromStorage(),
-    @required Result fetchWeatherForLocationWithQuery(String cityStr),
     @required
-        Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    @required Result refreshWeatherForLocation(String cityStr),
+        Result fetchWeatherForLocationWithQuery(
+            String cityStr, DateTime requestTime),
+    @required
+        Result fetchWeatherForLocationWithLattLong(
+            double latt, double long, DateTime requestTime),
+    @required
+        Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
   }) {
     assert(cityChanged != null);
     assert(newSearch != null);
@@ -896,7 +988,7 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
     assert(fetchWeatherForLocationWithQuery != null);
     assert(fetchWeatherForLocationWithLattLong != null);
     assert(refreshWeatherForLocation != null);
-    return refreshWeatherForLocation(cityStr);
+    return refreshWeatherForLocation(cityStr, requestTime);
   }
 
   @override
@@ -905,14 +997,16 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
     Result cityChanged(String cityStr),
     Result newSearch(),
     Result loadFromStorage(),
-    Result fetchWeatherForLocationWithQuery(String cityStr),
-    Result fetchWeatherForLocationWithLattLong(double latt, double long),
-    Result refreshWeatherForLocation(String cityStr),
+    Result fetchWeatherForLocationWithQuery(
+        String cityStr, DateTime requestTime),
+    Result fetchWeatherForLocationWithLattLong(
+        double latt, double long, DateTime requestTime),
+    Result refreshWeatherForLocation(String cityStr, DateTime requestTime),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (refreshWeatherForLocation != null) {
-      return refreshWeatherForLocation(cityStr);
+      return refreshWeatherForLocation(cityStr, requestTime);
     }
     return orElse();
   }
@@ -959,9 +1053,12 @@ class _$RefreshWeather with DiagnosticableTreeMixin implements RefreshWeather {
 }
 
 abstract class RefreshWeather implements WeatherEvent {
-  const factory RefreshWeather(String cityStr) = _$RefreshWeather;
+  const factory RefreshWeather(
+      {@required String cityStr,
+      @required DateTime requestTime}) = _$RefreshWeather;
 
   String get cityStr;
+  DateTime get requestTime;
   $RefreshWeatherCopyWith<RefreshWeather> get copyWith;
 }
 
