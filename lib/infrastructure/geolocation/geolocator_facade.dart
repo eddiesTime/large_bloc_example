@@ -17,8 +17,7 @@ class GeolocatorFacade implements IGeolocationFacade {
   @override
   Future<Position> getCurrentUserPosition() {
     try {
-      return _geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.best);
+      return _geolocator.getCurrentPosition();
     } catch (e, s) {
       _loggingFacade.logError(
           logger: _logger,
