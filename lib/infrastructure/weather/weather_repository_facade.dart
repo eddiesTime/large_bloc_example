@@ -4,7 +4,6 @@ import 'package:flutter_bloc_example/domain/weather/value_objects.dart';
 import 'package:flutter_bloc_example/domain/weather/weather_failure.dart';
 import 'package:flutter_bloc_example/infrastructure/logging/i_logging_facade.dart';
 import 'package:flutter_bloc_example/infrastructure/weather/city_dto.dart';
-import 'package:flutter_bloc_example/injection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:weather_app_example_data_models_core/weather_app_example_data_models_core.dart';

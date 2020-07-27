@@ -1,4 +1,3 @@
-import 'package:flutter_bloc_example/domain/authentication/auth_failure.dart';
 import 'package:flutter_bloc_example/domain/local_storage/local_storage_failure.dart';
 import 'package:flutter_test/flutter_test.dart';
 

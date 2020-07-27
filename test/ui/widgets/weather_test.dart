@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_example/application/blocs.dart';
 import 'package:flutter_bloc_example/domain/theme/theme_entity.dart';
-import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
-import 'package:flutter_bloc_example/domain/weather/weather_failure.dart';
 import 'package:flutter_bloc_example/presentation/weather/widgets/combined_weather_temperature.dart';
 import 'package:flutter_bloc_example/presentation/weather/widgets/gradient_container.dart';
 import 'package:flutter_bloc_example/presentation/weather/widgets/last_updated.dart';

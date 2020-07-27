@@ -14,7 +14,7 @@ void main() {
   group('Authentication Bloc', () {
     FirebaseAuthFacade _authFacade;
     AuthenticationBloc _authBloc;
-    final AuthenticationState _initial = AuthenticationState.initial();
+    const AuthenticationState _initial = AuthenticationState.initial();
 
     setUp(() {
       _authFacade = MockAuthFacade();

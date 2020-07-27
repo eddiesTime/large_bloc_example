@@ -51,7 +51,7 @@ class SignInForm extends StatelessWidget {
                 height: 200.0,
                 width: 200.0,
                 clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/flutter_logo.png'),
                     fit: BoxFit.cover,
@@ -135,7 +135,7 @@ class SignInForm extends StatelessWidget {
               ),
               if (state.isSubmitting) ...[
                 const SizedBox(height: 8),
-                const LinearProgressIndicator(value: null),
+                const LinearProgressIndicator(),
               ]
             ],
           ),

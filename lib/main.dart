@@ -15,9 +15,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Initialises the code generation for [get_it].
   await configureInjection(Environment.dev);
-  List<String> ONLY_ERROR = ["E"];
+  const List<String> onlyError = ["E"];
   // getIt<ILoggingFacade<FimberLog>>().initializeLogging();
-  getIt<ILoggingFacade<FimberLog>>().initializeLogging(logLevels: ONLY_ERROR);
+  getIt<ILoggingFacade<FimberLog>>().initializeLogging(logLevels: onlyError);
   Bloc.observer = SimpleBlocObserver(
       getIt<ILoggingFacade<FimberLog>>()
           .createNamedLogger(name: 'Bloc Observer'),

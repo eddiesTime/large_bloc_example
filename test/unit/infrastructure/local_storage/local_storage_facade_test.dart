@@ -25,12 +25,11 @@ class MockLoggingFacade extends Mock implements ILoggingFacade<FimberLog> {}
 class MockWeatherResponse extends Mock implements WeatherResponse {}
 
 class MockWeatherEntityDto extends Mock implements WeatherEntityDto {
-  @override
   static WeatherEntityDto fromJson() {
     return MockWeatherEntityDto();
   }
 
-  @override
+  // ignore: prefer_constructors_over_static_methods
   static MockWeatherEntityDto fromDomain() {
     return MockWeatherEntityDto();
   }

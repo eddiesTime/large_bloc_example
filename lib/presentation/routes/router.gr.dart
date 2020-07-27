@@ -3,8 +3,9 @@
 // **************************************************************************
 // AutoRouteGenerator
 // **************************************************************************
-
+// ignore: unused_import
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc_example/presentation/splash/splash_page.dart';
