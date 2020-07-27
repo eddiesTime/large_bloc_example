@@ -26,7 +26,7 @@ class _WeatherPageState extends State<WeatherPage> {
             key: const Key('__Settings_IconButton__'),
             icon: const Icon(Icons.settings),
             onPressed: () {
-              ExtendedNavigator.root.pushNamed(Routes.settingsPage);
+              ExtendedNavigator.root.push(Routes.settingsPage);
             },
           ),
         ],
@@ -58,7 +58,7 @@ class _WeatherPageState extends State<WeatherPage> {
             onPressed: () {
               BlocProvider.of<WeatherBloc>(context)
                   .add(const WeatherEvent.newSearch());
-              ExtendedNavigator.root.pushNamed(Routes.searchPage);
+              ExtendedNavigator.root.push(Routes.searchPage);
             },
             child: const Icon(
               Icons.search,

@@ -9,13 +9,13 @@ class SimpleBlocObserver extends BlocObserver {
   SimpleBlocObserver(this._logger, this._loggingFacade);
 
   @override
-  void onError(Bloc bloc, Object error, StackTrace stackTrace) {
+  void onError(Cubit cubit, Object error, StackTrace stackTrace) {
     _loggingFacade.logError(
         logger: _logger,
-        message: bloc.runtimeType.toString(),
+        message: cubit.runtimeType.toString(),
         exception: error,
         stackTrace: stackTrace);
-    super.onError(bloc, error, stackTrace);
+    super.onError(cubit, error, stackTrace);
   }
 
   @override

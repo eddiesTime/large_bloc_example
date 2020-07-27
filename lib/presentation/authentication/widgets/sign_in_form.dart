@@ -31,7 +31,7 @@ class SignInForm extends StatelessWidget {
                 ).show(context);
               },
               (_) {
-                ExtendedNavigator.root.pushReplacementNamed(Routes.weatherPage);
+                ExtendedNavigator.root.replace(Routes.weatherPage);
                 context
                     .bloc<AuthenticationBloc>()
                     .add(const AuthenticationEvent.authCheckRequested());

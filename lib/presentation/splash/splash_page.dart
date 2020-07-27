@@ -12,9 +12,9 @@ class SplashPage extends StatelessWidget {
         state.map(
           initial: (_) {},
           authenticated: (_) =>
-              ExtendedNavigator.root.pushReplacementNamed(Routes.weatherPage),
-          unauthenticated: (_) => ExtendedNavigator.root
-              .pushReplacementNamed(Routes.authenticationPage),
+              ExtendedNavigator.root.replace(Routes.weatherPage),
+          unauthenticated: (_) =>
+              ExtendedNavigator.root.replace(Routes.authenticationPage),
         );
       },
       child: _PageWidget(),

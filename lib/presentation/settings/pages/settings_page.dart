@@ -14,8 +14,8 @@ class SettingsPage extends StatelessWidget {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         state.maybeMap(
-            unauthenticated: (_) => ExtendedNavigator.root
-                .pushReplacementNamed(Routes.authenticationPage),
+            unauthenticated: (_) =>
+                ExtendedNavigator.root.replace(Routes.authenticationPage),
             orElse: () {});
       },
       child: Scaffold(
