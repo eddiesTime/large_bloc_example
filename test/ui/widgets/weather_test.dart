@@ -15,14 +15,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockSettingsBloc extends MockBloc<SettingsEvent, SettingsState>
-    implements SettingsBloc {}
+class MockSettingsBloc extends MockBloc<SettingsState> implements SettingsBloc {
+}
 
-class MockWeatherBloc extends MockBloc<WeatherEvent, WeatherState>
-    implements WeatherBloc {}
+class MockWeatherBloc extends MockBloc<WeatherState> implements WeatherBloc {}
 
-class MockThemeBloc extends MockBloc<ThemeEvent, ThemeState>
-    implements ThemeBloc {}
+class MockThemeBloc extends MockBloc<ThemeState> implements ThemeBloc {}
 
 class MockWeatherResponse extends Mock implements model.WeatherResponse {}
 

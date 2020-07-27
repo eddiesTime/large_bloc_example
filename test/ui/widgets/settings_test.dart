@@ -6,8 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockSettingsBloc extends MockBloc<SettingsEvent, SettingsState>
-    implements SettingsBloc {}
+class MockSettingsBloc extends MockBloc<SettingsState> implements SettingsBloc {
+}
 
 void main() {
   group('Settings Widget', () {

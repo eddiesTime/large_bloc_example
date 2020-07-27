@@ -13,8 +13,8 @@ class MockWeatherResponse extends Mock implements WeatherResponse {}
 
 class MockWeather extends Mock implements Weather {}
 
-class MockSettingsBloc extends MockBloc<SettingsEvent, SettingsState>
-    implements SettingsBloc {}
+class MockSettingsBloc extends MockBloc<SettingsState> implements SettingsBloc {
+}
 
 void main() {
   WeatherResponse _weatherResponse;

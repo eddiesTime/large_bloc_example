@@ -10,11 +10,10 @@ import 'package:flutter_bloc_example/presentation/weather/widgets/weather.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockWeatherBloc extends MockBloc<WeatherEvent, WeatherState>
-    implements WeatherBloc {}
+class MockWeatherBloc extends MockBloc<WeatherState> implements WeatherBloc {}
 
-class MockSettingsBloc extends MockBloc<SettingsEvent, SettingsState>
-    implements SettingsBloc {}
+class MockSettingsBloc extends MockBloc<SettingsState> implements SettingsBloc {
+}
 
 void main() {
   group('Weather Page', () {
