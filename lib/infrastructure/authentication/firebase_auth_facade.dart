@@ -89,14 +89,15 @@ class FirebaseAuthFacade implements IAuthFacade {
   @override
   Future<Either<AuthFailure, Unit>> signInWithGoogle() async {
     try {
-      final googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
 
       if (googleUser == null) {
         return left(const AuthFailure.cancelledByUser());
       }
 
-      final googleAuthentication = await googleUser.authentication;
-      final authCredential = GoogleAuthProvider.getCredential(
+      final GoogleSignInAuthentication googleAuthentication =
+          await googleUser.authentication;
+      final AuthCredential authCredential = GoogleAuthProvider.getCredential(
         accessToken: googleAuthentication.accessToken,
         idToken: googleAuthentication.idToken,
       );
