@@ -7,14 +7,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockSettingsBloc extends MockBloc<SettingsEvent, SettingsState>
-    implements SettingsBloc {}
+class MockSettingsBloc extends MockBloc<SettingsState> implements SettingsBloc {
+}
 
-class MockWeatherBloc extends MockBloc<WeatherEvent, WeatherState>
-    implements WeatherBloc {}
+class MockWeatherBloc extends MockBloc<WeatherState> implements WeatherBloc {}
 
-class MockThemeBloc extends MockBloc<ThemeEvent, ThemeState>
-    implements ThemeBloc {}
+class MockThemeBloc extends MockBloc<ThemeState> implements ThemeBloc {}
 
 void main() {
   SettingsBloc _settingsBloc;
@@ -36,7 +34,7 @@ void main() {
       when(_themeBloc.state)
           .thenAnswer((_) => ThemeState(themeEntity: _themeEntity));
       await tester.pumpWidget(BlocBuilder<ThemeBloc, ThemeState>(
-          bloc: _themeBloc,
+          cubit: _themeBloc,
           builder: (context, themeState) {
             return MultiBlocProvider(
               providers: [

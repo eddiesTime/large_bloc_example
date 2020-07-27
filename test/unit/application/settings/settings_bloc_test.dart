@@ -16,16 +16,16 @@ void main() {
 
     blocTest(
         'should emit SettingsState.celcius when event is ToggleTemperatureUnit(true)',
-        build: () async => settingsBloc,
-        act: (SettingsBloc bloc) async {
+        build: () => settingsBloc,
+        act: (SettingsBloc bloc) {
           bloc.add(const ToggleTemperatureUnit(false));
           bloc.add(const ToggleTemperatureUnit(true));
         },
         expect: [SettingsState.fahrenheit(), SettingsState.celcius()]);
     blocTest(
         'should emit SettingsState.fahrenheit when event is ToggleTemperatureUnit(false)',
-        build: () async => settingsBloc,
-        act: (SettingsBloc bloc) async {
+        build: () => settingsBloc,
+        act: (SettingsBloc bloc) {
           bloc.add(const ToggleTemperatureUnit(false));
         },
         expect: [SettingsState.fahrenheit()]);

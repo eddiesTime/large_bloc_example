@@ -33,8 +33,7 @@ class MockWeatherEntity extends Mock implements WeatherEntity {
   MockWeatherEntity(this.weatherResponse);
 }
 
-class MockWeatherBloc extends MockBloc<WeatherEvent, WeatherState>
-    implements WeatherBloc {}
+class MockWeatherBloc extends MockBloc<WeatherState> implements WeatherBloc {}
 
 class MockWeatherFailure extends Mock implements WeatherFailure {}
 
