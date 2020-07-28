@@ -26,6 +26,7 @@ class MockFirebaseUserMapper extends Mock implements FirebaseUserMapper {}
 
 class MockFirebaseUser extends Mock implements FirebaseUser {}
 
+// ignore: avoid_implementing_value_types
 class MockGoogleAccount extends Mock implements GoogleSignInAccount {}
 
 class MockGoogleSignInAuthentication extends Mock
@@ -42,7 +43,9 @@ class MockGoogleAuthProvider extends Mock implements GoogleAuthProvider {
   MockGoogleAuthProvider(MockAuthCredential credentials) {
     _credentials = credentials;
   }
+
   @override
+  // ignore: override_on_non_overriding_member
   static AuthCredential getCredential() {
     return _credentials;
   }
@@ -63,11 +66,6 @@ void main() {
     FirebaseUser _mockUser;
     UserEntity _mockUserEntity;
     ILoggingFacade<FimberLog> _loggingFacade;
-    GoogleSignInAccount _mockGoogleAccount;
-    GoogleSignInAuthentication _mockGoogleAuthentication;
-    GoogleAuthProvider _mockGoogleAuthProvider;
-    MockAuthCredential _mockAuthCredential;
-    AuthResult _mockAuthResult;
     final EmailAddress _mockEmail = EmailAddress('foo.bar@test.com');
     final Password _mockPassword = Password('FooBar123');
     final emailAddressStr = _mockEmail.value.getOrElse(() => 'INVALID EMAIL');
@@ -86,11 +84,6 @@ void main() {
         _firebaseUserMapper,
         _loggingFacade,
       );
-      _mockGoogleAccount = MockGoogleAccount();
-      _mockGoogleAuthentication = MockGoogleSignInAuthentication();
-      _mockAuthCredential = MockAuthCredential();
-      _mockGoogleAuthProvider = MockGoogleAuthProvider(_mockAuthCredential);
-      _mockAuthResult = MockAuthResult();
     });
 
     test(
@@ -140,7 +133,7 @@ void main() {
           .thenThrow(ArgumentError());
       expect(
           () => _loggingFacade.logError(
-              logger: null, message: 'Get current user position'),
+              logger: null, message: 'Register with email and password.'),
           throwsArgumentError);
       expect(
           await _authFacade.registerWithEmailAndPassword(
@@ -158,7 +151,7 @@ void main() {
           .thenThrow(ArgumentError());
       expect(
           () => _loggingFacade.logError(
-              logger: null, message: 'Get current user position'),
+              logger: null, message: 'Register with email and password.'),
           throwsArgumentError);
       expect(
           await _authFacade.registerWithEmailAndPassword(
@@ -168,17 +161,32 @@ void main() {
     // SIGN IN WITH EMAIL AND PASSWORD
     test(
         'should check wether signInWithEmailAndPassword is working correctly for success case',
-        () async {});
+        () async {
+      when(_firebaseAuth.signInWithEmailAndPassword(
+              email: 'foo.bar@test.com', password: 'FooBar123'))
+          .thenAnswer((_) => Future.value());
+      expect(
+          await _authFacade.signInWithEmailAndPassword(
+              emailAddress: _mockEmail, password: _mockPassword),
+          right(unit));
+    });
     test(
         'should check wether signInWithEmailAndPassword is working correctly for failure case "Wrong Password"',
         () async {
+      when(_firebaseAuth.signInWithEmailAndPassword(
+              email: 'foo.bar@test.com', password: 'FooBar123'))
+          .thenThrow(PlatformException(code: 'ERROR_WRONG_PASSWORD'));
       when(_loggingFacade.logError(
-              logger: null, message: 'Register with email and password.'))
+              logger: null, message: 'Sign in with email and password'))
           .thenThrow(ArgumentError());
       expect(
           () => _loggingFacade.logError(
               logger: null, message: 'Sign in with email and password'),
           throwsArgumentError);
+      expect(
+          await _authFacade.signInWithEmailAndPassword(
+              emailAddress: _mockEmail, password: _mockPassword),
+          left(const AuthFailure.invalidEmailAndPasswordCombination()));
     });
     test(
         'should check wether signInWithEmailAndPassword is working correctly for failure case "User Not Found"',

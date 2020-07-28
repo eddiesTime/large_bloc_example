@@ -14,7 +14,6 @@ class MockTree extends Mock implements LogTree {}
 void main() {
   group('Fimber Logging Facade', () {
     FimberFacade _mockFimberFacade;
-    Fimber _mockFimber;
     FimberLog _mockFimberLog;
     final FimberLog _fimberLog = FimberLog('Foo');
     final FimberFacade _fimberFacade = FimberFacade();
@@ -24,7 +23,6 @@ void main() {
     setUp(() async {
       _mockFimberFacade = MockFimberFacade();
       _mockFimberLog = MockFimberLog();
-      _mockFimber = MockFimber();
     });
 
     test('should check if createNamedLogger(name) is working correctly', () {

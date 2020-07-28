@@ -26,6 +26,7 @@ class Settings extends StatelessWidget {
                 ),
                 const Divider(),
                 ListTile(
+                  key: const Key('__Units_List_Tile__'),
                   title: const Text(
                     'Temperature Units',
                   ),
@@ -44,6 +45,7 @@ class Settings extends StatelessWidget {
               ],
             ),
             Container(
+              key: const Key('__Logout_Box__'),
               decoration: const BoxDecoration(
                 border: Border(
                   top: BorderSide(width: 3.0, color: Colors.black38),
@@ -53,6 +55,7 @@ class Settings extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               margin: const EdgeInsets.only(bottom: 24.0),
               child: ListTile(
+                key: const Key('__Logout_List_Tile__'),
                 onTap: () {
                   context.bloc<AuthenticationBloc>().add(const SignedOut());
                 },

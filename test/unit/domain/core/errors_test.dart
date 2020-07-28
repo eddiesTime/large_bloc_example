@@ -14,7 +14,7 @@ void main() {
       expect(
           _error.toString(),
           Error.safeToString(
-              'Encountered a ValueFailure at an unrecoverable point. Terminating. Falure was: ValueFailure<dynamic>.empty(failedValue: Foo)'));
+              'Encountered a ValueFailure at an unrecoverable point. Terminating. Failure was: ValueFailure<dynamic>.empty(failedValue: Foo)'));
     });
   });
 }

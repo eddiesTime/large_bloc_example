@@ -29,9 +29,11 @@ void main() {
         ),
       );
       expect(find.byType(ListView), findsOneWidget);
-      expect(find.byType(ListTile), findsOneWidget);
+      expect(find.byKey(const Key('__Units_List_Tile__')), findsOneWidget);
       expect(find.text('Temperature Units'), findsOneWidget);
       expect(find.byType(Switch), findsOneWidget);
+      expect(find.byKey(const Key('__Logout_Box__')), findsOneWidget);
+      expect(find.byKey(const Key('__Logout_List_Tile__')), findsOneWidget);
     });
 
     testWidgets(

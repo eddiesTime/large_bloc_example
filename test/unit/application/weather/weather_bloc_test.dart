@@ -185,20 +185,23 @@ void main() {
           .thenAnswer((_) => Future.value(_failure));
       _bloc.add(
           FetchWeatherWithQuery(cityStr: 'abc123', requestTime: _mockTime));
-      await emitsExactly(_bloc, [
-        _bloc.state.copyWith(
-          city: City('abc123'),
-          isLoading: true,
-          weatherFailureOrSuccessOption: none(),
-        ),
-        _bloc.state.copyWith(
-          city: City('abc123'),
-          isLoading: false,
-          showErrorMessages: true,
-          weatherFailureOrSuccessOption:
-              some(left(const WeatherFailure.notALocation())),
-        ),
-      ]);
+      await emitsExactly(
+        _bloc,
+        [
+          // _bloc.state.copyWith(
+          //   city: City('abc123'),
+          //   isLoading: true,
+          //   weatherFailureOrSuccessOption: none(),
+          // ),
+          _bloc.state.copyWith(
+            city: City('abc123'),
+            isLoading: false,
+            showErrorMessages: true,
+            weatherFailureOrSuccessOption:
+                some(left(const WeatherFailure.notALocation())),
+          ),
+        ],
+      );
     });
     test(
         'should check whether state is yielded correctly for actionOnWeatherFacadeWithQuery() for fetch weather with query event and WeatherResponse',

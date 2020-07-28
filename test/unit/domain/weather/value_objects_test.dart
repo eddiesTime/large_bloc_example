@@ -1,0 +1,14 @@
+import 'package:flutter_bloc_example/domain/weather/value_objects.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+void main() {
+  group('Weather Value Objects', () {
+    setUp(() async {});
+
+    test('should check whether factory constructor city is working correctly',
+        () {
+      final City _mockCity = City('Foo');
+      expect(City('Foo'), _mockCity);
+    });
+  });
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter_bloc_example/application/authentication/authentication_bloc.dart';
 import 'package:flutter_bloc_example/application/settings/settings_bloc.dart';
 import 'package:flutter_bloc_example/presentation/settings/pages/settings_page.dart';
 import 'package:flutter_bloc_example/presentation/settings/widgets/settings.dart';
@@ -10,18 +11,28 @@ import 'package:mockito/mockito.dart';
 class MockSettingsBloc extends MockBloc<SettingsState> implements SettingsBloc {
 }
 
+class MockAuthBloc extends MockBloc<AuthenticationState>
+    implements AuthenticationBloc {}
+
 void main() {
   group('Settings Page', () {
     SettingsBloc _settingsBloc;
+    AuthenticationBloc _authBloc;
 
     setUp(() {
       _settingsBloc = MockSettingsBloc();
+      _authBloc = MockAuthBloc();
     });
     testWidgets('renders correctly', (WidgetTester tester) async {
       when(_settingsBloc.state).thenAnswer((_) => SettingsState.celcius());
-      await tester.pumpWidget(BlocProvider<SettingsBloc>.value(
+      await tester.pumpWidget(MultiBlocProvider(providers: [
+        BlocProvider<SettingsBloc>.value(
           value: _settingsBloc,
-          child: MaterialApp(title: 'Test', home: SettingsPage())));
+        ),
+        BlocProvider<AuthenticationBloc>.value(
+          value: _authBloc,
+        )
+      ], child: MaterialApp(title: 'Test', home: SettingsPage())));
       await tester.pumpAndSettle();
       expect(find.byType(Scaffold), findsOneWidget);
       expect(find.byType(AppBar), findsOneWidget);

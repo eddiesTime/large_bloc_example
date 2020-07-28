@@ -1,7 +1,11 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_example/application/blocs.dart';
 import 'package:flutter_bloc_example/domain/theme/theme_entity.dart';
+import 'package:flutter_bloc_example/domain/weather/value_objects.dart';
+import 'package:flutter_bloc_example/domain/weather/weather_entity.dart';
+import 'package:flutter_bloc_example/domain/weather/weather_failure.dart';
 import 'package:flutter_bloc_example/presentation/weather/widgets/combined_weather_temperature.dart';
 import 'package:flutter_bloc_example/presentation/weather/widgets/gradient_container.dart';
 import 'package:flutter_bloc_example/presentation/weather/widgets/last_updated.dart';
@@ -61,7 +65,12 @@ void main() {
 
     testWidgets('should render properly for WeatherState.loading',
         (WidgetTester tester) async {
-      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
+      when(_weatherBloc.state)
+          .thenAnswer((_) => WeatherState.initial().copyWith(
+                city: City('London'),
+                isLoading: true,
+                weatherFailureOrSuccessOption: none(),
+              ));
       await tester.pumpWidget(
         BlocProvider<WeatherBloc>.value(
           value: _weatherBloc,
@@ -78,7 +87,14 @@ void main() {
 
     testWidgets('should render properly for WeatherState.loadingFailure',
         (WidgetTester tester) async {
-      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
+      when(_weatherBloc.state)
+          .thenAnswer((_) => WeatherState.initial().copyWith(
+                city: City('Foo'),
+                isLoading: false,
+                showErrorMessages: true,
+                weatherFailureOrSuccessOption:
+                    some(left(const WeatherFailure.notALocation())),
+              ));
       await tester.pumpWidget(
         BlocProvider<WeatherBloc>.value(
           value: _weatherBloc,
@@ -90,12 +106,19 @@ void main() {
         ),
       );
       expect(find.byType(Center), findsNWidgets(2));
-      expect(find.text('Something went wrong!'), findsOneWidget);
+      expect(find.text('Not a location!'), findsOneWidget);
     });
 
     testWidgets('should render properly for WeatherState.loaded',
         (WidgetTester tester) async {
-      when(_weatherBloc.state).thenAnswer((_) => WeatherState.initial());
+      when(_weatherBloc.state)
+          .thenAnswer((_) => WeatherState.initial().copyWith(
+                city: City('London'),
+                weatherEntity: WeatherEntity.initial(),
+                isLoading: false,
+                showErrorMessages: true,
+                weatherFailureOrSuccessOption: some(right(_weatherResponse)),
+              ));
       when(_settingsBloc.state).thenAnswer((_) => SettingsState.celcius());
       when(_themeBloc.state)
           .thenAnswer((_) => ThemeState(themeEntity: ThemeEntity.initial()));
