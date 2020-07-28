@@ -32,6 +32,10 @@ jobs:
         run: pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '.freezed.dart$'
       - name: Remove *_injectable_module.dart files from coverage report
         run: pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '_injectable_module.dart$'
+      - name: Remove injection file from coverage report
+        run: pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r 'injection.dart$'
+      - name: Remove .gr file from coverage report
+        run: pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '.gr.dart$'
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.0.7
         with:
