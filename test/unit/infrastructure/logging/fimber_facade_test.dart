@@ -5,9 +5,7 @@ import 'package:mockito/mockito.dart';
 
 class MockFimberFacade extends Mock implements FimberFacade {}
 
-class MockFimber extends Mock implements Fimber {
-  static void plantTree(LogTree debugTree) {}
-}
+class MockFimber extends Mock implements Fimber {}
 
 class MockFimberLog extends Mock implements FimberLog {}
 
