@@ -42,8 +42,10 @@ class SignInForm extends StatelessWidget {
       },
       builder: (context, state) {
         return Form(
+          key: const Key('__Sign_In_Form__'),
           autovalidate: state.showErrorMessages,
           child: ListView(
+            key: const Key('__Sign_In_Form_List_View__'),
             padding: const EdgeInsets.all(8.0),
             children: <Widget>[
               Container(
@@ -60,6 +62,7 @@ class SignInForm extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                key: const Key('__Email_Text_Form_Field__'),
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email),
                   labelText: 'Email',
@@ -83,6 +86,7 @@ class SignInForm extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                key: const Key('__Password_Text_Form_Field__'),
                 // controller: passwordController,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.lock),
@@ -107,6 +111,7 @@ class SignInForm extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: FlatButton(
+                      key: const Key('__Sign_In_Form_Sign_In_Button__'),
                       onPressed: () => context.bloc<SignInFormBloc>().add(
                           const SignInFormEvent
                               .signInWithEmailAndPasswordPressed()),
@@ -116,6 +121,7 @@ class SignInForm extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: FlatButton(
+                      key: const Key('__Sign_In_Form_Register_Button__'),
                       onPressed: () => context.bloc<SignInFormBloc>().add(
                           const SignInFormEvent
                               .registerWithEmailAndPasswordPressed()),
@@ -125,6 +131,7 @@ class SignInForm extends StatelessWidget {
                 ],
               ),
               RaisedButton(
+                key: const Key('__Sign_In_Form_Sign_In_With_Google_Button__'),
                 onPressed: () => context
                     .bloc<SignInFormBloc>()
                     .add(const SignInFormEvent.signInWithGooglePressed()),
