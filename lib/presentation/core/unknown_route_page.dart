@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 class UnknownRoutePage extends StatelessWidget {
@@ -7,9 +6,9 @@ class UnknownRoutePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: Colors.grey,
-      body: Center(
+      body: const Center(
         child: Text(
-          'ERROR 404 \npage not found ${RouteData.of(context).name}',
+          'ERROR 404 \npage not found',
           textAlign: TextAlign.center,
         ),
       ),
