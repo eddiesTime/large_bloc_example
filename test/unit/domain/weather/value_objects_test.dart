@@ -10,5 +10,10 @@ void main() {
       final City _mockCity = City('Foo');
       expect(City('Foo'), _mockCity);
     });
+    test(
+        'should check whether factory constructor city is throwing an AssertionError for null value',
+        () {
+      expect(() => City(null), throwsAssertionError);
+    });
   });
 }
