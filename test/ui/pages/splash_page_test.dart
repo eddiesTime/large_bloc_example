@@ -8,7 +8,6 @@ import 'package:flutter_bloc_example/application/blocs.dart';
 import 'package:flutter_bloc_example/domain/authentication/user_entity.dart';
 import 'package:flutter_bloc_example/domain/authentication/value_objects.dart';
 import 'package:flutter_bloc_example/domain/core/value_object.dart';
-import 'package:flutter_bloc_example/presentation/pages.dart';
 import 'package:flutter_bloc_example/presentation/routes/router.dart';
 import 'package:flutter_bloc_example/presentation/splash/splash_page.dart';
 import 'package:flutter_test/flutter_test.dart';
