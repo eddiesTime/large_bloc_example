@@ -39,7 +39,6 @@ void main() {
     });
     test('should check whether getter hashCode is working correctly', () {
       expect(_mockValidValueObject.hashCode, 991766199);
-      expect(EmailAddress('Foo').hashCode, 914322953);
     });
     test(
         'should check whether factory constructor UniqueId.fromUniqueString is throwing an AssertionError for null value',
