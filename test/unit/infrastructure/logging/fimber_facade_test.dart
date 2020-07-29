@@ -26,12 +26,16 @@ void main() {
     });
 
     test('should check if createNamedLogger(name) is working correctly', () {
-      when(_mockFimberFacade.createNamedLogger(name: _mockName))
-          .thenReturn(_fimberLog);
-      expect(_mockFimberFacade.createNamedLogger(name: _mockName),
-          isA<FimberLog>());
+      // when(_mockFimberFacade.createNamedLogger(name: _mockName))
+      //     .thenReturn(_fimberLog);
+      // expect(_mockFimberFacade.createNamedLogger(name: _mockName),
+      //     isA<FimberLog>());
+      // expect(
+      //     _mockFimberFacade.createNamedLogger(name: _mockName).tag, _mockName);
       expect(
-          _mockFimberFacade.createNamedLogger(name: _mockName).tag, _mockName);
+          FimberFacade().createNamedLogger(name: 'FooBar'), isA<FimberLog>());
+      expect(FimberFacade().createNamedLogger(name: 'FooBar').tag,
+          FimberLog('FooBar').tag);
     });
     // test(
     //     'should check if initializeLogging() is working correctly in case of logLevels not null',
