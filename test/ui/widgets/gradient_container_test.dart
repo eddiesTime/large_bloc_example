@@ -14,6 +14,8 @@ void main() {
       );
       expect(find.byType(Container), findsOneWidget);
       expect(find.text('Test'), findsOneWidget);
+      expect(() => GradientContainer(color: null, child: null),
+          throwsAssertionError);
     });
   });
 }

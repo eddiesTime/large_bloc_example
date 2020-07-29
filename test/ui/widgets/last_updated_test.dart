@@ -16,6 +16,7 @@ void main() {
       final finder = find.byWidgetPredicate((widget) =>
           widget is Text && widget.data.contains(_tDate.minute.toString()));
       expect(finder, findsOneWidget);
+      expect(() => LastUpdated(dateTime: null), throwsAssertionError);
     });
   });
 }

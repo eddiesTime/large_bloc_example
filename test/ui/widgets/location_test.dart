@@ -13,6 +13,7 @@ void main() {
         ),
       );
       expect(find.text('London'), findsOneWidget);
+      expect(() => Location(location: null), throwsAssertionError);
     });
   });
 }
