@@ -10,7 +10,8 @@ class AuthenticationPage extends StatelessWidget {
     return Scaffold(
       body: BlocProvider<SignInFormBloc>(
         create: (context) => getIt<SignInFormBloc>(),
-        child: const Center(child: SignInForm()),
+        child: const Center(
+            key: Key('__AUTHENTICATION_PAGE_CENTER__'), child: SignInForm()),
       ),
     );
   }
