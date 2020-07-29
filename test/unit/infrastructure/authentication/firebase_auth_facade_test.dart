@@ -285,6 +285,8 @@ void main() {
               ),
           throwsArgumentError);
       expect(() => _authFacade.signOut(), throwsFormatException);
+      verify(_loggingFacade.logError(logger: null, message: 'Logout'))
+          .called(1);
     });
     test('should check wether signOut is working correctly for success case',
         () async {
