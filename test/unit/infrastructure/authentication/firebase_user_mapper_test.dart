@@ -6,26 +6,29 @@ import 'package:flutter_bloc_example/infrastructure/authentication/firebase_user
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockFirebaseUser extends Mock implements FirebaseUser {}
+class MockFirebaseUser extends Mock implements FirebaseUser {
+  final String uid;
+  final String displayName;
+  final String email;
 
-class MockFirebaseUserMapper extends Mock implements FirebaseUserMapper {}
+  MockFirebaseUser(this.uid, this.displayName, this.email);
+}
 
 void main() {
   FirebaseUser _user;
   FirebaseUserMapper _userMapper;
   group('Firebase User Mapper', () {
     setUp(() {
-      _user = MockFirebaseUser();
-      _userMapper = MockFirebaseUserMapper();
+      _user = MockFirebaseUser('1234567', 'Foobar', 'foo.bar@test.com');
+      _userMapper = FirebaseUserMapper();
     });
     test(
         'should check whether toDomain() is working correctly for existing user',
         () {
       final UserEntity _mockUser = UserEntity(
-          id: UniqueId.fromUniqueString('123'),
-          emailAddress: EmailAddress('foo.bar@test.com'),
-          name: StringSingleLine('Foo'));
-      when(_userMapper.toDomain(_user)).thenReturn(_mockUser);
+          id: UniqueId.fromUniqueString(_user.uid),
+          emailAddress: EmailAddress(_user.email),
+          name: StringSingleLine(_user.displayName));
       expect(_userMapper.toDomain(_user), _mockUser);
     });
     test(
