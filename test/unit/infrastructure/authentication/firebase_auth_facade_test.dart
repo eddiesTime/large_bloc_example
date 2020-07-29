@@ -27,7 +27,7 @@ class MockFirebaseUserMapper extends Mock implements FirebaseUserMapper {}
 class MockFirebaseUser extends Mock implements FirebaseUser {}
 
 // ignore: avoid_implementing_value_types
-class MockGoogleAccount extends Mock implements GoogleSignInAccount {}
+class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {}
 
 class MockGoogleSignInAuthentication extends Mock
     implements GoogleSignInAuthentication {}
@@ -65,6 +65,7 @@ void main() {
     FirebaseUserMapper _firebaseUserMapper;
     FirebaseUser _mockUser;
     UserEntity _mockUserEntity;
+    GoogleSignInAccount _mockGoogleSignInAccount;
     ILoggingFacade<FimberLog> _loggingFacade;
     final EmailAddress _mockEmail = EmailAddress('foo.bar@test.com');
     final Password _mockPassword = Password('FooBar123');
@@ -78,6 +79,7 @@ void main() {
       _loggingFacade = MockLoggingFacade();
       _mockUser = MockFirebaseUser();
       _mockUserEntity = MockUserEntity();
+      _mockGoogleSignInAccount = MockGoogleSignInAccount();
       _authFacade = FirebaseAuthFacade(
         _firebaseAuth,
         _googleSignIn,
@@ -189,8 +191,11 @@ void main() {
           left(const AuthFailure.invalidEmailAndPasswordCombination()));
     });
     test(
-        'should check wether signInWithEmailAndPassword is working correctly for failure case "User Not Found"',
+        'should check wether signInWithEmailAndPassword is working correctly for failure case "User not found"',
         () async {
+      when(_firebaseAuth.signInWithEmailAndPassword(
+              email: 'foo.bar@test.com', password: 'FooBar123'))
+          .thenThrow(PlatformException(code: 'ERROR_USER_NOT_FOUND'));
       when(_loggingFacade.logError(
               logger: null, message: 'Sign in with email and password'))
           .thenThrow(ArgumentError());
@@ -198,10 +203,17 @@ void main() {
           () => _loggingFacade.logError(
               logger: null, message: 'Sign in with email and password'),
           throwsArgumentError);
+      expect(
+          await _authFacade.signInWithEmailAndPassword(
+              emailAddress: _mockEmail, password: _mockPassword),
+          left(const AuthFailure.invalidEmailAndPasswordCombination()));
     });
     test(
         'should check wether signInWithEmailAndPassword is working correctly for failure case "Server Error"',
         () async {
+      when(_firebaseAuth.signInWithEmailAndPassword(
+              email: 'foo.bar@test.com', password: 'FooBar123'))
+          .thenThrow(PlatformException(code: ''));
       when(_loggingFacade.logError(
               logger: null, message: 'Sign in with email and password'))
           .thenThrow(ArgumentError());
@@ -209,6 +221,10 @@ void main() {
           () => _loggingFacade.logError(
               logger: null, message: 'Sign in with email and password'),
           throwsArgumentError);
+      expect(
+          await _authFacade.signInWithEmailAndPassword(
+              emailAddress: _mockEmail, password: _mockPassword),
+          left(const AuthFailure.serverError()));
     });
     // SIGN IN WITH GOOGLE
     test(
@@ -235,23 +251,40 @@ void main() {
     test(
         'should check wether signInWithGoogle is working correctly for failure case',
         () async {
-      when(_googleSignIn.signIn()).thenThrow(PlatformException(code: ''));
+      when(_googleSignIn.signIn())
+          .thenAnswer((_) => Future.value(_mockGoogleSignInAccount));
+      when(_mockGoogleSignInAccount.authentication)
+          .thenThrow(PlatformException(code: ''));
       when(_loggingFacade.logError(
               logger: null, message: 'Sign in with Google'))
           .thenThrow(ArgumentError());
       expect(
           () => _loggingFacade.logError(
-              logger: null, message: 'Sign in with Google'),
+                logger: null,
+                message: 'Sign in with Google',
+              ),
           throwsArgumentError);
+      expect(await _authFacade.signInWithGoogle(),
+          left(const AuthFailure.serverError()));
     });
     // SIGN OUT
     test('should check wether signOut is working correctly for failure case',
         () async {
-      when(_googleSignIn.signOut()).thenThrow(Exception());
-      when(_loggingFacade.logError(logger: null, message: 'Logout'))
-          .thenThrow(ArgumentError());
-      expect(() => _loggingFacade.logError(logger: null, message: 'Logout'),
+      when(_googleSignIn.signOut())
+          .thenAnswer((_) => Future.error(const FormatException()));
+      when(_firebaseAuth.signOut())
+          .thenAnswer((_) => Future.error(const FormatException()));
+      when(_loggingFacade.logError(
+        logger: null,
+        message: 'Logout',
+      )).thenThrow(ArgumentError());
+      expect(
+          () => _loggingFacade.logError(
+                logger: null,
+                message: 'Logout',
+              ),
           throwsArgumentError);
+      expect(() async => await _authFacade.signOut(), throwsFormatException);
     });
     test('should check wether signOut is working correctly for success case',
         () async {
