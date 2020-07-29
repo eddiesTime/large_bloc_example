@@ -23,6 +23,11 @@ void main() {
         ),
       );
     });
+    test(
+        'should check whether EmailAddress is throwing an AssertionError for null value',
+        () {
+      expect(() => EmailAddress(null), throwsAssertionError);
+    });
     test('should check whether Password is a string for "FooBar123"', () {
       final Password _password = Password('FooBar123');
       expect(_password.value, equals(const Right('FooBar123')));
@@ -39,6 +44,11 @@ void main() {
           ),
         ),
       );
+    });
+    test(
+        'should check whether Password is throwing an AssertionError for null value',
+        () {
+      expect(() => Password(null), throwsAssertionError);
     });
   });
 }
