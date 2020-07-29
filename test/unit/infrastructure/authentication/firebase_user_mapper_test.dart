@@ -7,8 +7,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 class MockFirebaseUser extends Mock implements FirebaseUser {
+  @override
   final String uid;
+  @override
   final String displayName;
+  @override
   final String email;
 
   MockFirebaseUser(this.uid, this.displayName, this.email);

@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_bloc_example/domain/authentication/auth_failure.dart';
 import 'package:flutter_bloc_example/domain/authentication/value_objects.dart';
 import 'package:flutter_bloc_example/domain/core/errors.dart';
 import 'package:flutter_bloc_example/domain/core/value_failure.dart';

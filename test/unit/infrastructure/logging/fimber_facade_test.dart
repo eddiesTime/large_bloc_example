@@ -13,39 +13,20 @@ class MockTree extends Mock implements LogTree {}
 
 void main() {
   group('Fimber Logging Facade', () {
-    FimberFacade _mockFimberFacade;
     FimberLog _mockFimberLog;
-    final FimberLog _fimberLog = FimberLog('Foo');
     final FimberFacade _fimberFacade = FimberFacade();
-    const String _mockName = 'Foo';
     const String _mockMessage = 'Bar';
 
     setUp(() async {
-      _mockFimberFacade = MockFimberFacade();
       _mockFimberLog = MockFimberLog();
     });
 
     test('should check if createNamedLogger(name) is working correctly', () {
-      // when(_mockFimberFacade.createNamedLogger(name: _mockName))
-      //     .thenReturn(_fimberLog);
-      // expect(_mockFimberFacade.createNamedLogger(name: _mockName),
-      //     isA<FimberLog>());
-      // expect(
-      //     _mockFimberFacade.createNamedLogger(name: _mockName).tag, _mockName);
       expect(
           FimberFacade().createNamedLogger(name: 'FooBar'), isA<FimberLog>());
       expect(FimberFacade().createNamedLogger(name: 'FooBar').tag,
           FimberLog('FooBar').tag);
     });
-    // test(
-    //     'should check if initializeLogging() is working correctly in case of logLevels not null',
-    //     () {
-    //   _mockFimberFacade.initializeLogging();
-    //   verify(MockFimber.plantTree(MockTree())).called(1);
-    // });
-    // test(
-    //     'should check if initializeLogging() is working correctly in case of logLevels is null',
-    //     () {});
     test('should check if logDebug() is working correctly', () {
       _fimberFacade.logDebug(logger: _mockFimberLog, message: _mockMessage);
       verify(_mockFimberLog.d(_mockMessage)).called(1);
