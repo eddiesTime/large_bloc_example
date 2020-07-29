@@ -1,3 +1,6 @@
+[![codecov](https://codecov.io/gh/eddiesTime/large_bloc_example/branch/master/graph/badge.svg?token=4A2VTNqhkf)](https://codecov.io/gh/eddiesTime/large_bloc_example)
+
+
 # flutter_bloc
 
 A new Flutter project.
