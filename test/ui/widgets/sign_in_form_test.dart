@@ -60,8 +60,8 @@ void main() {
       expect(
           const SignInForm(
             key: Key('__Constructor__'),
-          ).toString(),
-          "SignInForm-[<'__Constructor__'>]");
+          ),
+          isA<SignInForm>());
     });
 
     testWidgets(
@@ -117,7 +117,29 @@ void main() {
       verify(_signInFormBloc
               .add(const SignInFormEvent.emailChanged('foo.bar@test.com')))
           .called(1);
-      expect(_signInFormBloc.state.emailAddress.value.isRight(), isTrue);
+      expect(
+          _signInFormBloc.state.emailAddress.value.fold(
+            (f) => f.maybeMap(
+              invalidEmail: (_) => 'Invalid email',
+              orElse: () => null,
+            ),
+            (_) => null,
+          ),
+          isNull);
+      when(_signInFormBloc.state)
+          .thenAnswer((_) => SignInFormState.initial().copyWith(
+                emailAddress: EmailAddress('foo'),
+                authFailureOrSuccessOption: none(),
+              ));
+      expect(
+          _signInFormBloc.state.emailAddress.value.fold(
+            (f) => f.maybeMap(
+              invalidEmail: (_) => 'Invalid email',
+              orElse: () => null,
+            ),
+            (_) => null,
+          ),
+          'Invalid email');
     });
     testWidgets(
         'should check whether onChanged for password field works correctly',
