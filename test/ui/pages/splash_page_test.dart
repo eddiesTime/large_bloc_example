@@ -47,7 +47,7 @@ void main() {
       await tester.pumpWidget(
         BlocProvider<AuthenticationBloc>.value(
           value: _authBloc,
-          child: MaterialApp(
+          child: const MaterialApp(
             title: 'Test',
             home: SplashPage(),
           ),
@@ -97,7 +97,7 @@ void main() {
             BlocProvider<AuthenticationBloc>.value(value: _authBloc),
             // BlocProvider<SignInFormBloc>.value(value: _signInFormBloc),
           ],
-          child: MaterialApp(title: 'Test', home: SplashPage()),
+          child: const MaterialApp(title: 'Test', home: SplashPage()),
         ));
         expect(find.byType(Scaffold), findsOneWidget);
         expect(find.byType(Center), findsOneWidget);

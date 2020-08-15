@@ -12,7 +12,10 @@ class AuthenticationPage extends StatelessWidget {
         key: const Key('__Auth_Page_BlocProvider<SignInFormBloc>__'),
         create: (context) => getIt<SignInFormBloc>(),
         child: const Center(
-            key: Key('__AUTHENTICATION_PAGE_CENTER__'), child: SignInForm()),
+            key: Key('__AUTHENTICATION_PAGE_CENTER__'),
+            child: SignInForm(
+              key: Key('__SIGN_IN_FORM_WIDGET__'),
+            )),
       ),
     );
   }

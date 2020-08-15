@@ -5,9 +5,12 @@ import 'package:flutter_bloc_example/application/authentication/authentication_b
 import 'package:flutter_bloc_example/presentation/routes/router.dart';
 
 class SplashPage extends StatelessWidget {
+  const SplashPage({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
+      key: const Key('__Splash_Page_Bloc_Listener__'),
       listener: (context, state) {
         state.map(
           initial: (_) {},
@@ -26,8 +29,12 @@ class _PageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      key: Key('__Splash_Page_Scaffold__'),
       body: Center(
-        child: CircularProgressIndicator(),
+        key: Key('__Splash_Page_Center__'),
+        child: CircularProgressIndicator(
+          key: Key('__Splash_Page_Progress_Indicator__'),
+        ),
       ),
     );
   }
