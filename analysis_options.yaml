@@ -4,6 +4,7 @@ analyzer:
   exclude:
     - lib/**/*.g.dart
     - lib/**/*.freezed.dart
+    - lib/**/*.gr.dart
   errors:
     missing_required_param: error
     missing_return: error
