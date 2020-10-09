@@ -7,11 +7,12 @@ on:
   pull_request:
     branches: [master]
 # A workflow run is made up of one or more jobs. Jobs run parallel by default.
+# A workflow run is made up of one or more jobs. Jobs run parallel by default.
 jobs:
   # First job.
   test:
     # The type of machine to run the job on. []
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Install Flutter
@@ -22,25 +23,8 @@ jobs:
         run: flutter pub get
       - name: Run Analizer
         run: flutter analyze
-      - name: Run unit and widget test. Create coverage report
-        run: flutter test --coverage
-      - name: Install CLI package to remove files from coverage report easily
-        run: pub global activate remove_from_coverage
-      - name: Remove .g.dart files from coverage report
-        run: pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '.g.dart$'
-      - name: Remove .freezed.dart files from coverage report
-        run: pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '.freezed.dart$'
-      - name: Remove *_injectable_module.dart files from coverage report
-        run: pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '_injectable_module.dart$'
-      - name: Remove injection file from coverage report
-        run: pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r 'injection.dart$'
-      - name: Remove .gr file from coverage report
-        run: pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '.gr.dart$'
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.7
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: coverage/lcov.info
+      - name: Run unit and widget test
+        run: flutter test
 # drive_ios:
 #   #creates a build matrix for your jobs
 #   strategy:
