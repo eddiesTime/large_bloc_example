@@ -21,8 +21,6 @@ jobs:
           channel: 'dev'
       - name: Install Dependencies
         run: flutter pub get
-      - name: Run Analizer
-        run: flutter analyze
       - name: Run unit and widget test
         run: flutter test
 # drive_ios:
